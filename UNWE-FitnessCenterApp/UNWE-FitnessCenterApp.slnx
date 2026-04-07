@@ -10,4 +10,5 @@
     <Project Path="FitnessCenterApp.Web.ViewModels/FitnessCenterApp.Web.ViewModels.csproj" />
     <Project Path="FitnessCenterApp.Web/FitnessCenterApp.Web.csproj" />
   </Folder>
+  <Project Path="FitnessCenterApp.Common/FitnessCenterApp.Common.csproj" />
 </Solution>
