@@ -1,7 +1,13 @@
 <Solution>
-  <Folder Name="/Data/" />
-  <Folder Name="/NewFolder1/" />
-  <Folder Name="/Services/" />
-  <Folder Name="/Web/" />
-  <Project Path="FitnessCenterApp.Web/FitnessCenterApp.Web.csproj" />
+  <Folder Name="/Data/">
+    <Project Path="FitnessCenterApp.Data.Models/FitnessCenterApp.Data.Models.csproj" />
+    <Project Path="FitnessCenterApp.Data/FitnessCenterApp.Data.csproj" />
+  </Folder>
+  <Folder Name="/Services/">
+    <Project Path="FitnessCenterApp.Services.Data/FitnessCenterApp.Services.Data.csproj" />
+  </Folder>
+  <Folder Name="/Web/">
+    <Project Path="FitnessCenterApp.Web.ViewModels/FitnessCenterApp.Web.ViewModels.csproj" />
+    <Project Path="FitnessCenterApp.Web/FitnessCenterApp.Web.csproj" />
+  </Folder>
 </Solution>
