@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.25" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\FitnessCenterApp.Common\FitnessCenterApp.Common.csproj" />
     <ProjectReference Include="..\FitnessCenterApp.Data.Models\FitnessCenterApp.Data.Models.csproj" />
     <ProjectReference Include="..\FitnessCenterApp.Data\FitnessCenterApp.Data.csproj" />
