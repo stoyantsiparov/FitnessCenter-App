@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Data/" />
+  <Folder Name="/NewFolder1/" />
+  <Folder Name="/Services/" />
+  <Folder Name="/Web/" />
+  <Project Path="FitnessCenterApp.Web/FitnessCenterApp.Web.csproj" />
+</Solution>

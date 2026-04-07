@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-FitnessCenterApp.Web-3ed8e533-0e21-4bca-b9d4-1977f992b033</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.25" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.25" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.25" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.25" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.25" />
+  </ItemGroup>
+
+</Project>
