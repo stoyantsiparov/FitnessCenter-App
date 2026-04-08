@@ -20,4 +20,8 @@
     <ProjectReference Include="..\FitnessCenterApp.Data.Models\FitnessCenterApp.Data.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
