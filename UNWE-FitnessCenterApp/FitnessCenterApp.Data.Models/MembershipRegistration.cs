@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FitnessCenterApp.Data.Models;
 
-[PrimaryKey(nameof(MemberId), nameof(FitnessClassId))]
-public class FitnessClassRegistration
+[PrimaryKey(nameof(MemberId), nameof(MembershipTypeId))]
+public class MembershipRegistration
 {
     [ForeignKey(nameof(Member))]
     public string MemberId { get; set; } = null!;
     public IdentityUser Member { get; set; } = null!;
 
-    [ForeignKey(nameof(FitnessClass))]
-    public int FitnessClassId { get; set; }
-    public FitnessClass FitnessClass { get; set; } = null!;
+    [ForeignKey(nameof(MembershipType))]
+    public int MembershipTypeId { get; set; }
+    public MembershipType MembershipType { get; set; } = null!;
 }
