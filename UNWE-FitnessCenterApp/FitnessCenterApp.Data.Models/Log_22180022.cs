@@ -14,15 +14,15 @@ public class Log_22180022
 
     [Required] 
     [MaxLength(TableNameMaxLength)]
-    //TODO: Add comment for TableName
+    [Comment("Name of the table where the operation occurred")]
     public string TableName { get; set; } = null!;
 
     [Required]
     [MaxLength(OperationTypeMaxLength)]
-    //TODO: Add comment for OperationType
+    [Comment("Type of operation performed (e.g., INSERT, UPDATE, DELETE)")]
     public string OperationType { get; set; } = null!;
 
     [Required]
-    //TODO: Add comment for OperationDateTime
+    [Comment("Date and time when the operation was performed")]
     public DateTime OperationDateTime { get; set; } = DateTime.UtcNow;
 }
