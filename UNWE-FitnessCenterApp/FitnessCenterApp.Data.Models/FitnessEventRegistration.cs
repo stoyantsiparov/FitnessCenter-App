@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FitnessCenterApp.Data.Models;
 
 [PrimaryKey(nameof(MemberId), nameof(EventId))]
-public class FitnessEventRegistration
+public class FitnessEventRegistration : BaseEntity
 {
     [ForeignKey(nameof(Member))]
     public string MemberId { get; set; } = null!;
