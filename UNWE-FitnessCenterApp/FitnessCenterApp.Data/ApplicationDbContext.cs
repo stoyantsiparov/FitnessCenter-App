@@ -1,4 +1,5 @@
 ﻿using FitnessCenterApp.Data.Models;
+using FitnessCenterApp.Data.Seeds;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,5 +42,12 @@ public class ApplicationDbContext : IdentityDbContext
         builder.Entity<FitnessClass>()
             .Property(fc => fc.Price)
             .HasPrecision(18, 2);
+
+        // Seed initial data
+        FitnessClassesSeeder.Seed(builder);
+        FitnessEventsSeeder.Seed(builder);
+        InstructorsSeeder.Seed(builder);
+        MembershipTypeSeeder.Seed(builder);
+        SpaProceduresSeeder.Seed(builder);
     }
 }
