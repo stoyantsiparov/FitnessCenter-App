@@ -1,5 +1,7 @@
 using FitnessCenterApp.Data;
 using FitnessCenterApp.Data.Seeds;
+using FitnessCenterApp.Services.Data;
+using FitnessCenterApp.Services.Data.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +35,15 @@ builder.Services.AddControllersWithViews(cfg =>
 
 builder.Services.AddRazorPages();
 
-var app = builder.Build();
+// Register custom services
+builder.Services.AddScoped<IMembershipTypeService, MembershipTypeService>();
+builder.Services.AddScoped<IFitnessClassService, FitnessClassService>();
+builder.Services.AddScoped<IFitnessEventService, FitnessEventService>();
+builder.Services.AddScoped<IInstructorService, InstructorService>();
+builder.Services.AddScoped<ISpaProcedureService, SpaProcedureService>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+WebApplication app = builder.Build();
 
 // Seed roles and users
 using (var scope = app.Services.CreateScope())
