@@ -14,4 +14,6 @@ public class MembershipRegistration : BaseEntity
     [ForeignKey(nameof(MembershipType))]
     public int MembershipTypeId { get; set; }
     public MembershipType MembershipType { get; set; } = null!;
+
+    public DateTime RegistrationDate { get; set; }
 }
