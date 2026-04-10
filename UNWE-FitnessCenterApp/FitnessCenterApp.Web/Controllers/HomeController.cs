@@ -1,32 +1,25 @@
-using System.Diagnostics;
-using FitnessCenterApp.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FitnessCenterApp.Web.Controllers
+namespace FitnessCenterApp.Web.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    public IActionResult Index()
     {
-        private readonly ILogger<HomeController> _logger;
+        ViewData["Title"] = "Achieve Your Fitness Goals";
+        ViewData["Message"] = "Join our fitness and wellness community today!";
+        ViewData["CTAButtonText"] = "Get Started";
+        ViewData["Description"] = "Explore our fitness classes and rejuvenating spa services. Whether you’re looking to get fit or relax, we’ve got you covered.";
+        return View();
+    }
 
-        public HomeController(ILogger<HomeController> logger)
+    public IActionResult Error(int? statusCode = null)
+    {
+        if (statusCode == 404)
         {
-            _logger = logger;
+            return View("Error404");
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        return View("Error500");
     }
 }
