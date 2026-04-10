@@ -1,8 +1,82 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    ViewData["Message"] = "Welcome to the FitnessCenterApp!";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container text-center py-5">
+    <h2>@ViewData["Title"]</h2>
+    <h3 class="text-muted mb-4">@ViewData["Message"]</h3>
+
+    <p class="lead">Explore our list of fitness and spa services.</p>
+    <p class="lead">Add fitness classes to attend and book spa sessions.</p>
+
+    <div class="d-flex justify-content-center mb-5 mt-4">
+        <a asp-controller="MembershipType" asp-action="Index" class="btn btn-primary btn-lg px-5">Join Now</a>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="https://m.media-amazon.com/images/I/51Cg14ozwBL._AC_UF894,1000_QL80_.jpg" class="card-img-top img-fluid" alt="Fitness Classes" style="height: 250px; object-fit: cover;">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Fitness Classes</h5>
+                    <p class="card-text flex-grow-1">Join a fitness class that fits your schedule and goals.</p>
+                    <a asp-controller="FitnessClass" asp-action="Index" class="btn btn-primary w-100 mt-3">Learn More</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="https://thebeautyisland.co.uk/wp-content/uploads/2021/03/The-Beauty-Island-spa-treatments-18-1.jpg" class="card-img-top img-fluid" alt="Spa Services" style="height: 250px; object-fit: cover;">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Spa Services</h5>
+                    <p class="card-text flex-grow-1">Relax and unwind with our premium spa treatments.</p>
+                    <a asp-controller="SpaProcedure" asp-action="Index" class="btn btn-primary w-100 mt-3">Learn More</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="https://png.pngtree.com/thumb_back/fh260/background/20190223/ourmid/pngtree-color-tennis-sport-advertising-background-backgroundmotionwork-outtennistreeshand-paintedfreshhouses-image_75815.jpg" class="card-img-top img-fluid" alt="Fitness Events" style="height: 250px; object-fit: cover;">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Fitness Events</h5>
+                    <p class="card-text flex-grow-1">Join a fitness event and explore the beautiful nature.</p>
+                    <a asp-controller="FitnessEvent" asp-action="Index" class="btn btn-primary w-100 mt-3">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="mt-5 mb-4">Clients Testimonials</h2>
+    <div class="row mt-4">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <p><strong>"This is the best fitness app I've used. It helped me stay healthy and fit!"</strong></p>
+                    <p><span class="stars">⭐⭐⭐⭐⭐</span></p>
+                    <footer class="mt-auto">- Jane Doe, <cite title="Source Title">Fitness Enthusiast</cite></footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <p><strong>"The trainers are fantastic! I've achieved more in a few months here than I ever thought possible."</strong></p>
+                    <p><span class="stars">⭐⭐⭐⭐⭐</span></p>
+                    <footer class="mt-auto">- John Smith, <cite title="Source Title">Loyal Member</cite></footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <p><strong>"I love the variety of classes and the spa treatments. Best fitness experience ever!"</strong></p>
+                    <p><span class="stars">⭐⭐⭐⭐⭐</span></p>
+                    <footer class="mt-auto">- Sarah Lee, <cite title="Source Title">Regular Visitor</cite></footer>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
