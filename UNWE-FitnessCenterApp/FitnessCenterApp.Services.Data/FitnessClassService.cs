@@ -6,7 +6,7 @@ using FitnessCenterApp.Web.ViewModels.Instructor;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static FitnessCenterApp.Common.ApplicationsConstants;
-using static FitnessCenterApp.Common.ErrorMessages.Class;
+using static FitnessCenterApp.Common.ErrorMessages.FitnessClass;
 using static FitnessCenterApp.Common.ErrorMessages.Roles;
 
 namespace FitnessCenterApp.Services.Data;
