@@ -1,0 +1,102 @@
+﻿using FitnessCenterApp.Services.Data.Contracts;
+using FitnessCenterApp.Web.Controllers;
+using FitnessCenterApp.Web.ViewModels.SpaProcedure;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using static FitnessCenterApp.Common.ApplicationsConstants;
+using static FitnessCenterApp.Common.SuccessfulValidationMessages.SpaProcedure;
+
+namespace FitnessCenterApp.Web.Areas.Admin.Controllers;
+
+[Area(AdminRole)]
+[Authorize(Roles = AdminRole)]
+public class SpaProceduresManagementController : BaseController
+{
+    private readonly ISpaProcedureService _spaService;
+
+    public SpaProceduresManagementController(ISpaProcedureService spaService)
+    {
+        _spaService = spaService;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        var spaProcedures = await _spaService.GetAllSpaProceduresAsync();
+        return View(spaProcedures);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Add()
+    {
+        var model = await _spaService.GetSpaProcedureForAddAsync();
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Add(AddSpaProcedureViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            TempData["ErrorMessage"] = InvalidData;
+            return View(model);
+        }
+
+        var userId = GetUserId();
+        await _spaService.AddSpaProcedureAsync(model, userId);
+
+        TempData["SuccessMessage"] = SpaProcedureAddedSuccessfully;
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
+    {
+        var model = await _spaService.GetSpaProceduresByIdAsync(id);
+
+        if (model != null)
+        {
+            return View(model);
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(EditSpaProcedureViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            TempData["ErrorMessage"] = InvalidData;
+            return View(model);
+        }
+
+        var userId = GetUserId();
+        await _spaService.EditSpaProcedureAsync(model, userId);
+
+        TempData["SuccessMessage"] = SpaProcedureUpdatedSuccessfully;
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var model = await _spaService.GetSpaProcedureForDeleteAsync(id);
+
+        if (model != null)
+        {
+            return View(model);
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(DeleteSpaProcedureViewModel model)
+    {
+        var userId = GetUserId();
+        await _spaService.DeleteSpaProcedureAsync(model.Id, userId);
+
+        TempData["SuccessMessage"] = SpaProcedureDeletedSuccessfully;
+        return RedirectToAction(nameof(Index));
+    }
+}
