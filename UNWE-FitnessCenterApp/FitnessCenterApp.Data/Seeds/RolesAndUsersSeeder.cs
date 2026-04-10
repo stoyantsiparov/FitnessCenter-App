@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+using static FitnessCenterApp.Common.ApplicationsConstants;
+
 namespace FitnessCenterApp.Data.Seeds;
 
 public static class RolesAndUsersSeeder
@@ -11,8 +13,8 @@ public static class RolesAndUsersSeeder
         var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-        // 1. Create roles
-        string[] roles = { "Admin", "Member", "User" };
+        // 1. Create roles using constants
+        string[] roles = { AdminRole, MemberRole, UserRole };
 
         foreach (var role in roles)
         {
@@ -22,10 +24,10 @@ public static class RolesAndUsersSeeder
             }
         }
 
-        // 2. Create users and assign roles
-        await SeedUserAsync(userManager, configuration, "AdminSettings", "Admin");
-        await SeedUserAsync(userManager, configuration, "MemberSettings", "Member");
-        await SeedUserAsync(userManager, configuration, "UserSettings", "User");
+        // 2. Create users and assign roles using constants
+        await SeedUserAsync(userManager, configuration, "AdminSettings", AdminRole);
+        await SeedUserAsync(userManager, configuration, "MemberSettings", MemberRole);
+        await SeedUserAsync(userManager, configuration, "UserSettings", UserRole);
     }
 
     private static async Task SeedUserAsync(UserManager<IdentityUser> userManager, IConfiguration configuration, string configSection, string roleName)
