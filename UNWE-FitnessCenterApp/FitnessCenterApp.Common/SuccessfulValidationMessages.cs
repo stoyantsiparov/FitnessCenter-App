@@ -11,13 +11,13 @@ public static class SuccessfulValidationMessages
         public const string SpaProcedureBookedSuccessfully = "Spa procedure booked successfully.";
     }
 
-    public static class Class
+    public static class FitnessClass
     {
-        public const string ClassAppointmentRemovedSuccessfully = "Class appointment removed successfully.";
-        public const string ClassAddedSuccessfully = "Class added successfully.";
-        public const string ClassUpdatedSuccessfully = "Class updated successfully.";
-        public const string ClassDeletedSuccessfully = "Class deleted successfully.";
-        public const string ClassBookedSuccessfully = "Successfully signed up for class.";
+        public const string ClassAppointmentRemovedSuccessfully = "Fitness class appointment removed successfully.";
+        public const string ClassAddedSuccessfully = "Fitness class added successfully.";
+        public const string ClassUpdatedSuccessfully = "Fitness class updated successfully.";
+        public const string ClassDeletedSuccessfully = "Fitness class deleted successfully.";
+        public const string ClassBookedSuccessfully = "Successfully signed up for the fitness class.";
     }
 
     public static class Instructor

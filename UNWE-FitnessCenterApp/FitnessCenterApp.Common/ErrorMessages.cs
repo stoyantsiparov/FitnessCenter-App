@@ -24,19 +24,19 @@ public static class ErrorMessages
         public const string EventFull = "There are no more available spots for this event.";
     }
 
-    public static class Class
+    public static class FitnessClass
     {
-        public const string FitnessClassDoesNotExist = "The specified class does not exist.";
-        public const string ClassNotFound = "Class not found.";
-        public const string AlreadyRegisteredForClass = "You have already signed up for this class.";
-        public const string UserNotRegisteredForClass = "You are not registered for this class.";
-        public const string ClassViewModelCannotBeNull = "Class view model cannot be null.";
+        public const string FitnessClassDoesNotExist = "The specified fitness class does not exist.";
+        public const string ClassNotFound = "Fitness class not found.";
+        public const string AlreadyRegisteredForClass = "You have already signed up for this fitness class.";
+        public const string UserNotRegisteredForClass = "You are not registered for this fitness class.";
+        public const string ClassViewModelCannotBeNull = "Fitness class view model cannot be null.";
         public const string UserIdCannotBeEmpty = "User ID cannot be null or empty.";
-        public const string ClassWithTheSameNameAndScheduleAlreadyExists = "A class with the same name and schedule already exists.";
+        public const string ClassWithTheSameNameAndScheduleAlreadyExists = "A fitness class with the same name and schedule already exists.";
         public const string InvalidScheduleFormat = "Invalid schedule format.";
-        public const string OnlyMembersCanRegisterForThisClass = "Only members can register for fitness class.";
+        public const string OnlyMembersCanRegisterForThisClass = "Only members can register for fitness classes.";
         public const string ClassNameAndScheduleAreRequired = "Name and Schedule are required.";
-        public const string ClassFull = "There are no more available spots for this class.";
+        public const string ClassFull = "There are no more available spots for this fitness class.";
     }
 
     public static class MembershipType
