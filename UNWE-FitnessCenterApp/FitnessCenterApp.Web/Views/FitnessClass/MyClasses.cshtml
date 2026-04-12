@@ -1,0 +1,57 @@
+﻿@model IEnumerable<FitnessCenterApp.Web.ViewModels.FitnessClass.AllFitnessClassesViewModel>
+
+@{
+	ViewData["Title"] = "My Classes";
+}
+
+<h2 class="text-center mt-4">@ViewData["Title"]</h2>
+<hr class="mb-5" />
+
+@if (!Model.Any())
+{
+	<div class="text-center">
+		<h4 class="text-muted">You haven't registered for any classes yet.</h4>
+		<a asp-controller="FitnessClass" asp-action="Index" class="btn btn-primary mt-3">Browse Classes</a>
+	</div>
+}
+else
+{
+	<div class="row row-cols-1 row-cols-md-3 g-4">
+		@foreach (var fitnessClass in Model)
+		{
+			<div class="col">
+				<div class="card h-100" style="border-color: #8697C4;">
+					@if (!string.IsNullOrEmpty(fitnessClass.ImageUrl))
+					{
+						<img class="card-img-top" src="@fitnessClass.ImageUrl" alt="@fitnessClass.Name" style="height: 200px; object-fit: cover;">
+					}
+					else
+					{
+						<img class="card-img-top" src="~/img/no-image-available-02.jpg" alt="No Image Available" style="height: 200px; object-fit: cover;">
+						}
+
+						<div class="card-body d-flex flex-column">
+							<h5 class="card-title text-center text-primary">@fitnessClass.Name</h5>
+							<hr class="mt-2 mb-3" />
+
+							<p class="card-text flex-grow-1"><strong>Schedule:</strong> @fitnessClass.Schedule</p>
+							<p class="text-muted text-center mb-3">
+								<i class="bi bi-clock"></i> Duration: @fitnessClass.Duration min<br />
+								<i class="bi bi-people"></i> Capacity: @fitnessClass.Capacity spots
+							</p>
+
+							<div class="mt-auto">
+								<form method="post" asp-controller="FitnessClass" asp-action="RemoveFromMyClasses" asp-route-id="@fitnessClass.Id">
+									<button type="submit" class="btn btn-danger w-100">Remove</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	}
+
+	@section Scripts {
+		<partial name="_ValidationScriptsPartial" />
+	}
