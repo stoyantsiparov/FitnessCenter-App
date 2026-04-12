@@ -10,9 +10,13 @@ public class PaginatedFitnessClassesViewModel
 
     public int TotalPages { get; set; }
 
-    public string? SearchQuery { get; set; }
-
     public bool HasPreviousPage => PageNumber > 1;
 
     public bool HasNextPage => PageNumber < TotalPages;
+
+    public string? SearchQuery { get; set; }
+
+    public int? MinDuration { get; set; }
+
+    public int? MaxDuration { get; set; }
 }

@@ -1,4 +1,6 @@
-﻿namespace FitnessCenterApp.Web.ViewModels.FitnessClass;
+﻿using FitnessCenterApp.Web.ViewModels.Instructor;
+
+namespace FitnessCenterApp.Web.ViewModels.FitnessClass;
 
 public class FitnessClassDetailsViewModel
 {
@@ -10,5 +12,6 @@ public class FitnessClassDetailsViewModel
     public string Schedule { get; set; } = null!;
     public int Duration { get; set; }
     public int Capacity { get; set; }
-    public string InstructorFullName { get; set; } = null!;
+
+    public InstructorInfoViewModel Instructor { get; set; } = null!;
 }
