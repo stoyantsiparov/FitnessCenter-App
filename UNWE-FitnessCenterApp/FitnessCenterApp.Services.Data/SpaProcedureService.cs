@@ -162,16 +162,16 @@ public class SpaProcedureService : ISpaProcedureService
     /// </summary>
     public async Task AddToMySpaAppointmentsAsync(string userId, EditSpaProcedureViewModel spaProcedure, DateTime appointmentDateTime)
     {
-        // 1. Проверка за минало време
+        // 1. Check if the appointment date and time is in the past
         if (appointmentDateTime < DateTime.Now)
         {
             throw new InvalidOperationException(PastAppointmentDate);
         }
 
-        // 2. Проверка за работно време (от 09:00 до 18:00)
+        // 2. Check if the appointment time is within working hours (09:00 - 18:00)
         TimeSpan timeOfDay = appointmentDateTime.TimeOfDay;
-        TimeSpan startTime = new TimeSpan(9, 0, 0); // 09:00
-        TimeSpan endTime = new TimeSpan(18, 0, 0);  // 18:00
+        TimeSpan startTime = new TimeSpan(9, 0, 0);
+        TimeSpan endTime = new TimeSpan(18, 0, 0);
 
         if (timeOfDay < startTime || timeOfDay > endTime)
         {
@@ -184,7 +184,7 @@ public class SpaProcedureService : ISpaProcedureService
             throw new InvalidOperationException(OnlyMembersCanBookSpaProcedures);
         }
 
-        // Зареждаме процедурата заедно с текущите регистрации за да проверим капацитета
+        // Load the spa procedure with its registrations to check capacity
         var procedureEntity = await _context.SpaProcedures
             .Include(sp => sp.SpaRegistrations)
             .FirstOrDefaultAsync(sp => sp.Id == spaProcedure.Id);
@@ -194,7 +194,7 @@ public class SpaProcedureService : ISpaProcedureService
             throw new InvalidOperationException(SpaProcedureNotFound);
         }
 
-        // 3. Проверка за КАПАЦИТЕТ
+        // 3. Check if the spa procedure is fully booked
         if (procedureEntity.SpaRegistrations.Count >= procedureEntity.Capacity)
         {
             throw new InvalidOperationException("This spa procedure is fully booked.");
@@ -212,12 +212,12 @@ public class SpaProcedureService : ISpaProcedureService
         {
             MemberId = userId,
             SpaProcedureId = spaProcedure.Id,
-            ModifiedOn_22180022 = DateTime.UtcNow // Задължителното поле!
+            ModifiedOn_22180022 = DateTime.UtcNow
         };
 
         await _context.SpaRegistrations.AddAsync(spaRegistration);
 
-        // Обновяваме датата на самата процедура
+        // Update the appointment date of the procedure
         procedureEntity.AppointmentDateTime = appointmentDateTime;
         procedureEntity.ModifiedOn_22180022 = DateTime.UtcNow;
 
