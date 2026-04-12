@@ -46,7 +46,8 @@ public class FitnessEventService : IFitnessEventService
                 ImageUrl = e.ImageUrl,
                 Location = e.Location,
                 StartDateTime = e.StartDate.ToString("dd/MM/yyyy HH:mm"),
-                EndDateTime = e.EndDate.ToString("dd/MM/yyyy HH:mm")
+                EndDateTime = e.EndDate.ToString("dd/MM/yyyy HH:mm"),
+                Capacity = e.Capacity
             })
             .AsNoTracking()
             .ToListAsync();
@@ -117,7 +118,8 @@ public class FitnessEventService : IFitnessEventService
                 ImageUrl = r.FitnessEvent.ImageUrl,
                 Location = r.FitnessEvent.Location,
                 StartDateTime = r.FitnessEvent.StartDate.ToString("dd/MM/yyyy HH:mm"),
-                EndDateTime = r.FitnessEvent.EndDate.ToString("dd/MM/yyyy HH:mm")
+                EndDateTime = r.FitnessEvent.EndDate.ToString("dd/MM/yyyy HH:mm"),
+                Capacity = r.FitnessEvent.Capacity
             })
             .AsNoTracking()
             .ToListAsync();
