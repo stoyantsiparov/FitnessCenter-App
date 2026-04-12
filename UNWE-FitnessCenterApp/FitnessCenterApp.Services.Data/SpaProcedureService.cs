@@ -24,7 +24,7 @@ public class SpaProcedureService : ISpaProcedureService
     /// <summary>
     /// Get all spa procedures with pagination
     /// </summary>
-    public async Task<PaginatedSpaProceduresViewModel> GetAllSpaProceduresPaginationAsync(string? searchQuery = null, int pageNumber = 1, int pageSize = 4)
+    public async Task<PaginatedSpaProceduresViewModel> GetAllSpaProceduresPaginationAsync(string? searchQuery = null, int pageNumber = 1, int pageSize = 6)
     {
         var query = _context.SpaProcedures.AsQueryable();
 
@@ -45,6 +45,7 @@ public class SpaProcedureService : ISpaProcedureService
                 Name = sp.Name,
                 Description = sp.Description,
                 ImageUrl = sp.ImageUrl,
+                Capacity = sp.Capacity,
                 AppointmentDateTime = sp.AppointmentDateTime.ToString("dd/MM/yyyy HH:mm")
             })
             .AsNoTracking()
@@ -89,6 +90,7 @@ public class SpaProcedureService : ISpaProcedureService
                 Name = sp.Name,
                 Description = sp.Description,
                 ImageUrl = sp.ImageUrl,
+                Capacity = sp.Capacity,
                 AppointmentDateTime = sp.AppointmentDateTime.ToString("dd/MM/yyyy HH:mm")
             })
             .AsNoTracking()
@@ -148,6 +150,7 @@ public class SpaProcedureService : ISpaProcedureService
                 Name = sr.SpaProcedure.Name,
                 ImageUrl = sr.SpaProcedure.ImageUrl,
                 Description = sr.SpaProcedure.Description,
+                Capacity = sr.SpaProcedure.Capacity,
                 AppointmentDateTime = sr.SpaProcedure.AppointmentDateTime.ToString("dd/MM/yyyy HH:mm")
             })
             .AsNoTracking()
@@ -159,9 +162,20 @@ public class SpaProcedureService : ISpaProcedureService
     /// </summary>
     public async Task AddToMySpaAppointmentsAsync(string userId, EditSpaProcedureViewModel spaProcedure, DateTime appointmentDateTime)
     {
+        // 1. Проверка за минало време
         if (appointmentDateTime < DateTime.Now)
         {
             throw new InvalidOperationException(PastAppointmentDate);
+        }
+
+        // 2. Проверка за работно време (от 09:00 до 18:00)
+        TimeSpan timeOfDay = appointmentDateTime.TimeOfDay;
+        TimeSpan startTime = new TimeSpan(9, 0, 0); // 09:00
+        TimeSpan endTime = new TimeSpan(18, 0, 0);  // 18:00
+
+        if (timeOfDay < startTime || timeOfDay > endTime)
+        {
+            throw new InvalidOperationException("Appointments can only be booked between 09:00 and 18:00.");
         }
 
         var user = await _userManager.FindByIdAsync(userId);
@@ -180,10 +194,10 @@ public class SpaProcedureService : ISpaProcedureService
             throw new InvalidOperationException(SpaProcedureNotFound);
         }
 
-        // Проверка за КАПАЦИТЕТ
+        // 3. Проверка за КАПАЦИТЕТ
         if (procedureEntity.SpaRegistrations.Count >= procedureEntity.Capacity)
         {
-            throw new InvalidOperationException(SpaProcedureFull);
+            throw new InvalidOperationException("This spa procedure is fully booked.");
         }
 
         var existingRegistration = await _context.SpaRegistrations
@@ -203,8 +217,9 @@ public class SpaProcedureService : ISpaProcedureService
 
         await _context.SpaRegistrations.AddAsync(spaRegistration);
 
-        // Както в оригиналния ти проект, обновяваме датата на самата процедура
+        // Обновяваме датата на самата процедура
         procedureEntity.AppointmentDateTime = appointmentDateTime;
+        procedureEntity.ModifiedOn_22180022 = DateTime.UtcNow;
 
         await _context.SaveChangesAsync();
     }
@@ -237,7 +252,8 @@ public class SpaProcedureService : ISpaProcedureService
             ImageUrl = string.Empty,
             Description = string.Empty,
             Duration = 0,
-            Price = 0.0m
+            Price = 0.0m,
+            Capacity = 1
         };
 
         return await Task.FromResult(model);

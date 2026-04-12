@@ -16,7 +16,7 @@ public class SpaProcedureController : BaseController
     }
 
     [AllowAnonymous]
-    public async Task<IActionResult> Index(string? searchQuery = null, int pageNumber = 1, int pageSize = 4)
+    public async Task<IActionResult> Index(string? searchQuery = null, int pageNumber = 1, int pageSize = 6)
     {
         var model = await _spaService.GetAllSpaProceduresPaginationAsync(searchQuery, pageNumber, pageSize);
 
@@ -72,6 +72,7 @@ public class SpaProcedureController : BaseController
         return RedirectToAction(nameof(MySpaAppointments));
     }
 
+    [HttpPost]
     public async Task<IActionResult> RemoveFromMySpaAppointment(int id)
     {
         var model = await _spaService.GetSpaProceduresByIdAsync(id);
