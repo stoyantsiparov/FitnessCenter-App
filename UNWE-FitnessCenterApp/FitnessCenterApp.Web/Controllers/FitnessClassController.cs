@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static FitnessCenterApp.Common.ErrorMessages.FitnessClass;
 using static FitnessCenterApp.Common.SuccessfulValidationMessages.FitnessClass;
+using static FitnessCenterApp.Common.ApplicationsConstants;
 
 namespace FitnessCenterApp.Web.Controllers;
 
@@ -16,7 +17,7 @@ public class FitnessClassController : BaseController
     }
 
     [AllowAnonymous]
-    public async Task<IActionResult> Index(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, int pageNumber = 1, int pageSize = 6)
+    public async Task<IActionResult> Index(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
     {
         // Ensure page number and page size are valid
         var model = await _fitnessClassService.GetAllClassesPaginationAsync(searchQuery, minDuration, maxDuration, pageNumber, pageSize);

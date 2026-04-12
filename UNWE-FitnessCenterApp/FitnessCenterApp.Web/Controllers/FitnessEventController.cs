@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static FitnessCenterApp.Common.ErrorMessages.FitnessEvent;
 using static FitnessCenterApp.Common.SuccessfulValidationMessages.FitnessEvent;
+using static FitnessCenterApp.Common.ApplicationsConstants;
 
 namespace FitnessCenterApp.Web.Controllers;
 
@@ -17,7 +18,7 @@ public class FitnessEventController : BaseController
 
     [AllowAnonymous]
     // УЕДНАКВЕНО: Добавен е pageSize = 6, за да съвпада с FitnessClassController
-    public async Task<IActionResult> Index(string? searchQuery = null, int pageNumber = 1, int pageSize = 6)
+    public async Task<IActionResult> Index(string? searchQuery = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
     {
         // УЕДНАКВЕНО: Подаваме и pageSize на сървиса
         var model = await _fitnessEventService.GetAllFitnessEventsAsync(searchQuery, pageNumber, pageSize);

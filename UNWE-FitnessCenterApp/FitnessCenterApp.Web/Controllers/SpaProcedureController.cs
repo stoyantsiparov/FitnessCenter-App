@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static FitnessCenterApp.Common.ErrorMessages.SpaProcedure;
 using static FitnessCenterApp.Common.SuccessfulValidationMessages.SpaProcedure;
+using static FitnessCenterApp.Common.ApplicationsConstants;
 
 namespace FitnessCenterApp.Web.Controllers;
 
@@ -16,7 +17,7 @@ public class SpaProcedureController : BaseController
     }
 
     [AllowAnonymous]
-    public async Task<IActionResult> Index(string? searchQuery = null, int pageNumber = 1, int pageSize = 6)
+    public async Task<IActionResult> Index(string? searchQuery = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
     {
         var model = await _spaService.GetAllSpaProceduresPaginationAsync(searchQuery, pageNumber, pageSize);
 
