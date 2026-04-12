@@ -25,4 +25,8 @@
     <ProjectReference Include="..\FitnessCenterApp.Web.ViewModels\FitnessCenterApp.Web.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\SpaProcedure\" />
+  </ItemGroup>
+
 </Project>
