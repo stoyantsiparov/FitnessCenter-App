@@ -37,9 +37,15 @@
 						<h5 class="card-title text-center text-primary">@procedure.Name</h5>
 						<hr class="mt-2 mb-3" />
 
-						<p class="card-text flex-grow-1">@procedure.Description</p>
+						<p class="card-text flex-grow-1 text-center">
+							@procedure.Description
+						</p>
 
-						<div class="mt-auto d-flex flex-column gap-2 mt-3">
+						<div class="alert text-center py-2 mb-3" style="background-color: #EDE8F5; border-color: #ADBBDA; font-size: 0.9rem;">
+							<strong><i class="bi bi-people"></i> Capacity:</strong> @procedure.Capacity spots
+						</div>
+
+						<div class="mt-auto d-flex flex-column gap-2">
 							<a asp-controller="SpaProcedure" asp-action="Details" asp-route-id="@procedure.Id" class="btn btn-primary w-100">Book Procedure</a>
 						</div>
 					</div>

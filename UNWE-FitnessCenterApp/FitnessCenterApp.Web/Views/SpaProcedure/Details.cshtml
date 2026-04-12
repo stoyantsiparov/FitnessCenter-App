@@ -19,23 +19,26 @@
 
 			<div class="col-md-7">
 				<div class="card-body d-flex flex-column h-100 p-4">
-					<h4 class="card-title text-primary mb-3">Procedure Details</h4>
-					<p class="card-text flex-grow-1"><strong>Description:</strong> @Model.Description</p>
-					<p class="card-text"><strong>Price:</strong> @Model.Price.ToString("C")</p>
-					<p class="card-text mb-4"><strong>Duration:</strong> @Model.Duration minutes</p>
+					<h4 class="card-title text-primary mb-3">Procedure Information</h4>
+                    
+					<p class="card-text flex-grow-1"><strong>Description:</strong><br /> @Model.Description</p>
+                    
+					<div class="alert py-2 mb-4" style="background-color: #EDE8F5; border-color: #ADBBDA;">
+						<p class="mb-1"><strong><i class="bi bi-tag"></i> Price:</strong> @Model.Price.ToString("C")</p>
+						<p class="mb-1"><strong><i class="bi bi-clock"></i> Duration:</strong> @Model.Duration minutes</p>
+						<p class="mb-0"><strong><i class="bi bi-people"></i> Capacity:</strong> @Model.Capacity spots total</p>
+					</div>
 
 					<div class="mt-auto">
-						<form method="post" asp-action="AddToMySpaAppointments" asp-route-id="@Model.Id" class="bg-light p-3 rounded" style="border: 1px solid #ADBBDA;">
+						<form method="post" asp-action="AddToMySpaAppointments" asp-route-id="@Model.Id" class="bg-light p-3 rounded mb-3" style="border: 1px solid #ADBBDA;">
 							<div class="form-group mb-3">
 								<label for="appointmentDateTime" class="form-label fw-bold">Select Appointment Date and Time:</label>
 								<input type="datetime-local" name="appointmentDateTime" id="appointmentDateTime" class="form-control border-primary" required />
 							</div>
                             
-							<div class="d-flex gap-2">
-								<button type="submit" class="btn btn-primary w-50">Book Now</button>
-								<a asp-controller="SpaProcedure" asp-action="Index" class="btn btn-outline-secondary w-50">Back to List</a>
-							</div>
+							<button type="submit" class="btn btn-primary w-100 fw-bold">Book Now</button>
 						</form>
+						<a asp-controller="SpaProcedure" asp-action="Index" class="btn btn-outline-secondary w-100">Back to List</a>
 					</div>
 				</div>
 			</div>
@@ -49,10 +52,10 @@
 	<script>
 		// Get current date and time
 		var today = new Date();
-        
+
 		// Remove timezone offset to format correctly in local time
 		today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
-        
+
 		// Set the min attribute for the input to today's date
 		var minDate = today.toISOString().slice(0, 16);
 		document.getElementById("appointmentDateTime").setAttribute("min", minDate);
@@ -61,8 +64,20 @@
 		var maxDateObj = new Date();
 		maxDateObj.setDate(maxDateObj.getDate() + 7);
 		maxDateObj.setMinutes(maxDateObj.getMinutes() - maxDateObj.getTimezoneOffset());
-        
+
 		var maxDate = maxDateObj.toISOString().slice(0, 16);
 		document.getElementById("appointmentDateTime").setAttribute("max", maxDate);
+
+		document.getElementById("appointmentDateTime").closest("form").addEventListener("submit", function (e) {
+			if (document.getElementById("appointmentDateTime").value) {
+				var selectedDate = new Date(document.getElementById("appointmentDateTime").value);
+				var hours = selectedDate.getHours();
+				var minutes = selectedDate.getMinutes();
+				if (hours < 9 || hours > 18 || (hours === 18 && minutes > 0)) {
+					e.preventDefault();
+					alert("Appointments can only be booked between 09:00 and 18:00. Please select a valid time.");
+				}
+			}
+		});
 	</script>
 }
