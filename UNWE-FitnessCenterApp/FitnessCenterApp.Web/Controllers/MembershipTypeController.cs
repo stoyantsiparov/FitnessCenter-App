@@ -45,6 +45,7 @@ public class MembershipTypeController : BaseController
         return View(model);
     }
 
+    [HttpPost]
     public async Task<IActionResult> AddMyMembership(int id)
     {
         var model = await _membershipTypeService.GetMembershipTypeByIdAsync(id);
@@ -71,6 +72,7 @@ public class MembershipTypeController : BaseController
         return RedirectToAction(nameof(MyMembershipType));
     }
 
+    [HttpPost]
     public async Task<IActionResult> RemoveMyMembership(int id)
     {
         var model = await _membershipTypeService.GetMembershipTypeByIdAsync(id);
