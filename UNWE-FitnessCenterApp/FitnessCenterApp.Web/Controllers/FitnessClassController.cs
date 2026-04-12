@@ -16,10 +16,10 @@ public class FitnessClassController : BaseController
     }
 
     [AllowAnonymous]
-    public async Task<IActionResult> Index(string? searchQuery = null, int pageNumber = 1, int pageSize = 6)
+    public async Task<IActionResult> Index(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, int pageNumber = 1, int pageSize = 6)
     {
         // Ensure page number and page size are valid
-        var model = await _fitnessClassService.GetAllClassesPaginationAsync(searchQuery, pageNumber, pageSize);
+        var model = await _fitnessClassService.GetAllClassesPaginationAsync(searchQuery, minDuration, maxDuration, pageNumber, pageSize);
 
         return View(model);
     }

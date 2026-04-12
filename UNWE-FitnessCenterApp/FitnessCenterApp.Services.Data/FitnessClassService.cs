@@ -40,7 +40,8 @@ public class FitnessClassService : IFitnessClassService
                 Name = c.Name,
                 ImageUrl = c.ImageUrl,
                 Schedule = c.ScheduleDateTime.ToString("dd/MM/yyyy HH:mm"),
-                Duration = c.Duration
+                Duration = c.Duration,
+                Capacity = c.Capacity
             })
             .AsNoTracking()
             .ToListAsync();
@@ -49,11 +50,13 @@ public class FitnessClassService : IFitnessClassService
     /// <summary>
     /// Get all fitness classes with pagination
     /// </summary>
-    public async Task<PaginatedFitnessClassesViewModel> GetAllClassesPaginationAsync(string? searchQuery, int pageNumber, int pageSize)
+    public async Task<PaginatedFitnessClassesViewModel> GetAllClassesPaginationAsync(string? searchQuery, int? minDuration, int? maxDuration, int pageNumber, int pageSize)
     {
         var query = _context.FitnessClasses.AsQueryable();
 
         if (!string.IsNullOrEmpty(searchQuery)) query = query.Where(c => c.Name.Contains(searchQuery));
+        if (minDuration.HasValue) query = query.Where(c => c.Duration >= minDuration.Value);
+        if (maxDuration.HasValue) query = query.Where(c => c.Duration <= maxDuration.Value);
 
         int totalClasses = await query.CountAsync();
         int totalPages = (int)Math.Ceiling(totalClasses / (double)pageSize);
@@ -67,7 +70,8 @@ public class FitnessClassService : IFitnessClassService
                 Name = c.Name,
                 ImageUrl = c.ImageUrl,
                 Schedule = c.ScheduleDateTime.ToString("dd/MM/yyyy HH:mm"),
-                Duration = c.Duration
+                Duration = c.Duration,
+                Capacity = c.Capacity
             })
             .AsNoTracking()
             .ToListAsync();
@@ -78,7 +82,9 @@ public class FitnessClassService : IFitnessClassService
             PageNumber = pageNumber,
             PageSize = pageSize,
             TotalPages = totalPages,
-            SearchQuery = searchQuery
+            SearchQuery = searchQuery,
+            MinDuration = minDuration,
+            MaxDuration = maxDuration
         };
     }
 
@@ -121,7 +127,14 @@ public class FitnessClassService : IFitnessClassService
                 Schedule = c.ScheduleDateTime.ToString("dd/MM/yyyy HH:mm"),
                 Duration = c.Duration,
                 Capacity = c.Capacity,
-                InstructorFullName = c.Instructor.FirstName + " " + c.Instructor.LastName
+                Instructor = new InstructorInfoViewModel
+                {
+                    FirstName = c.Instructor.FirstName,
+                    LastName = c.Instructor.LastName,
+                    Specialization = c.Instructor.Specialization,
+                    Bio = c.Instructor.Bio,
+                    ImageUrl = c.Instructor.ImageUrl
+                }
             })
             .FirstOrDefaultAsync();
     }
@@ -139,7 +152,8 @@ public class FitnessClassService : IFitnessClassService
                 Name = cr.FitnessClass.Name,
                 ImageUrl = cr.FitnessClass.ImageUrl,
                 Schedule = cr.FitnessClass.ScheduleDateTime.ToString("dd/MM/yyyy HH:mm"),
-                Duration = cr.FitnessClass.Duration
+                Duration = cr.FitnessClass.Duration,
+                Capacity = cr.FitnessClass.Capacity
             })
             .AsNoTracking()
             .ToListAsync();

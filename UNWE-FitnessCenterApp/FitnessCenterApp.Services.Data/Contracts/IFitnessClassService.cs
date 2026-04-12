@@ -5,7 +5,7 @@ namespace FitnessCenterApp.Services.Data.Contracts;
 public interface IFitnessClassService
 {
     Task<IEnumerable<AllFitnessClassesViewModel>> GetAllClassesAsync(string? searchQuery = null, int? minDuration = null, int? maxDuration = null);
-    Task<PaginatedFitnessClassesViewModel> GetAllClassesPaginationAsync(string? searchQuery = null, int pageNumber = 1, int pageSize = 6);
+    Task<PaginatedFitnessClassesViewModel> GetAllClassesPaginationAsync(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, int pageNumber = 1, int pageSize = 6);
     Task<EditFitnessClassViewModel?> GetClassByIdAsync(int id);
     Task<FitnessClassDetailsViewModel?> GetClassDetailsAsync(int id);
     Task<IEnumerable<AllFitnessClassesViewModel>> GetMyClassesAsync(string userId);
