@@ -1,0 +1,27 @@
+﻿@model FitnessCenterApp.Web.ViewModels.Instructor.InstructorDetailsViewModel
+
+<div class="container mt-5 mb-5">
+	<h2 class="text-center">Instructor Profile</h2>
+	<hr class="mb-4" />
+
+	<div class="card shadow-sm mx-auto" style="max-width: 900px; border-color: #8697C4;">
+		<div class="row g-0">
+			<div class="col-md-5 d-flex align-items-center justify-content-center p-4" style="background-color: #EDE8F5;">
+				<img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "/img/no-image.jpg" : Model.ImageUrl)"
+					 class="img-fluid rounded-circle shadow" style="width: 250px; height: 250px; object-fit: cover; border: 5px solid white;" />
+			</div>
+			<div class="col-md-7">
+				<div class="card-body d-flex flex-column h-100 p-4">
+					<h3 class="text-primary fw-bold">@Model.FirstName @Model.LastName</h3>
+					<div class="alert py-2 mb-3" style="background-color: #EDE8F5; border-color: #ADBBDA;">
+						<i class="bi bi-star-fill text-warning"></i> <strong>Specialization:</strong> @Model.Specialization
+					</div>
+					<p class="card-text flex-grow-1"><strong>Bio:</strong><br /> @Model.Bio</p>
+					<div class="mt-auto">
+						<a asp-action="Index" class="btn btn-outline-secondary w-100">Back to Team</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
