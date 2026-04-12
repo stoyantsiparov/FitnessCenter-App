@@ -30,6 +30,32 @@ public class ApplicationDbContext : IdentityDbContext
         // Set the default schema for all tables to "22180022"
         builder.HasDefaultSchema("22180022");
 
+        // Configure triggers for the main tables
+        builder.Entity<SpaProcedure>()
+            .ToTable(tb => tb.HasTrigger("TR_SpaProcedures_Log"));
+
+        builder.Entity<FitnessClass>()
+            .ToTable(tb => tb.HasTrigger("TR_FitnessClasses_Log"));
+
+        builder.Entity<FitnessEvent>()
+            .ToTable(tb => tb.HasTrigger("TR_FitnessEvents_Log"));
+
+        builder.Entity<MembershipType>()
+            .ToTable(tb => tb.HasTrigger("TR_MembershipTypes_Log"));
+
+        // Configure triggers for the registration tables
+        builder.Entity<SpaRegistration>()
+            .ToTable(tb => tb.HasTrigger("TR_SpaRegistrations_Log"));
+
+        builder.Entity<FitnessClassRegistration>()
+            .ToTable(tb => tb.HasTrigger("TR_FitnessClassRegistrations_Log"));
+
+        builder.Entity<FitnessEventRegistration>()
+            .ToTable(tb => tb.HasTrigger("TR_FitnessEventRegistrations_Log"));
+
+        builder.Entity<MembershipRegistration>()
+            .ToTable(tb => tb.HasTrigger("TR_MembershipRegistrations_Log"));
+
         // Precision settings for prices
         builder.Entity<MembershipType>()
             .Property(mt => mt.Price)
