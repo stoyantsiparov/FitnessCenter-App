@@ -1,0 +1,51 @@
+﻿@model IEnumerable<FitnessCenterApp.Web.ViewModels.MembershipType.AllMembershipTypeViewModel>
+
+@{
+	ViewData["Title"] = "My Active Membership";
+}
+
+<h2 class="text-center mt-4">@ViewData["Title"]</h2>
+<hr class="mb-5" />
+
+@if (Model != null && Model.Any())
+{
+	foreach (var membership in Model)
+	{
+		<div class="card mx-auto shadow" style="max-width: 400px; border-color: #28a745; border-width: 2px;">
+			<div class="card-header bg-success text-white text-center fw-bold">
+				<i class="bi bi-star-fill text-warning"></i> ACTIVE SUBSCRIPTION <i class="bi bi-star-fill text-warning"></i>
+			</div>
+            
+			@if (!string.IsNullOrEmpty(membership.ImageUrl))
+			{
+				<img class="card-img-top" src="@membership.ImageUrl" alt="@membership.Name" style="max-height: 300px; object-fit: cover;">
+			}
+			else
+			{
+				<img class="card-img-top" src="~/img/no-image-available-02.jpg" alt="No Image Available" style="max-height: 300px; object-fit: cover;">
+				}
+
+				<div class="card-body text-center">
+					<h3 class="card-title text-primary">@membership.Name</h3>
+					<hr />
+					<p class="card-text fs-5"><strong>Duration:</strong> @membership.Duration days</p>
+					<p class="card-text fs-5"><strong>Price Paid:</strong> @membership.Price.ToString("C")</p>
+				</div>
+            
+				<div class="card-footer bg-white border-top-0 pb-3 px-4">
+					<form method="post" asp-action="RemoveMyMembership" asp-route-id="@membership.Id" onsubmit="return confirm('Are you sure you want to cancel your membership? You will lose access immediately.');">
+						<button type="submit" class="btn btn-outline-danger w-100 fw-bold">Cancel Membership</button>
+					</form>
+				</div>
+			</div>
+		}
+	}
+else
+	{
+		<div class="text-center mt-5">
+			<i class="bi bi-card-heading text-muted" style="font-size: 4rem;"></i>
+			<h4 class="text-muted mt-3">You currently have no active membership.</h4>
+			<p class="mb-4">Subscribe to a plan to unlock classes, spa procedures, and full club access!</p>
+			<a asp-action="Index" class="btn btn-primary btn-lg px-5">View Membership Plans</a>
+		</div>
+	}
