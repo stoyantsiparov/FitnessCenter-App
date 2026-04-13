@@ -4,7 +4,8 @@ namespace FitnessCenterApp.Services.Data.Contracts;
 
 public interface IInstructorService
 {
-    Task<IEnumerable<AllInstructorsViewModel>> GetAllInstructorsAsync(string? searchQuery = null);
+    Task<PaginatedInstructorsViewModel> GetAllInstructorsPaginationAsync(string? searchQuery = null, int pageNumber = 1, int pageSize = 3);
+    Task<IEnumerable<AllInstructorsViewModel>> GetAllInstructorsAsync();
     Task<EditInstructorViewModel?> GetInstructorByIdAsync(int id);
     Task<InstructorDetailsViewModel?> GetInstructorDetailsAsync(int id);
     Task<AddInstructorViewModel> GetInstructorForAddAsync();

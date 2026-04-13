@@ -22,9 +22,9 @@ public class InstructorService : IInstructorService
     }
 
     /// <summary>
-    /// Get all instructors with optional search query.
+    /// Get all instructors with pagination and search. (Used by Public UI)
     /// </summary>
-    public async Task<IEnumerable<AllInstructorsViewModel>> GetAllInstructorsAsync(string? searchQuery = null)
+    public async Task<PaginatedInstructorsViewModel> GetAllInstructorsPaginationAsync(string? searchQuery = null, int pageNumber = 1, int pageSize = 3)
     {
         var query = _context.Instructors.AsQueryable();
 
@@ -36,7 +36,39 @@ public class InstructorService : IInstructorService
                 i.Specialization.Contains(searchQuery));
         }
 
-        return await query
+        var totalInstructors = await query.CountAsync();
+        var totalPages = (int)Math.Ceiling(totalInstructors / (double)pageSize);
+
+        var instructors = await query
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .Select(i => new AllInstructorsViewModel
+            {
+                Id = i.Id,
+                FirstName = i.FirstName,
+                LastName = i.LastName,
+                ImageUrl = i.ImageUrl,
+                Specialization = i.Specialization
+            })
+            .AsNoTracking()
+            .ToListAsync();
+
+        return new PaginatedInstructorsViewModel
+        {
+            Instructors = instructors,
+            PageNumber = pageNumber,
+            PageSize = pageSize,
+            TotalPages = totalPages,
+            SearchQuery = searchQuery
+        };
+    }
+
+    /// <summary>
+    /// Get all instructors without pagination. (Used by Admin Area)
+    /// </summary>
+    public async Task<IEnumerable<AllInstructorsViewModel>> GetAllInstructorsAsync()
+    {
+        return await _context.Instructors
             .Select(i => new AllInstructorsViewModel
             {
                 Id = i.Id,

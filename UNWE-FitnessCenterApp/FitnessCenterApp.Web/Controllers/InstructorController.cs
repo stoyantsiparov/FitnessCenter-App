@@ -1,6 +1,7 @@
 ﻿using FitnessCenterApp.Services.Data.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static FitnessCenterApp.Common.ApplicationsConstants;
 
 namespace FitnessCenterApp.Web.Controllers;
 
@@ -14,9 +15,9 @@ public class InstructorController : BaseController
     }
 
     [AllowAnonymous]
-    public async Task<IActionResult> Index(string? searchQuery = null)
+    public async Task<IActionResult> Index(string? searchQuery = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
     {
-        var model = await _instructorService.GetAllInstructorsAsync(searchQuery);
+        var model = await _instructorService.GetAllInstructorsPaginationAsync(searchQuery, pageNumber, pageSize);
 
         return View(model);
     }
