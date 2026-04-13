@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FitnessCenterApp.Web.ViewModels.FitnessClass.AllFitnessClassesViewModel>
 
 @{
-	ViewData["Title"] = "My Classes";
+	ViewData["Title"] = "My Registered Classes";
 }
 
 <h2 class="text-center mt-4">@ViewData["Title"]</h2>
@@ -34,15 +34,17 @@ else
 							<h5 class="card-title text-center text-primary">@fitnessClass.Name</h5>
 							<hr class="mt-2 mb-3" />
 
-							<p class="card-text flex-grow-1"><strong>Schedule:</strong> @fitnessClass.Schedule</p>
-							<p class="text-muted text-center mb-3">
-								<i class="bi bi-clock"></i> Duration: @fitnessClass.Duration min<br />
-								<i class="bi bi-people"></i> Capacity: @fitnessClass.Capacity spots
+							<p class="card-text flex-grow-1 text-center">
+								<strong><i class="bi bi-calendar-week"></i> Schedule:</strong><br /> @fitnessClass.Schedule
 							</p>
+
+							<div class="alert text-center py-2 mb-3" style="background-color: #EDE8F5; border-color: #ADBBDA; font-size: 0.9rem;">
+								<strong>Duration:</strong> @fitnessClass.Duration min
+							</div>
 
 							<div class="mt-auto">
 								<form method="post" asp-controller="FitnessClass" asp-action="RemoveFromMyClasses" asp-route-id="@fitnessClass.Id">
-									<button type="submit" class="btn btn-danger w-100">Remove</button>
+									<button type="submit" class="btn btn-danger w-100">Leave Class</button>
 								</form>
 							</div>
 						</div>
