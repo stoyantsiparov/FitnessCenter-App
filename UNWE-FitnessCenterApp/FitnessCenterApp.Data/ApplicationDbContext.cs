@@ -43,6 +43,9 @@ public class ApplicationDbContext : IdentityDbContext
         builder.Entity<MembershipType>()
             .ToTable(tb => tb.HasTrigger("TR_MembershipTypes_Log"));
 
+        builder.Entity<Instructor>()
+            .ToTable(tb => tb.HasTrigger("TR_Instructors_Log"));
+
         // Configure triggers for the registration tables
         builder.Entity<SpaRegistration>()
             .ToTable(tb => tb.HasTrigger("TR_SpaRegistrations_Log"));
