@@ -64,7 +64,7 @@ public static class EntityValidationConstants
         public const int DescriptionMinLength = 10;
         public const int DurationMinValue = 30;
         public const int DurationMaxValue = 180;
-        public const string PriceMinValue = "99.00";
+        public const string PriceMinValue = "40.00";
         public const string PriceMaxValue = "399.00";
         public const int CapacityMaxValue = 5;
         public const int CapacityMinValue = 1;
