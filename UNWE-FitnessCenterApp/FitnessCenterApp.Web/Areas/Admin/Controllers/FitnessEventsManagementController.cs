@@ -22,7 +22,7 @@ public class FitnessEventsManagementController : BaseController
 
     public async Task<IActionResult> Index()
     {
-        var fitnessEvents = await _fitnessEventService.GetAllFitnessEventsAsync(null, 1, 100);
+        var fitnessEvents = await _fitnessEventService.GetAllFitnessEventsAsync(null, null, 1, 100);
         return View(fitnessEvents.FitnessEvents);
     }
 
