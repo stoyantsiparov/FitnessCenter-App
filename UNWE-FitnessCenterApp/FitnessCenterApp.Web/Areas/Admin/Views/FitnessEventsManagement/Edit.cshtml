@@ -1,0 +1,84 @@
+﻿@model FitnessCenterApp.Web.ViewModels.FitnessEvent.EditFitnessEventViewModel
+
+@{
+    ViewData["Title"] = "Edit Fitness Event";
+}
+
+<div class="container mt-5 mb-5">
+    <h1 class="text-primary mb-4">Edit Fitness Event</h1>
+
+    <form asp-action="Edit" method="post" id="editFitnessEventForm">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group mb-3">
+            <label asp-for="Title" class="fw-bold"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="ImageUrl" class="fw-bold">Image URL</label>
+            <input asp-for="ImageUrl" class="form-control" />
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Description" class="fw-bold"></label>
+            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Location" class="fw-bold"></label>
+            <input asp-for="Location" class="form-control" />
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Capacity" class="fw-bold"></label>
+            <input asp-for="Capacity" class="form-control" type="number" />
+            <span asp-validation-for="Capacity" class="text-danger"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 form-group mb-3">
+                <label asp-for="StartDate" class="fw-bold">Start Date and Time</label>
+                <input asp-for="StartDate" class="form-control" type="datetime-local" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 form-group mb-3">
+                <label asp-for="EndDate" class="fw-bold">End Date and Time</label>
+                <input asp-for="EndDate" class="form-control" type="datetime-local" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group d-flex justify-content-start mt-4">
+            <button type="submit" class="btn btn-primary me-2" style="width: 200px;">Save Changes</button>
+            <a asp-action="Index" class="btn btn-secondary" style="width: 200px;">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.getElementById("editFitnessEventForm").onsubmit = function (event) {
+            var startDateInput = document.querySelector("input[name='StartDate']");
+            var endDateInput = document.querySelector("input[name='EndDate']");
+
+            if (startDateInput && endDateInput && startDateInput.value && endDateInput.value) {
+                var startDate = new Date(startDateInput.value);
+                var endDate = new Date(endDateInput.value);
+
+                if (endDate <= startDate) {
+                    event.preventDefault();
+                    alert("End Date must be later than Start Date.");
+                }
+            }
+        };
+    </script>
+}
