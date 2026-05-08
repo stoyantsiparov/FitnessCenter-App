@@ -33,6 +33,15 @@ public class FitnessClassService : IFitnessClassService
         if (minDuration.HasValue) query = query.Where(c => c.Duration >= minDuration.Value);
         if (maxDuration.HasValue) query = query.Where(c => c.Duration <= maxDuration.Value);
 
+        query = sortOrder switch
+        {
+            "name_asc" => query.OrderBy(c => c.Name),
+            "name_desc" => query.OrderByDescending(c => c.Name),
+            "duration_asc" => query.OrderBy(c => c.Duration),
+            "duration_desc" => query.OrderByDescending(c => c.Duration),
+            _ => query.OrderByDescending(c => c.Id)
+        };
+
         return await query
             .Select(c => new AllFitnessClassesViewModel
             {
@@ -55,6 +64,15 @@ public class FitnessClassService : IFitnessClassService
         if (!string.IsNullOrEmpty(searchQuery)) query = query.Where(c => c.Name.Contains(searchQuery));
         if (minDuration.HasValue) query = query.Where(c => c.Duration >= minDuration.Value);
         if (maxDuration.HasValue) query = query.Where(c => c.Duration <= maxDuration.Value);
+
+        query = sortOrder switch
+        {
+            "name_asc" => query.OrderBy(c => c.Name),
+            "name_desc" => query.OrderByDescending(c => c.Name),
+            "duration_asc" => query.OrderBy(c => c.Duration),
+            "duration_desc" => query.OrderByDescending(c => c.Duration),
+            _ => query.OrderByDescending(c => c.Id)
+        };
 
         int totalClasses = await query.CountAsync();
         int totalPages = (int)Math.Ceiling(totalClasses / (double)pageSize);

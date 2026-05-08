@@ -33,6 +33,15 @@ public class FitnessEventService : IFitnessEventService
             query = query.Where(e => e.Title.Contains(searchTerm) || e.Location.Contains(searchTerm));
         }
 
+        query = sortOrder switch
+        {
+            "date_asc" => query.OrderBy(e => e.StartDate),
+            "date_desc" => query.OrderByDescending(e => e.StartDate),
+            "title_asc" => query.OrderBy(e => e.Title),
+            "title_desc" => query.OrderByDescending(e => e.Title),
+            _ => query.OrderByDescending(e => e.Id)
+        };
+
         var totalEvents = await query.CountAsync();
         var totalPages = (int)Math.Ceiling(totalEvents / (double)pageSize);
 

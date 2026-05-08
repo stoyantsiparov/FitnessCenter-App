@@ -35,6 +35,13 @@ public class InstructorService : IInstructorService
                 i.Specialization.Contains(searchQuery));
         }
 
+        query = sortOrder switch
+        {
+            "name_asc" => query.OrderBy(i => i.FirstName).ThenBy(i => i.LastName),
+            "name_desc" => query.OrderByDescending(i => i.FirstName).ThenByDescending(i => i.LastName),
+            _ => query.OrderByDescending(i => i.Id)
+        };
+
         var totalInstructors = await query.CountAsync();
         var totalPages = (int)Math.Ceiling(totalInstructors / (double)pageSize);
 

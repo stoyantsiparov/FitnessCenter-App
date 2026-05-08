@@ -33,6 +33,13 @@ public class SpaProcedureService : ISpaProcedureService
             query = query.Where(sp => sp.Name.Contains(searchQuery) || sp.Description.Contains(searchQuery));
         }
 
+        query = sortOrder switch
+        {
+            "name_asc" => query.OrderBy(sp => sp.Name),
+            "name_desc" => query.OrderByDescending(sp => sp.Name),
+            _ => query.OrderByDescending(sp => sp.Id)
+        };
+
         var totalProcedures = await query.CountAsync();
         var totalPages = (int)Math.Ceiling(totalProcedures / (double)pageSize);
 
@@ -80,6 +87,13 @@ public class SpaProcedureService : ISpaProcedureService
         {
             query = query.Where(sp => sp.Duration <= maxDuration.Value);
         }
+
+        query = sortOrder switch
+        {
+            "name_asc" => query.OrderBy(sp => sp.Name),
+            "name_desc" => query.OrderByDescending(sp => sp.Name),
+            _ => query.OrderByDescending(sp => sp.Id)
+        };
 
         return await query
             .Select(sp => new AllSpaProceduresViewModel
