@@ -42,11 +42,19 @@ public class MembershipTypesManagementController : BaseController
             return View(model);
         }
 
-        var userId = GetUserId();
-        await _membershipTypeService.AddMembershipTypeAsync(model, userId);
+        try
+        {
+            var userId = GetUserId();
+            await _membershipTypeService.AddMembershipTypeAsync(model, userId);
 
-        TempData["SuccessMessage"] = MembershipTypeAddedSuccessfully;
-        return RedirectToAction(nameof(Index));
+            TempData["SuccessMessage"] = MembershipTypeAddedSuccessfully;
+            return RedirectToAction(nameof(Index));
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+            return View(model);
+        }
     }
 
     [HttpGet]
@@ -72,11 +80,19 @@ public class MembershipTypesManagementController : BaseController
             return View(model);
         }
 
-        var userId = GetUserId();
-        await _membershipTypeService.EditMembershipTypeAsync(model, userId);
+        try
+        {
+            var userId = GetUserId();
+            await _membershipTypeService.EditMembershipTypeAsync(model, userId);
 
-        TempData["SuccessMessage"] = MembershipTypeUpdatedSuccessfully;
-        return RedirectToAction(nameof(Index));
+            TempData["SuccessMessage"] = MembershipTypeUpdatedSuccessfully;
+            return RedirectToAction(nameof(Index));
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+            return View(model);
+        }
     }
 
     [HttpGet]
@@ -96,10 +112,18 @@ public class MembershipTypesManagementController : BaseController
     [HttpPost]
     public async Task<IActionResult> Delete(DeleteMembershipTypeViewModel model)
     {
-        var userId = GetUserId();
-        await _membershipTypeService.DeleteMembershipTypeAsync(model.Id, userId);
+        try
+        {
+            var userId = GetUserId();
+            await _membershipTypeService.DeleteMembershipTypeAsync(model.Id, userId);
 
-        TempData["SuccessMessage"] = MembershipTypeDeletedSuccessfully;
+            TempData["SuccessMessage"] = MembershipTypeDeletedSuccessfully;
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+        }
+
         return RedirectToAction(nameof(Index));
     }
 }

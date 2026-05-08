@@ -42,11 +42,19 @@ public class FitnessEventsManagementController : BaseController
             return View(model);
         }
 
-        var userId = GetUserId();
-        await _fitnessEventService.AddFitnessEventAsync(model, userId);
+        try
+        {
+            var userId = GetUserId();
+            await _fitnessEventService.AddFitnessEventAsync(model, userId);
 
-        TempData["SuccessMessage"] = FitnessEventAddedSuccessfully;
-        return RedirectToAction(nameof(Index));
+            TempData["SuccessMessage"] = FitnessEventAddedSuccessfully;
+            return RedirectToAction(nameof(Index));
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+            return View(model);
+        }
     }
 
     [HttpGet]
@@ -104,10 +112,18 @@ public class FitnessEventsManagementController : BaseController
     [HttpPost]
     public async Task<IActionResult> Delete(DeleteFitnessEventViewModel model)
     {
-        var userId = GetUserId();
-        await _fitnessEventService.DeleteFitnessEventAsync(model.Id, userId);
+        try
+        {
+            var userId = GetUserId();
+            await _fitnessEventService.DeleteFitnessEventAsync(model.Id, userId);
 
-        TempData["SuccessMessage"] = FitnessEventDeletedSuccessfully;
+            TempData["SuccessMessage"] = FitnessEventDeletedSuccessfully;
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+        }
+
         return RedirectToAction(nameof(Index));
     }
 }

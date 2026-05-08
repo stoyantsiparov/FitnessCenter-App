@@ -44,11 +44,21 @@ public class FitnessClassesManagementController : BaseController
             return View(model);
         }
 
-        var userId = GetUserId();
-        await _fitnessClassService.AddClassAsync(model, userId);
+        try
+        {
+            var userId = GetUserId();
+            await _fitnessClassService.AddClassAsync(model, userId);
 
-        TempData["SuccessMessage"] = ClassAddedSuccessfully;
-        return RedirectToAction(nameof(Index));
+            TempData["SuccessMessage"] = ClassAddedSuccessfully;
+            return RedirectToAction(nameof(Index));
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+            var instructors = await _fitnessClassService.GetClassForAddAsync();
+            model.Instructors = instructors.Instructors;
+            return View(model);
+        }
     }
 
     [HttpGet]
@@ -78,11 +88,21 @@ public class FitnessClassesManagementController : BaseController
             return View(model);
         }
 
-        var userId = GetUserId();
-        await _fitnessClassService.EditClassAsync(model, userId);
+        try
+        {
+            var userId = GetUserId();
+            await _fitnessClassService.EditClassAsync(model, userId);
 
-        TempData["SuccessMessage"] = ClassUpdatedSuccessfully;
-        return RedirectToAction(nameof(Index));
+            TempData["SuccessMessage"] = ClassUpdatedSuccessfully;
+            return RedirectToAction(nameof(Index));
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+            var instructors = await _fitnessClassService.GetClassForAddAsync();
+            model.Instructors = instructors.Instructors;
+            return View(model);
+        }
     }
 
     [HttpGet]
@@ -102,10 +122,18 @@ public class FitnessClassesManagementController : BaseController
     [HttpPost]
     public async Task<IActionResult> Delete(DeleteFitnessClassViewModel model)
     {
-        var userId = GetUserId();
-        await _fitnessClassService.DeleteClassAsync(model.Id, userId);
+        try
+        {
+            var userId = GetUserId();
+            await _fitnessClassService.DeleteClassAsync(model.Id, userId);
 
-        TempData["SuccessMessage"] = ClassDeletedSuccessfully;
+            TempData["SuccessMessage"] = ClassDeletedSuccessfully;
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+        }
+
         return RedirectToAction(nameof(Index));
     }
 }

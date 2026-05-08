@@ -51,19 +51,14 @@ public class InstructorsManagementController : BaseController
         try
         {
             var userId = GetUserId();
-            if (string.IsNullOrEmpty(userId))
-            {
-                TempData["ErrorMessage"] = UserIdCannotBeEmpty;
-                return View(model);
-            }
-
             await _instructorService.AddInstructorAsync(model, userId);
+
             TempData["SuccessMessage"] = InstructorAddedSuccessfully;
             return RedirectToAction(nameof(Index));
         }
-        catch (Exception)
+        catch (InvalidOperationException ex)
         {
-            TempData["ErrorMessage"] = InstructorAddError;
+            TempData["ErrorMessage"] = ex.Message;
             return View(model);
         }
     }
@@ -107,12 +102,13 @@ public class InstructorsManagementController : BaseController
         {
             var userId = GetUserId();
             await _instructorService.EditInstructorAsync(model, userId);
+
             TempData["SuccessMessage"] = InstructorUpdatedSuccessfully;
             return RedirectToAction(nameof(Index));
         }
-        catch (Exception)
+        catch (InvalidOperationException ex)
         {
-            TempData["ErrorMessage"] = InstructorEditError;
+            TempData["ErrorMessage"] = ex.Message;
             return View(model);
         }
     }
@@ -150,11 +146,12 @@ public class InstructorsManagementController : BaseController
         {
             var userId = GetUserId();
             await _instructorService.DeleteInstructorAsync(model.Id, userId);
+
             TempData["SuccessMessage"] = InstructorDeletedSuccessfully;
         }
-        catch (Exception)
+        catch (InvalidOperationException ex)
         {
-            TempData["ErrorMessage"] = InstructorDeleteError;
+            TempData["ErrorMessage"] = ex.Message;
         }
 
         return RedirectToAction(nameof(Index));

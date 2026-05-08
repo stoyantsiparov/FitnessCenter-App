@@ -41,11 +41,19 @@ public class SpaProceduresManagementController : BaseController
             return View(model);
         }
 
-        var userId = GetUserId();
-        await _spaService.AddSpaProcedureAsync(model, userId);
+        try
+        {
+            var userId = GetUserId();
+            await _spaService.AddSpaProcedureAsync(model, userId);
 
-        TempData["SuccessMessage"] = SpaProcedureAddedSuccessfully;
-        return RedirectToAction(nameof(Index));
+            TempData["SuccessMessage"] = SpaProcedureAddedSuccessfully;
+            return RedirectToAction(nameof(Index));
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+            return View(model);
+        }
     }
 
     [HttpGet]
@@ -70,11 +78,19 @@ public class SpaProceduresManagementController : BaseController
             return View(model);
         }
 
-        var userId = GetUserId();
-        await _spaService.EditSpaProcedureAsync(model, userId);
+        try
+        {
+            var userId = GetUserId();
+            await _spaService.EditSpaProcedureAsync(model, userId);
 
-        TempData["SuccessMessage"] = SpaProcedureUpdatedSuccessfully;
-        return RedirectToAction(nameof(Index));
+            TempData["SuccessMessage"] = SpaProcedureUpdatedSuccessfully;
+            return RedirectToAction(nameof(Index));
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+            return View(model);
+        }
     }
 
     [HttpGet]
@@ -93,10 +109,18 @@ public class SpaProceduresManagementController : BaseController
     [HttpPost]
     public async Task<IActionResult> Delete(DeleteSpaProcedureViewModel model)
     {
-        var userId = GetUserId();
-        await _spaService.DeleteSpaProcedureAsync(model.Id, userId);
+        try
+        {
+            var userId = GetUserId();
+            await _spaService.DeleteSpaProcedureAsync(model.Id, userId);
 
-        TempData["SuccessMessage"] = SpaProcedureDeletedSuccessfully;
+            TempData["SuccessMessage"] = SpaProcedureDeletedSuccessfully;
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+        }
+
         return RedirectToAction(nameof(Index));
     }
 }
