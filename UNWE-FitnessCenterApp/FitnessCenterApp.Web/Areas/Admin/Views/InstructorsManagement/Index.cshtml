@@ -1,0 +1,67 @@
+﻿@model IEnumerable<FitnessCenterApp.Web.ViewModels.Instructor.AllInstructorsViewModel>
+
+@{
+    ViewData["Title"] = "Manage Instructors";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4 text-primary">@ViewData["Title"]</h2>
+
+    <div class="d-flex justify-content-between mb-3">
+        <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+        <a asp-action="Add" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add New Instructor
+        </a>
+    </div>
+
+    <div class="table-responsive shadow-sm">
+        <table class="table table-bordered table-striped table-hover mb-0">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th style="width: 100px;">Image</th>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th style="width: 250px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="align-middle">
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="4" class="text-center text-muted py-4">No instructors found.</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var instructor in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @if (!string.IsNullOrEmpty(instructor.ImageUrl))
+                                {
+                                    <img src="@instructor.ImageUrl" alt="@instructor.FirstName" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover;" />
+                                }
+                                else
+                                {
+                                    <img src="~/img/no-image-available-02.jpg" alt="No image" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover;" />
+                                }
+                            </td>
+                            <td>@instructor.FirstName @instructor.LastName</td>
+                            <td class="text-center">@instructor.Specialization</td>
+                            <td class="text-center">
+                                <a asp-action="Edit" asp-route-id="@instructor.Id" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@instructor.Id" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
