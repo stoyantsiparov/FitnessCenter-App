@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using static FitnessCenterApp.Common.ApplicationsConstants;
 using static FitnessCenterApp.Common.ErrorMessages.Instructor;
 using static FitnessCenterApp.Common.ErrorMessages.Roles;
+using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
 
 namespace FitnessCenterApp.Services.Data;
 
@@ -95,7 +96,8 @@ public class InstructorService : IInstructorService
                 LastName = i.LastName,
                 ImageUrl = i.ImageUrl,
                 Bio = i.Bio,
-                Specialization = i.Specialization
+                Specialization = i.Specialization,
+                ModifiedOn_22180022 = i.ModifiedOn_22180022
             })
             .FirstOrDefaultAsync();
     }
@@ -181,6 +183,8 @@ public class InstructorService : IInstructorService
             throw new InvalidOperationException(InstructorNotFound);
         }
 
+        _context.Entry(instructor).Property(i => i.ModifiedOn_22180022).OriginalValue = model.ModifiedOn_22180022;
+
         instructor.FirstName = model.FirstName;
         instructor.LastName = model.LastName;
         instructor.ImageUrl = model.ImageUrl;
@@ -188,8 +192,14 @@ public class InstructorService : IInstructorService
         instructor.Specialization = model.Specialization;
         instructor.ModifiedOn_22180022 = DateTime.UtcNow;
 
-        _context.Instructors.Update(instructor);
-        await _context.SaveChangesAsync();
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new InvalidOperationException(ConcurrencyControlMessage);
+        }
     }
 
     /// <summary>

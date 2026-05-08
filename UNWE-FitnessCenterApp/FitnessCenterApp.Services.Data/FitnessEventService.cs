@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using static FitnessCenterApp.Common.ApplicationsConstants;
 using static FitnessCenterApp.Common.ErrorMessages.FitnessEvent;
 using static FitnessCenterApp.Common.ErrorMessages.Roles;
+using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
+using static FitnessCenterApp.Common.EntityValidationConstants.FitnessEvent;
 
 namespace FitnessCenterApp.Services.Data;
 
@@ -45,8 +47,8 @@ public class FitnessEventService : IFitnessEventService
                 Title = e.Title,
                 ImageUrl = e.ImageUrl,
                 Location = e.Location,
-                StartDateTime = e.StartDate.ToString("dd/MM/yyyy HH:mm"),
-                EndDateTime = e.EndDate.ToString("dd/MM/yyyy HH:mm"),
+                StartDateTime = e.StartDate.ToString(DateTimeFormat),
+                EndDateTime = e.EndDate.ToString(DateTimeFormat),
                 Capacity = e.Capacity
             })
             .AsNoTracking()
@@ -78,7 +80,8 @@ public class FitnessEventService : IFitnessEventService
                 ImageUrl = e.ImageUrl,
                 StartDate = e.StartDate.ToString("yyyy-MM-ddTHH:mm"),
                 EndDate = e.EndDate.ToString("yyyy-MM-ddTHH:mm"),
-                Capacity = e.Capacity
+                Capacity = e.Capacity,
+                ModifiedOn_22180022 = e.ModifiedOn_22180022
             })
             .FirstOrDefaultAsync();
     }
@@ -97,8 +100,8 @@ public class FitnessEventService : IFitnessEventService
                 ImageUrl = e.ImageUrl,
                 Location = e.Location,
                 Description = e.Description,
-                StartDateTime = e.StartDate.ToString("dd/MM/yyyy HH:mm"),
-                EndDateTime = e.EndDate.ToString("dd/MM/yyyy HH:mm"),
+                StartDateTime = e.StartDate.ToString(DateTimeFormat),
+                EndDateTime = e.EndDate.ToString(DateTimeFormat),
                 Capacity = e.Capacity
             })
             .FirstOrDefaultAsync();
@@ -117,8 +120,8 @@ public class FitnessEventService : IFitnessEventService
                 Title = r.FitnessEvent.Title,
                 ImageUrl = r.FitnessEvent.ImageUrl,
                 Location = r.FitnessEvent.Location,
-                StartDateTime = r.FitnessEvent.StartDate.ToString("dd/MM/yyyy HH:mm"),
-                EndDateTime = r.FitnessEvent.EndDate.ToString("dd/MM/yyyy HH:mm"),
+                StartDateTime = r.FitnessEvent.StartDate.ToString(DateTimeFormat),
+                EndDateTime = r.FitnessEvent.EndDate.ToString(DateTimeFormat),
                 Capacity = r.FitnessEvent.Capacity
             })
             .AsNoTracking()
@@ -278,6 +281,8 @@ public class FitnessEventService : IFitnessEventService
             throw new InvalidOperationException(FitnessEventDoesNotExist);
         }
 
+        _context.Entry(fitnessEvent).Property(e => e.ModifiedOn_22180022).OriginalValue = model.ModifiedOn_22180022;
+
         var startDate = DateTime.Parse(model.StartDate);
         var endDate = DateTime.Parse(model.EndDate);
 
@@ -300,8 +305,14 @@ public class FitnessEventService : IFitnessEventService
         fitnessEvent.Capacity = model.Capacity;
         fitnessEvent.ModifiedOn_22180022 = DateTime.UtcNow;
 
-        _context.FitnessEvents.Update(fitnessEvent);
-        await _context.SaveChangesAsync();
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new InvalidOperationException(ConcurrencyControlMessage);
+        }
     }
 
     /// <summary>

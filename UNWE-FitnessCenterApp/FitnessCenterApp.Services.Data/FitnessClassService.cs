@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using static FitnessCenterApp.Common.ApplicationsConstants;
 using static FitnessCenterApp.Common.ErrorMessages.FitnessClass;
 using static FitnessCenterApp.Common.ErrorMessages.Roles;
+using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
+using static FitnessCenterApp.Common.EntityValidationConstants.FitnessClass;
 
 namespace FitnessCenterApp.Services.Data;
 
@@ -39,7 +41,7 @@ public class FitnessClassService : IFitnessClassService
                 Id = c.Id,
                 Name = c.Name,
                 ImageUrl = c.ImageUrl,
-                Schedule = c.ScheduleDateTime.ToString("dd/MM/yyyy HH:mm"),
+                Schedule = c.ScheduleDateTime.ToString(ScheduleDateTimeFormat),
                 Duration = c.Duration,
                 Capacity = c.Capacity
             })
@@ -69,7 +71,7 @@ public class FitnessClassService : IFitnessClassService
                 Id = c.Id,
                 Name = c.Name,
                 ImageUrl = c.ImageUrl,
-                Schedule = c.ScheduleDateTime.ToString("dd/MM/yyyy HH:mm"),
+                Schedule = c.ScheduleDateTime.ToString(ScheduleDateTimeFormat),
                 Duration = c.Duration,
                 Capacity = c.Capacity
             })
@@ -105,7 +107,8 @@ public class FitnessClassService : IFitnessClassService
                 Schedule = c.ScheduleDateTime.ToString("yyyy-MM-ddTHH:mm"),
                 Duration = c.Duration,
                 Capacity = c.Capacity,
-                InstructorId = c.InstructorId
+                InstructorId = c.InstructorId,
+                ModifiedOn_22180022 = c.ModifiedOn_22180022
             })
             .FirstOrDefaultAsync();
     }
@@ -124,7 +127,7 @@ public class FitnessClassService : IFitnessClassService
                 Description = c.Description,
                 Price = c.Price,
                 ImageUrl = c.ImageUrl,
-                Schedule = c.ScheduleDateTime.ToString("dd/MM/yyyy HH:mm"),
+                Schedule = c.ScheduleDateTime.ToString(ScheduleDateTimeFormat),
                 Duration = c.Duration,
                 Capacity = c.Capacity,
                 Instructor = new InstructorInfoViewModel
@@ -151,7 +154,7 @@ public class FitnessClassService : IFitnessClassService
                 Id = cr.FitnessClass.Id,
                 Name = cr.FitnessClass.Name,
                 ImageUrl = cr.FitnessClass.ImageUrl,
-                Schedule = cr.FitnessClass.ScheduleDateTime.ToString("dd/MM/yyyy HH:mm"),
+                Schedule = cr.FitnessClass.ScheduleDateTime.ToString(ScheduleDateTimeFormat),
                 Duration = cr.FitnessClass.Duration,
                 Capacity = cr.FitnessClass.Capacity
             })
@@ -164,7 +167,8 @@ public class FitnessClassService : IFitnessClassService
     /// </summary>
     public async Task AddToMyClassesAsync(string userId, EditFitnessClassViewModel? classesViewModel)
     {
-        if (classesViewModel == null) throw new ArgumentNullException(nameof(classesViewModel));
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+        if (classesViewModel == null) throw new ArgumentNullException(nameof(classesViewModel), ClassViewModelCannotBeNull);
 
         var user = await _userManager.FindByIdAsync(userId);
         var isMember = user != null && await _userManager.IsInRoleAsync(user, MemberRole);
@@ -206,7 +210,8 @@ public class FitnessClassService : IFitnessClassService
     /// </summary>
     public async Task RemoveFromMyClassesAsync(string userId, EditFitnessClassViewModel? classesViewModel)
     {
-        if (classesViewModel == null) throw new ArgumentNullException(nameof(classesViewModel));
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+        if (classesViewModel == null) throw new ArgumentNullException(nameof(classesViewModel), ClassViewModelCannotBeNull);
 
         var registration = await _context.FitnessClassRegistrations
             .FirstOrDefaultAsync(cr => cr.MemberId == userId && cr.FitnessClassId == classesViewModel.Id);
@@ -239,6 +244,9 @@ public class FitnessClassService : IFitnessClassService
     /// </summary>
     public async Task AddClassAsync(AddFitnessClassViewModel model, string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+        if (model == null) throw new ArgumentNullException(nameof(model), ClassViewModelCannotBeNull);
+
         var user = await _userManager.FindByIdAsync(userId);
         var isAdmin = user != null && await _userManager.IsInRoleAsync(user, AdminRole);
 
@@ -247,13 +255,31 @@ public class FitnessClassService : IFitnessClassService
             throw new UnauthorizedAccessException(YouAreNotAuthorizedToAdd);
         }
 
+        if (string.IsNullOrWhiteSpace(model.Name) || string.IsNullOrWhiteSpace(model.Schedule))
+        {
+            throw new InvalidOperationException(ClassNameAndScheduleAreRequired);
+        }
+
+        if (!DateTime.TryParse(model.Schedule, out DateTime parsedSchedule))
+        {
+            throw new InvalidOperationException(InvalidScheduleFormat);
+        }
+
+        var classExists = await _context.FitnessClasses
+            .AnyAsync(c => c.Name == model.Name && c.ScheduleDateTime == parsedSchedule);
+
+        if (classExists)
+        {
+            throw new InvalidOperationException(ClassWithTheSameNameAndScheduleAlreadyExists);
+        }
+
         var fitnessClass = new FitnessClass
         {
             Name = model.Name,
             Description = model.Description,
             Price = model.Price,
             ImageUrl = model.ImageUrl,
-            ScheduleDateTime = DateTime.Parse(model.Schedule),
+            ScheduleDateTime = parsedSchedule,
             Duration = model.Duration,
             Capacity = model.Capacity,
             InstructorId = model.InstructorId,
@@ -269,6 +295,9 @@ public class FitnessClassService : IFitnessClassService
     /// </summary>
     public async Task EditClassAsync(EditFitnessClassViewModel model, string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+        if (model == null) throw new ArgumentNullException(nameof(model), ClassViewModelCannotBeNull);
+
         var user = await _userManager.FindByIdAsync(userId);
         var isAdmin = user != null && await _userManager.IsInRoleAsync(user, AdminRole);
 
@@ -277,20 +306,47 @@ public class FitnessClassService : IFitnessClassService
             throw new UnauthorizedAccessException(YouAreNotAuthorizedToEdit);
         }
 
+        if (string.IsNullOrWhiteSpace(model.Name) || string.IsNullOrWhiteSpace(model.Schedule))
+        {
+            throw new InvalidOperationException(ClassNameAndScheduleAreRequired);
+        }
+
+        if (!DateTime.TryParse(model.Schedule, out DateTime parsedSchedule))
+        {
+            throw new InvalidOperationException(InvalidScheduleFormat);
+        }
+
+        var classExists = await _context.FitnessClasses
+            .AnyAsync(c => c.Name == model.Name && c.ScheduleDateTime == parsedSchedule && c.Id != model.Id);
+
+        if (classExists)
+        {
+            throw new InvalidOperationException(ClassWithTheSameNameAndScheduleAlreadyExists);
+        }
+
         var fitnessClass = await _context.FitnessClasses.FindAsync(model.Id);
         if (fitnessClass == null) throw new InvalidOperationException(ClassNotFound);
+
+        _context.Entry(fitnessClass).Property(c => c.ModifiedOn_22180022).OriginalValue = model.ModifiedOn_22180022;
 
         fitnessClass.Name = model.Name;
         fitnessClass.Description = model.Description;
         fitnessClass.Price = model.Price;
         fitnessClass.ImageUrl = model.ImageUrl;
-        fitnessClass.ScheduleDateTime = DateTime.Parse(model.Schedule);
+        fitnessClass.ScheduleDateTime = parsedSchedule;
         fitnessClass.Duration = model.Duration;
         fitnessClass.Capacity = model.Capacity;
         fitnessClass.InstructorId = model.InstructorId;
         fitnessClass.ModifiedOn_22180022 = DateTime.UtcNow;
 
-        await _context.SaveChangesAsync();
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new InvalidOperationException(ConcurrencyControlMessage);
+        }
     }
 
     /// <summary>
@@ -314,6 +370,8 @@ public class FitnessClassService : IFitnessClassService
     /// </summary>
     public async Task DeleteClassAsync(int id, string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var user = await _userManager.FindByIdAsync(userId);
         var isAdmin = user != null && await _userManager.IsInRoleAsync(user, AdminRole);
 

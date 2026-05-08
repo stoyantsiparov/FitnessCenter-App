@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using static FitnessCenterApp.Common.ApplicationsConstants;
 using static FitnessCenterApp.Common.ErrorMessages.SpaProcedure;
 using static FitnessCenterApp.Common.ErrorMessages.Roles;
+using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
+using static FitnessCenterApp.Common.EntityValidationConstants.SpaProcedure;
 
 namespace FitnessCenterApp.Services.Data;
 
@@ -46,7 +48,7 @@ public class SpaProcedureService : ISpaProcedureService
                 Description = sp.Description,
                 ImageUrl = sp.ImageUrl,
                 Capacity = sp.Capacity,
-                AppointmentDateTime = sp.AppointmentDateTime.ToString("dd/MM/yyyy HH:mm")
+                AppointmentDateTime = sp.AppointmentDateTime.ToString(AppointmentDateTimeFormat)
             })
             .AsNoTracking()
             .ToListAsync();
@@ -91,7 +93,7 @@ public class SpaProcedureService : ISpaProcedureService
                 Description = sp.Description,
                 ImageUrl = sp.ImageUrl,
                 Capacity = sp.Capacity,
-                AppointmentDateTime = sp.AppointmentDateTime.ToString("dd/MM/yyyy HH:mm")
+                AppointmentDateTime = sp.AppointmentDateTime.ToString(AppointmentDateTimeFormat)
             })
             .AsNoTracking()
             .ToListAsync();
@@ -112,7 +114,8 @@ public class SpaProcedureService : ISpaProcedureService
                 Description = sp.Description,
                 Price = sp.Price,
                 Duration = sp.Duration,
-                Capacity = sp.Capacity
+                Capacity = sp.Capacity,
+                ModifiedOn_22180022 = sp.ModifiedOn_22180022
             })
             .FirstOrDefaultAsync();
     }
@@ -151,7 +154,7 @@ public class SpaProcedureService : ISpaProcedureService
                 ImageUrl = sr.SpaProcedure.ImageUrl,
                 Description = sr.SpaProcedure.Description,
                 Capacity = sr.SpaProcedure.Capacity,
-                AppointmentDateTime = sr.SpaProcedure.AppointmentDateTime.ToString("dd/MM/yyyy HH:mm")
+                AppointmentDateTime = sr.SpaProcedure.AppointmentDateTime.ToString(AppointmentDateTimeFormat)
             })
             .AsNoTracking()
             .ToListAsync();
@@ -162,13 +165,11 @@ public class SpaProcedureService : ISpaProcedureService
     /// </summary>
     public async Task AddToMySpaAppointmentsAsync(string userId, EditSpaProcedureViewModel spaProcedure, DateTime appointmentDateTime)
     {
-        // 1. Check if the appointment date and time is in the past
         if (appointmentDateTime < DateTime.Now)
         {
             throw new InvalidOperationException(PastAppointmentDate);
         }
 
-        // 2. Check if the appointment time is within working hours (09:00 - 18:00)
         TimeSpan timeOfDay = appointmentDateTime.TimeOfDay;
         TimeSpan startTime = new TimeSpan(9, 0, 0);
         TimeSpan endTime = new TimeSpan(18, 0, 0);
@@ -184,7 +185,6 @@ public class SpaProcedureService : ISpaProcedureService
             throw new InvalidOperationException(OnlyMembersCanBookSpaProcedures);
         }
 
-        // Load the spa procedure with its registrations to check capacity
         var procedureEntity = await _context.SpaProcedures
             .Include(sp => sp.SpaRegistrations)
             .FirstOrDefaultAsync(sp => sp.Id == spaProcedure.Id);
@@ -194,10 +194,9 @@ public class SpaProcedureService : ISpaProcedureService
             throw new InvalidOperationException(SpaProcedureNotFound);
         }
 
-        // 3. Check if the spa procedure is fully booked
         if (procedureEntity.SpaRegistrations.Count >= procedureEntity.Capacity)
         {
-            throw new InvalidOperationException("This spa procedure is fully booked.");
+            throw new InvalidOperationException(SpaProcedureFull);
         }
 
         var existingRegistration = await _context.SpaRegistrations
@@ -217,7 +216,6 @@ public class SpaProcedureService : ISpaProcedureService
 
         await _context.SpaRegistrations.AddAsync(spaRegistration);
 
-        // Update the appointment date of the procedure
         procedureEntity.AppointmentDateTime = appointmentDateTime;
         procedureEntity.ModifiedOn_22180022 = DateTime.UtcNow;
 
@@ -308,6 +306,8 @@ public class SpaProcedureService : ISpaProcedureService
             throw new InvalidOperationException(SpaProcedureNotFound);
         }
 
+        _context.Entry(spaProcedure).Property(sp => sp.ModifiedOn_22180022).OriginalValue = model.ModifiedOn_22180022;
+
         spaProcedure.Name = model.Name;
         spaProcedure.ImageUrl = model.ImageUrl;
         spaProcedure.Description = model.Description;
@@ -316,8 +316,14 @@ public class SpaProcedureService : ISpaProcedureService
         spaProcedure.Capacity = model.Capacity;
         spaProcedure.ModifiedOn_22180022 = DateTime.UtcNow;
 
-        _context.SpaProcedures.Update(spaProcedure);
-        await _context.SaveChangesAsync();
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new InvalidOperationException(ConcurrencyControlMessage);
+        }
     }
 
     /// <summary>

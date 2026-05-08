@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using static FitnessCenterApp.Common.ApplicationsConstants;
 using static FitnessCenterApp.Common.ErrorMessages.MembershipType;
 using static FitnessCenterApp.Common.ErrorMessages.Roles;
+using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
 
 namespace FitnessCenterApp.Services.Data;
 
@@ -53,7 +54,8 @@ public class MembershipTypeService : IMembershipTypeService
                 Price = m.Price,
                 Duration = m.Duration,
                 Description = m.Description,
-                ImageUrl = m.ImageUrl
+                ImageUrl = m.ImageUrl,
+                ModifiedOn_22180022 = m.ModifiedOn_22180022
             })
             .FirstOrDefaultAsync();
     }
@@ -191,7 +193,7 @@ public class MembershipTypeService : IMembershipTypeService
     }
 
     /// <summary>
-    ///	Add a new membership type to the database.
+    /// Add a new membership type to the database.
     /// </summary>
     public async Task AddMembershipTypeAsync(AddMembershipTypeViewModel model, string userId)
     {
@@ -233,6 +235,8 @@ public class MembershipTypeService : IMembershipTypeService
             throw new InvalidOperationException(MembershipTypeDoesNotExist);
         }
 
+        _context.Entry(membershipType).Property(m => m.ModifiedOn_22180022).OriginalValue = model.ModifiedOn_22180022;
+
         membershipType.Name = model.Name;
         membershipType.Price = model.Price;
         membershipType.Duration = model.Duration;
@@ -240,8 +244,14 @@ public class MembershipTypeService : IMembershipTypeService
         membershipType.ImageUrl = model.ImageUrl ?? string.Empty;
         membershipType.ModifiedOn_22180022 = DateTime.UtcNow;
 
-        _context.MembershipTypes.Update(membershipType);
-        await _context.SaveChangesAsync();
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new InvalidOperationException(ConcurrencyControlMessage);
+        }
     }
 
     /// <summary>
