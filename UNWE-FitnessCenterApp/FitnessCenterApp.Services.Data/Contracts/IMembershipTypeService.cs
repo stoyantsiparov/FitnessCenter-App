@@ -5,9 +5,9 @@ namespace FitnessCenterApp.Services.Data.Contracts;
 public interface IMembershipTypeService
 {
     /// <summary>
-    /// Retrieves all membership types, optionally sorted.
+    /// Retrieves all membership types.
     /// </summary>
-    Task<IEnumerable<AllMembershipTypeViewModel>> GetAllMembershipTypesAsync(string? sortOrder = null);
+    Task<IEnumerable<AllMembershipTypeViewModel>> GetAllMembershipTypesAsync();
 
     /// <summary>
     /// Retrieves a membership type by its identifier for editing purposes.

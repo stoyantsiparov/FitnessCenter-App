@@ -23,7 +23,7 @@ public class MembershipTypeService : IMembershipTypeService
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<AllMembershipTypeViewModel>> GetAllMembershipTypesAsync(string? sortOrder = null)
+    public async Task<IEnumerable<AllMembershipTypeViewModel>> GetAllMembershipTypesAsync()
     {
         return await _context.MembershipTypes
             .Select(m => new AllMembershipTypeViewModel
