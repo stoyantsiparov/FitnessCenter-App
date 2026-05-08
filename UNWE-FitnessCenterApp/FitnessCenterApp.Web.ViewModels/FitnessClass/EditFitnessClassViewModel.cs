@@ -36,4 +36,6 @@ public class EditFitnessClassViewModel
     [Range(1, int.MaxValue)]
     public int InstructorId { get; set; }
     public IEnumerable<AllInstructorsViewModel> Instructors { get; set; } = new List<AllInstructorsViewModel>();
+
+    public DateTime ModifiedOn_22180022 { get; set; }
 }

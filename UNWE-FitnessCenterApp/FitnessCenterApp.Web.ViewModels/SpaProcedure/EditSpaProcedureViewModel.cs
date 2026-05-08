@@ -28,4 +28,6 @@ public class EditSpaProcedureViewModel
     [Required]
     [Range(CapacityMinValue, CapacityMaxValue)]
     public int Capacity { get; set; } = CapacityDefaultValue;
+
+    public DateTime ModifiedOn_22180022 { get; set; }
 }

@@ -26,4 +26,6 @@ public class EditMembershipTypeViewModel
     public string Description { get; set; } = null!;
 
     public string? ImageUrl { get; set; }
+
+    public DateTime ModifiedOn_22180022 { get; set; }
 }
