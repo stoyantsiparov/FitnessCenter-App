@@ -75,4 +75,9 @@ public static class ErrorMessages
         public const string FailedToRemoveRole = "Failed to remove role. Please try again.";
         public const string FailedToDeleteRole = "Failed to delete user. Please try again.";
     }
+
+    public static class ConcurrencyControl
+    {
+        public const string ConcurrencyControlMessage = "An error occurred while processing your request. Please try again later.";
+    }
 }
