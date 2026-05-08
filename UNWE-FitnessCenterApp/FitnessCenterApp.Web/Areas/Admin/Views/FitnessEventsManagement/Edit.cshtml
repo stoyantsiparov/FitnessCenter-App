@@ -8,7 +8,8 @@
     <h1 class="text-primary mb-4">Edit Fitness Event</h1>
 
     <form asp-action="Edit" method="post" id="editFitnessEventForm">
-        <input type="hidden" asp-for="Id" />
+	    <input type="hidden" asp-for="Id" />
+	    <input type="hidden" asp-for="ModifiedOn_22180022" />
 
         <div class="form-group mb-3">
             <label asp-for="Title" class="fw-bold"></label>
