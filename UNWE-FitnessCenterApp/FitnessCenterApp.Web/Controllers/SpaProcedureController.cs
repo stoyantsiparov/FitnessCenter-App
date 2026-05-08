@@ -17,9 +17,11 @@ public class SpaProcedureController : BaseController
     }
 
     [AllowAnonymous]
-    public async Task<IActionResult> Index(string? searchQuery = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
+    public async Task<IActionResult> Index(string? searchQuery = null, string? sortOrder = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
     {
-        var model = await _spaService.GetAllSpaProceduresPaginationAsync(searchQuery, pageNumber, pageSize);
+        ViewData["CurrentSort"] = sortOrder;
+
+        var model = await _spaService.GetAllSpaProceduresPaginationAsync(searchQuery, sortOrder, pageNumber, pageSize);
 
         return View(model);
     }

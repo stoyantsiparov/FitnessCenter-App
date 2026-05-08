@@ -16,9 +16,11 @@ public class MembershipTypeController : BaseController
     }
 
     [AllowAnonymous]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? sortOrder = null)
     {
-        var model = await _membershipTypeService.GetAllMembershipTypesAsync();
+        ViewData["CurrentSort"] = sortOrder;
+
+        var model = await _membershipTypeService.GetAllMembershipTypesAsync(sortOrder);
 
         return View(model);
     }

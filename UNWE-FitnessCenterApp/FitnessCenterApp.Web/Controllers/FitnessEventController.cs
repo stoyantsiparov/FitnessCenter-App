@@ -17,11 +17,11 @@ public class FitnessEventController : BaseController
     }
 
     [AllowAnonymous]
-    // УЕДНАКВЕНО: Добавен е pageSize = 6, за да съвпада с FitnessClassController
-    public async Task<IActionResult> Index(string? searchQuery = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
+    public async Task<IActionResult> Index(string? searchQuery = null, string? sortOrder = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
     {
-        // УЕДНАКВЕНО: Подаваме и pageSize на сървиса
-        var model = await _fitnessEventService.GetAllFitnessEventsAsync(searchQuery, pageNumber, pageSize);
+        ViewData["CurrentSort"] = sortOrder;
+
+        var model = await _fitnessEventService.GetAllFitnessEventsAsync(searchQuery, sortOrder, pageNumber, pageSize);
 
         return View(model);
     }

@@ -15,9 +15,11 @@ public class InstructorController : BaseController
     }
 
     [AllowAnonymous]
-    public async Task<IActionResult> Index(string? searchQuery = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
+    public async Task<IActionResult> Index(string? searchQuery = null, string? sortOrder = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
     {
-        var model = await _instructorService.GetAllInstructorsPaginationAsync(searchQuery, pageNumber, pageSize);
+        ViewData["CurrentSort"] = sortOrder;
+
+        var model = await _instructorService.GetAllInstructorsPaginationAsync(searchQuery, sortOrder, pageNumber, pageSize);
 
         return View(model);
     }

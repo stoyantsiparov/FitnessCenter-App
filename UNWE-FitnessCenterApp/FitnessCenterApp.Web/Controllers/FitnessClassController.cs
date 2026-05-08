@@ -17,10 +17,11 @@ public class FitnessClassController : BaseController
     }
 
     [AllowAnonymous]
-    public async Task<IActionResult> Index(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
+    public async Task<IActionResult> Index(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, string? sortOrder = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
     {
-        // Ensure page number and page size are valid
-        var model = await _fitnessClassService.GetAllClassesPaginationAsync(searchQuery, minDuration, maxDuration, pageNumber, pageSize);
+        ViewData["CurrentSort"] = sortOrder;
+
+        var model = await _fitnessClassService.GetAllClassesPaginationAsync(searchQuery, minDuration, maxDuration, sortOrder, pageNumber, pageSize);
 
         return View(model);
     }
