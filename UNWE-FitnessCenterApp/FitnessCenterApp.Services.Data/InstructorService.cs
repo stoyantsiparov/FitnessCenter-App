@@ -22,10 +22,8 @@ public class InstructorService : IInstructorService
         _userManager = userManager;
     }
 
-    /// <summary>
-    /// Get all instructors with pagination and search. (Used by Public UI)
-    /// </summary>
-    public async Task<PaginatedInstructorsViewModel> GetAllInstructorsPaginationAsync(string? searchQuery = null, int pageNumber = 1, int pageSize = 3)
+    /// <inheritdoc />
+    public async Task<PaginatedInstructorsViewModel> GetAllInstructorsPaginationAsync(string? searchQuery = null, string? sortOrder = null, int pageNumber = 1, int pageSize = 3)
     {
         var query = _context.Instructors.AsQueryable();
 
@@ -64,9 +62,7 @@ public class InstructorService : IInstructorService
         };
     }
 
-    /// <summary>
-    /// Get all instructors without pagination. (Used by Admin Area)
-    /// </summary>
+    /// <inheritdoc />
     public async Task<IEnumerable<AllInstructorsViewModel>> GetAllInstructorsAsync()
     {
         return await _context.Instructors
@@ -82,9 +78,7 @@ public class InstructorService : IInstructorService
             .ToListAsync();
     }
 
-    /// <summary>
-    /// Get instructor by id for editing.
-    /// </summary>
+    /// <inheritdoc />
     public async Task<EditInstructorViewModel?> GetInstructorByIdAsync(int id)
     {
         return await _context.Instructors
@@ -102,9 +96,7 @@ public class InstructorService : IInstructorService
             .FirstOrDefaultAsync();
     }
 
-    /// <summary>
-    /// Get instructor details by id.
-    /// </summary>
+    /// <inheritdoc />
     public async Task<InstructorDetailsViewModel?> GetInstructorDetailsAsync(int id)
     {
         return await _context.Instructors
@@ -121,9 +113,7 @@ public class InstructorService : IInstructorService
             .FirstOrDefaultAsync();
     }
 
-    /// <summary>
-    /// Get empty instructor model for adding.
-    /// </summary>
+    /// <inheritdoc />
     public async Task<AddInstructorViewModel> GetInstructorForAddAsync()
     {
         var model = new AddInstructorViewModel
@@ -138,9 +128,7 @@ public class InstructorService : IInstructorService
         return await Task.FromResult(model);
     }
 
-    /// <summary>
-    /// Add a new instructor to the database.
-    /// </summary>
+    /// <inheritdoc />
     public async Task AddInstructorAsync(AddInstructorViewModel model, string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -164,9 +152,7 @@ public class InstructorService : IInstructorService
         await _context.SaveChangesAsync();
     }
 
-    /// <summary>
-    /// Edit an existing instructor.
-    /// </summary>
+    /// <inheritdoc />
     public async Task EditInstructorAsync(EditInstructorViewModel model, string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -202,9 +188,7 @@ public class InstructorService : IInstructorService
         }
     }
 
-    /// <summary>
-    /// Get instructor model for confirmation before deleting.
-    /// </summary>
+    /// <inheritdoc />
     public async Task<DeleteInstructorViewModel?> GetInstructorForDeleteAsync(int id)
     {
         return await _context.Instructors
@@ -218,9 +202,7 @@ public class InstructorService : IInstructorService
             .FirstOrDefaultAsync();
     }
 
-    /// <summary>
-    /// Delete instructor from the database.
-    /// </summary>
+    /// <inheritdoc />
     public async Task DeleteInstructorAsync(int id, string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);

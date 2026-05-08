@@ -23,10 +23,8 @@ public class SpaProcedureService : ISpaProcedureService
         _userManager = userManager;
     }
 
-    /// <summary>
-    /// Get all spa procedures with pagination
-    /// </summary>
-    public async Task<PaginatedSpaProceduresViewModel> GetAllSpaProceduresPaginationAsync(string? searchQuery = null, int pageNumber = 1, int pageSize = 6)
+    /// <inheritdoc />
+    public async Task<PaginatedSpaProceduresViewModel> GetAllSpaProceduresPaginationAsync(string? searchQuery = null, string? sortOrder = null, int pageNumber = 1, int pageSize = 4)
     {
         var query = _context.SpaProcedures.AsQueryable();
 
@@ -63,10 +61,8 @@ public class SpaProcedureService : ISpaProcedureService
         };
     }
 
-    /// <summary>
-    /// Get all spa procedures with filters (Search, Min/Max Duration)
-    /// </summary>
-    public async Task<IEnumerable<AllSpaProceduresViewModel>> GetAllSpaProceduresAsync(string? searchQuery = null, int? minDuration = null, int? maxDuration = null)
+    /// <inheritdoc />
+    public async Task<IEnumerable<AllSpaProceduresViewModel>> GetAllSpaProceduresAsync(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, string? sortOrder = null)
     {
         var query = _context.SpaProcedures.AsQueryable();
 
@@ -99,9 +95,7 @@ public class SpaProcedureService : ISpaProcedureService
             .ToListAsync();
     }
 
-    /// <summary>
-    /// Get spa procedure by id for editing
-    /// </summary>
+    /// <inheritdoc />
     public async Task<EditSpaProcedureViewModel?> GetSpaProceduresByIdAsync(int id)
     {
         return await _context.SpaProcedures
@@ -120,9 +114,7 @@ public class SpaProcedureService : ISpaProcedureService
             .FirstOrDefaultAsync();
     }
 
-    /// <summary>
-    /// Get spa procedure details
-    /// </summary>
+    /// <inheritdoc />
     public async Task<SpaProcedureDetailsViewModel?> GetSpaProceduresDetailsAsync(int id)
     {
         return await _context.SpaProcedures
@@ -140,9 +132,7 @@ public class SpaProcedureService : ISpaProcedureService
             .FirstOrDefaultAsync();
     }
 
-    /// <summary>
-    /// Get user's spa procedures
-    /// </summary>
+    /// <inheritdoc />
     public async Task<IEnumerable<AllSpaProceduresViewModel>> GetMySpaProceduresAsync(string userId)
     {
         return await _context.SpaRegistrations
@@ -160,9 +150,7 @@ public class SpaProcedureService : ISpaProcedureService
             .ToListAsync();
     }
 
-    /// <summary>
-    /// Add spa procedure to user's appointments
-    /// </summary>
+    /// <inheritdoc />
     public async Task AddToMySpaAppointmentsAsync(string userId, EditSpaProcedureViewModel spaProcedure, DateTime appointmentDateTime)
     {
         if (appointmentDateTime < DateTime.Now)
@@ -222,9 +210,7 @@ public class SpaProcedureService : ISpaProcedureService
         await _context.SaveChangesAsync();
     }
 
-    /// <summary>
-    /// Remove spa procedure from user's appointments
-    /// </summary>
+    /// <inheritdoc />
     public async Task RemoveFromMySpaAppointmentsAsync(string userId, EditSpaProcedureViewModel spaProcedure)
     {
         var registration = await _context.SpaRegistrations
@@ -239,9 +225,7 @@ public class SpaProcedureService : ISpaProcedureService
         await _context.SaveChangesAsync();
     }
 
-    /// <summary>
-    /// Get spa procedure for add
-    /// </summary>
+    /// <inheritdoc />
     public async Task<AddSpaProcedureViewModel> GetSpaProcedureForAddAsync()
     {
         var model = new AddSpaProcedureViewModel
@@ -257,9 +241,7 @@ public class SpaProcedureService : ISpaProcedureService
         return await Task.FromResult(model);
     }
 
-    /// <summary>
-    /// Add spa procedure
-    /// </summary>
+    /// <inheritdoc />
     public async Task AddSpaProcedureAsync(AddSpaProcedureViewModel model, string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -286,9 +268,7 @@ public class SpaProcedureService : ISpaProcedureService
         await _context.SaveChangesAsync();
     }
 
-    /// <summary>
-    /// Edit spa procedure
-    /// </summary>
+    /// <inheritdoc />
     public async Task EditSpaProcedureAsync(EditSpaProcedureViewModel model, string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -326,9 +306,7 @@ public class SpaProcedureService : ISpaProcedureService
         }
     }
 
-    /// <summary>
-    /// Get spa procedure for delete
-    /// </summary>
+    /// <inheritdoc />
     public async Task<DeleteSpaProcedureViewModel?> GetSpaProcedureForDeleteAsync(int id)
     {
         return await _context.SpaProcedures
@@ -342,9 +320,7 @@ public class SpaProcedureService : ISpaProcedureService
             .FirstOrDefaultAsync();
     }
 
-    /// <summary>
-    /// Delete spa procedure
-    /// </summary>
+    /// <inheritdoc />
     public async Task DeleteSpaProcedureAsync(int id, string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);

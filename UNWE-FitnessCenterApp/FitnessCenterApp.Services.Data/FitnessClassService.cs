@@ -24,10 +24,8 @@ public class FitnessClassService : IFitnessClassService
         _userManager = userManager;
     }
 
-    /// <summary>
-    /// Get all fitness classes with optional filters
-    /// </summary>
-    public async Task<IEnumerable<AllFitnessClassesViewModel>> GetAllClassesAsync(string? searchQuery = null, int? minDuration = null, int? maxDuration = null)
+    /// <inheritdoc />
+    public async Task<IEnumerable<AllFitnessClassesViewModel>> GetAllClassesAsync(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, string? sortOrder = null)
     {
         var query = _context.FitnessClasses.AsQueryable();
 
@@ -49,10 +47,8 @@ public class FitnessClassService : IFitnessClassService
             .ToListAsync();
     }
 
-    /// <summary>
-    /// Get all fitness classes with pagination
-    /// </summary>
-    public async Task<PaginatedFitnessClassesViewModel> GetAllClassesPaginationAsync(string? searchQuery, int? minDuration, int? maxDuration, int pageNumber, int pageSize)
+    /// <inheritdoc />
+    public async Task<PaginatedFitnessClassesViewModel> GetAllClassesPaginationAsync(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, string? sortOrder = null, int pageNumber = 1, int pageSize = 6)
     {
         var query = _context.FitnessClasses.AsQueryable();
 
@@ -90,9 +86,7 @@ public class FitnessClassService : IFitnessClassService
         };
     }
 
-    /// <summary>
-    /// Get fitness class by id for editing
-    /// </summary>
+    /// <inheritdoc />
     public async Task<EditFitnessClassViewModel?> GetClassByIdAsync(int id)
     {
         return await _context.FitnessClasses
@@ -113,9 +107,7 @@ public class FitnessClassService : IFitnessClassService
             .FirstOrDefaultAsync();
     }
 
-    /// <summary>
-    /// Get fitness class details
-    /// </summary>
+    /// <inheritdoc />
     public async Task<FitnessClassDetailsViewModel?> GetClassDetailsAsync(int id)
     {
         return await _context.FitnessClasses
@@ -142,9 +134,7 @@ public class FitnessClassService : IFitnessClassService
             .FirstOrDefaultAsync();
     }
 
-    /// <summary>
-    /// Get user's registered fitness classes
-    /// </summary>
+    /// <inheritdoc />
     public async Task<IEnumerable<AllFitnessClassesViewModel>> GetMyClassesAsync(string userId)
     {
         return await _context.FitnessClassRegistrations
@@ -162,9 +152,7 @@ public class FitnessClassService : IFitnessClassService
             .ToListAsync();
     }
 
-    /// <summary>
-    /// Add fitness class to user's registered classes
-    /// </summary>
+    /// <inheritdoc />
     public async Task AddToMyClassesAsync(string userId, EditFitnessClassViewModel? classesViewModel)
     {
         if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
@@ -205,9 +193,7 @@ public class FitnessClassService : IFitnessClassService
         await _context.SaveChangesAsync();
     }
 
-    /// <summary>
-    /// Remove fitness class from user's registered classes
-    /// </summary>
+    /// <inheritdoc />
     public async Task RemoveFromMyClassesAsync(string userId, EditFitnessClassViewModel? classesViewModel)
     {
         if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
@@ -222,9 +208,7 @@ public class FitnessClassService : IFitnessClassService
         await _context.SaveChangesAsync();
     }
 
-    /// <summary>
-    /// Get fitness class for add
-    /// </summary>
+    /// <inheritdoc />
     public async Task<AddFitnessClassViewModel> GetClassForAddAsync()
     {
         var instructors = await _context.Instructors
@@ -239,9 +223,7 @@ public class FitnessClassService : IFitnessClassService
         return new AddFitnessClassViewModel { Instructors = instructors };
     }
 
-    /// <summary>
-    /// Add new fitness class
-    /// </summary>
+    /// <inheritdoc />
     public async Task AddClassAsync(AddFitnessClassViewModel model, string userId)
     {
         if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
@@ -290,9 +272,7 @@ public class FitnessClassService : IFitnessClassService
         await _context.SaveChangesAsync();
     }
 
-    /// <summary>
-    /// Edit existing fitness class
-    /// </summary>
+    /// <inheritdoc />
     public async Task EditClassAsync(EditFitnessClassViewModel model, string userId)
     {
         if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
@@ -349,9 +329,7 @@ public class FitnessClassService : IFitnessClassService
         }
     }
 
-    /// <summary>
-    /// Get fitness class for delete
-    /// </summary>
+    /// <inheritdoc />
     public async Task<DeleteFitnessClassViewModel?> GetClassForDeleteAsync(int id)
     {
         return await _context.FitnessClasses
@@ -365,9 +343,7 @@ public class FitnessClassService : IFitnessClassService
             .FirstOrDefaultAsync();
     }
 
-    /// <summary>
-    /// Delete fitness class
-    /// </summary>
+    /// <inheritdoc />
     public async Task DeleteClassAsync(int id, string userId)
     {
         if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);

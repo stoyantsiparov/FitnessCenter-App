@@ -22,10 +22,8 @@ public class MembershipTypeService : IMembershipTypeService
         _userManager = userManager;
     }
 
-    /// <summary>
-    /// Get all membership types from the database.
-    /// </summary>
-    public async Task<IEnumerable<AllMembershipTypeViewModel>> GetAllMembershipTypesAsync()
+    /// <inheritdoc />
+    public async Task<IEnumerable<AllMembershipTypeViewModel>> GetAllMembershipTypesAsync(string? sortOrder = null)
     {
         return await _context.MembershipTypes
             .Select(m => new AllMembershipTypeViewModel
@@ -40,9 +38,7 @@ public class MembershipTypeService : IMembershipTypeService
             .ToListAsync();
     }
 
-    /// <summary>
-    /// Get a specific membership type by its ID for editing.
-    /// </summary>
+    /// <inheritdoc />
     public async Task<EditMembershipTypeViewModel?> GetMembershipTypeByIdAsync(int id)
     {
         return await _context.MembershipTypes
@@ -60,9 +56,7 @@ public class MembershipTypeService : IMembershipTypeService
             .FirstOrDefaultAsync();
     }
 
-    /// <summary>
-    /// Get detailed information about a specific membership type.
-    /// </summary>
+    /// <inheritdoc />
     public async Task<MembershipTypeDetailsViewModel?> GetMembershipTypeDetailsAsync(int id)
     {
         return await _context.MembershipTypes
@@ -80,9 +74,7 @@ public class MembershipTypeService : IMembershipTypeService
             .FirstOrDefaultAsync();
     }
 
-    /// <summary>
-    /// Get all membership types that the user is subscribed to.
-    /// </summary>
+    /// <inheritdoc />
     public async Task<IEnumerable<AllMembershipTypeViewModel>> GetMyMembershipTypesAsync(string userId)
     {
         return await _context.MembershipRegistrations
@@ -99,9 +91,7 @@ public class MembershipTypeService : IMembershipTypeService
             .ToListAsync();
     }
 
-    /// <summary>
-    /// Add a membership type to the user's list of memberships.
-    /// </summary>
+    /// <inheritdoc />
     public async Task AddMyMembershipAsync(string userId, EditMembershipTypeViewModel? membershipTypeViewModel)
     {
         if (membershipTypeViewModel != null)
@@ -148,9 +138,7 @@ public class MembershipTypeService : IMembershipTypeService
         }
     }
 
-    /// <summary>
-    /// Remove a membership type from the user's list of memberships.
-    /// </summary>
+    /// <inheritdoc />
     public async Task RemoveMyMembershipAsync(string userId, EditMembershipTypeViewModel? membershipTypeViewModel)
     {
         var registration = await _context.MembershipRegistrations
@@ -175,9 +163,7 @@ public class MembershipTypeService : IMembershipTypeService
         }
     }
 
-    /// <summary>
-    /// Get the necessary information for adding a new membership type.
-    /// </summary>
+    /// <inheritdoc />
     public async Task<AddMembershipTypeViewModel> GetMembershipTypeForAddAsync()
     {
         var model = new AddMembershipTypeViewModel
@@ -192,9 +178,7 @@ public class MembershipTypeService : IMembershipTypeService
         return await Task.FromResult(model);
     }
 
-    /// <summary>
-    /// Add a new membership type to the database.
-    /// </summary>
+    /// <inheritdoc />
     public async Task AddMembershipTypeAsync(AddMembershipTypeViewModel model, string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -217,9 +201,7 @@ public class MembershipTypeService : IMembershipTypeService
         await _context.SaveChangesAsync();
     }
 
-    /// <summary>
-    /// Edit an existing membership type.
-    /// </summary>
+    /// <inheritdoc />
     public async Task EditMembershipTypeAsync(EditMembershipTypeViewModel model, string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -254,9 +236,7 @@ public class MembershipTypeService : IMembershipTypeService
         }
     }
 
-    /// <summary>
-    /// Get the necessary information for deleting a membership type.
-    /// </summary>
+    /// <inheritdoc />
     public async Task<DeleteMembershipTypeViewModel?> GetMembershipTypeForDeleteAsync(int id)
     {
         return await _context.MembershipTypes
@@ -270,9 +250,7 @@ public class MembershipTypeService : IMembershipTypeService
         .FirstOrDefaultAsync();
     }
 
-    /// <summary>
-    /// Delete a membership type from the database.
-    /// </summary>
+    /// <inheritdoc />
     public async Task DeleteMembershipTypeAsync(int id, string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);

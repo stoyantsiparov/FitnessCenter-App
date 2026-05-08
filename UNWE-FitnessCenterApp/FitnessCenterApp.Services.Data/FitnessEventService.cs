@@ -23,10 +23,8 @@ public class FitnessEventService : IFitnessEventService
         _userManager = userManager;
     }
 
-    /// <summary>
-    /// Get all fitness events with pagination
-    /// </summary>
-    public async Task<PaginatedFitnessEventsViewModel> GetAllFitnessEventsAsync(string? searchTerm = null, int pageNumber = 1, int pageSize = 6)
+    /// <inheritdoc />
+    public async Task<PaginatedFitnessEventsViewModel> GetAllFitnessEventsAsync(string? searchTerm = null, string? sortOrder = null, int pageNumber = 1, int pageSize = 6)
     {
         var query = _context.FitnessEvents.AsQueryable();
 
@@ -64,9 +62,7 @@ public class FitnessEventService : IFitnessEventService
         };
     }
 
-    /// <summary>
-    /// Get fitness event by id for editing
-    /// </summary>
+    /// <inheritdoc />
     public async Task<EditFitnessEventViewModel?> GetFitnessEventByIdAsync(int id)
     {
         return await _context.FitnessEvents
@@ -86,9 +82,7 @@ public class FitnessEventService : IFitnessEventService
             .FirstOrDefaultAsync();
     }
 
-    /// <summary>
-    /// Get fitness event details
-    /// </summary>
+    /// <inheritdoc />
     public async Task<FitnessEventDetailsViewModel?> GetFitnessEventDetailsAsync(int id)
     {
         return await _context.FitnessEvents
@@ -107,9 +101,7 @@ public class FitnessEventService : IFitnessEventService
             .FirstOrDefaultAsync();
     }
 
-    /// <summary>
-    /// Get user's fitness events
-    /// </summary>
+    /// <inheritdoc />
     public async Task<IEnumerable<AllFitnessEventsViewModel>> GetMyFitnessEventsAsync(string userId)
     {
         return await _context.FitnessEventRegistrations
@@ -128,9 +120,7 @@ public class FitnessEventService : IFitnessEventService
             .ToListAsync();
     }
 
-    /// <summary>
-    /// Add fitness event to user's fitness events
-    /// </summary>
+    /// <inheritdoc />
     public async Task AddToMyFitnessEventsAsync(string userId, EditFitnessEventViewModel? fitnessEventViewModel)
     {
         if (fitnessEventViewModel == null)
@@ -179,9 +169,7 @@ public class FitnessEventService : IFitnessEventService
         await _context.SaveChangesAsync();
     }
 
-    /// <summary>
-    /// Remove fitness event from user's fitness events
-    /// </summary>
+    /// <inheritdoc />
     public async Task RemoveFromMyFitnessEventsAsync(string userId, EditFitnessEventViewModel? fitnessEventViewModel)
     {
         if (fitnessEventViewModel == null)
@@ -201,9 +189,7 @@ public class FitnessEventService : IFitnessEventService
         await _context.SaveChangesAsync();
     }
 
-    /// <summary>
-    /// Get fitness event for add
-    /// </summary>
+    /// <inheritdoc />
     public async Task<AddFitnessEventViewModel> GetFitnessEventForAddAsync()
     {
         var model = new AddFitnessEventViewModel
@@ -219,9 +205,7 @@ public class FitnessEventService : IFitnessEventService
         return await Task.FromResult(model);
     }
 
-    /// <summary>
-    /// Add fitness event
-    /// </summary>
+    /// <inheritdoc />
     public async Task AddFitnessEventAsync(AddFitnessEventViewModel model, string userId)
     {
         if (model == null)
@@ -261,9 +245,7 @@ public class FitnessEventService : IFitnessEventService
         await _context.SaveChangesAsync();
     }
 
-    /// <summary>
-    /// Edit fitness event
-    /// </summary>
+    /// <inheritdoc />
     public async Task EditFitnessEventAsync(EditFitnessEventViewModel model, string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -315,9 +297,7 @@ public class FitnessEventService : IFitnessEventService
         }
     }
 
-    /// <summary>
-    /// Get fitness event for delete
-    /// </summary>
+    /// <inheritdoc />
     public async Task<DeleteFitnessEventViewModel?> GetFitnessEventForDeleteAsync(int id)
     {
         return await _context.FitnessEvents
@@ -331,9 +311,7 @@ public class FitnessEventService : IFitnessEventService
             .FirstOrDefaultAsync();
     }
 
-    /// <summary>
-    /// Delete fitness event
-    /// </summary>
+    /// <inheritdoc />
     public async Task DeleteFitnessEventAsync(int id, string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);

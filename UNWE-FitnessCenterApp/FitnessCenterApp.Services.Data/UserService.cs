@@ -16,9 +16,7 @@ public class UserService : IUserService
         _roleManager = roleManager;
     }
 
-    /// <summary>
-    /// Gets all registered users and their associated roles.
-    /// </summary>
+    /// <inheritdoc />
     public async Task<IEnumerable<AllUsersViewModel>> GetAllUsersAsync()
     {
         var users = await _userManager.Users.ToListAsync();
@@ -39,9 +37,7 @@ public class UserService : IUserService
         return allUsersViewModel;
     }
 
-    /// <summary>
-    /// Checks if a user with the given ID exists in the database.
-    /// </summary>
+    /// <inheritdoc />
     public async Task<bool> UserExistsByIdAsync(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -49,9 +45,7 @@ public class UserService : IUserService
         return user != null;
     }
 
-    /// <summary>
-    /// Assigns a specific role to a user.
-    /// </summary>
+    /// <inheritdoc />
     public async Task<bool> AssignUserToRoleAsync(string userId, string role)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -77,9 +71,7 @@ public class UserService : IUserService
         return result.Succeeded;
     }
 
-    /// <summary>
-    /// Removes a specific role from a user.
-    /// </summary>
+    /// <inheritdoc />
     public async Task<bool> RemoveUserRoleAsync(string userId, string role)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -105,9 +97,7 @@ public class UserService : IUserService
         return result.Succeeded;
     }
 
-    /// <summary>
-    /// Deletes a user from the database.
-    /// </summary>
+    /// <inheritdoc />
     public async Task<bool> DeleteUserAsync(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
