@@ -1,0 +1,74 @@
+﻿@model FitnessCenterApp.Web.ViewModels.SpaProcedure.SpaParticipantsViewModel
+
+@{
+    ViewData["Title"] = "Spa Procedure Bookings";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm mb-4" style="border-left: 5px solid #8697C4;">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="card-title text-primary mb-1">@Model.ProcedureName</h3>
+                <p class="text-muted mb-0"><i class="bi bi-clock me-1"></i> Default Appt. Time: @Model.AppointmentDateTime</p>
+            </div>
+            <div class="text-end">
+                <h5 class="mb-1">
+                    Bookings Filled:
+                    <span class="@(Model.CurrentParticipantsCount >= Model.Capacity ? "text-danger" : "text-success") fw-bold">
+                        @Model.CurrentParticipantsCount / @Model.Capacity
+                    </span>
+                </h5>
+                <a asp-action="Index" class="btn btn-outline-secondary btn-sm mt-2">Back to Procedures</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive shadow-sm pb-3">
+        <table id="participantsTable" class="table table-bordered table-striped table-hover mb-0 w-100">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>User Email</th>
+                    <th style="width: 200px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="align-middle">
+                @foreach (var participant in Model.Participants)
+                {
+                    <tr>
+                        <td class="fw-bold ps-3">@participant.Email</td>
+                        <td class="text-center">
+                            <form method="post" asp-action="RemoveParticipant" onsubmit="return confirm('Are you sure you want to cancel this user\'s appointment?');">
+                                <input type="hidden" name="procedureId" value="@Model.ProcedureId" />
+                                <input type="hidden" name="userId" value="@participant.UserId" />
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-user-times"></i> Cancel
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+        $('#participantsTable').DataTable({
+        "paging": true,
+        "ordering": true,
+        "info": true,
+        "columnDefs": [
+        { "orderable": false, "targets": -1 }
+        ],
+        "language": {
+        "emptyTable": "No appointments booked yet."
+        }
+        });
+        });
+    </script>
+}

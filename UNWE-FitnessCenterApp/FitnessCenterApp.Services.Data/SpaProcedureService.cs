@@ -368,4 +368,56 @@ public class SpaProcedureService : ISpaProcedureService
         _context.SpaProcedures.Remove(spaProcedure);
         await _context.SaveChangesAsync();
     }
+
+    /// <inheritdoc />
+    public async Task<SpaParticipantsViewModel?> GetSpaParticipantsAsync(int procedureId)
+    {
+        var spaProcedure = await _context.SpaProcedures
+            .Include(sp => sp.SpaRegistrations)
+            .FirstOrDefaultAsync(sp => sp.Id == procedureId);
+
+        if (spaProcedure == null) return null;
+
+        var participantsList = new List<SpaParticipantViewModel>();
+
+        foreach (var registration in spaProcedure.SpaRegistrations)
+        {
+            var user = await _userManager.FindByIdAsync(registration.MemberId);
+            if (user != null)
+            {
+                participantsList.Add(new SpaParticipantViewModel
+                {
+                    UserId = user.Id,
+                    Email = user.Email ?? "Unknown Email"
+                });
+            }
+        }
+
+        return new SpaParticipantsViewModel
+        {
+            ProcedureId = spaProcedure.Id,
+            ProcedureName = spaProcedure.Name,
+            AppointmentDateTime = spaProcedure.AppointmentDateTime.ToString(AppointmentDateTimeFormat),
+            Capacity = spaProcedure.Capacity,
+            CurrentParticipantsCount = participantsList.Count,
+            Participants = participantsList
+        };
+    }
+
+    /// <inheritdoc />
+    public async Task RemoveParticipantFromSpaAdminAsync(int procedureId, string userId)
+    {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
+        var registration = await _context.SpaRegistrations
+            .FirstOrDefaultAsync(r => r.SpaProcedureId == procedureId && r.MemberId == userId);
+
+        if (registration == null)
+        {
+            throw new InvalidOperationException("User is not booked for this procedure.");
+        }
+
+        _context.SpaRegistrations.Remove(registration);
+        await _context.SaveChangesAsync();
+    }
 }

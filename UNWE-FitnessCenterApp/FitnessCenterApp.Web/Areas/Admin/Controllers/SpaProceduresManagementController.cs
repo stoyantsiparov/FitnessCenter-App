@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static FitnessCenterApp.Common.ApplicationsConstants;
 using static FitnessCenterApp.Common.SuccessfulValidationMessages.SpaProcedure;
+using static FitnessCenterApp.Common.ErrorMessages.SpaProcedure;
 
 namespace FitnessCenterApp.Web.Areas.Admin.Controllers;
 
@@ -122,5 +123,35 @@ public class SpaProceduresManagementController : BaseController
         }
 
         return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Participants(int id)
+    {
+        var model = await _spaService.GetSpaParticipantsAsync(id);
+
+        if (model == null)
+        {
+            TempData["ErrorMessage"] = SpaProcedureNotFound;
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> RemoveParticipant(int procedureId, string userId)
+    {
+        try
+        {
+            await _spaService.RemoveParticipantFromSpaAdminAsync(procedureId, userId);
+            TempData["SuccessMessage"] = "Participant removed successfully.";
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+        }
+
+        return RedirectToAction(nameof(Participants), new { id = procedureId });
     }
 }

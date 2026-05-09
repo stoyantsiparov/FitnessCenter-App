@@ -63,4 +63,14 @@ public interface ISpaProcedureService
     /// Deletes a spa procedure from the database.
     /// </summary>
     Task DeleteSpaProcedureAsync(int id, string userId);
+
+    /// <summary>
+    /// Retrieves a list of all participants booked for a specific spa procedure.
+    /// </summary>
+    Task<SpaParticipantsViewModel?> GetSpaParticipantsAsync(int procedureId);
+
+    /// <summary>
+    /// Admin action to remove a specific user from a spa appointment.
+    /// </summary>
+    Task RemoveParticipantFromSpaAdminAsync(int procedureId, string userId);
 }
