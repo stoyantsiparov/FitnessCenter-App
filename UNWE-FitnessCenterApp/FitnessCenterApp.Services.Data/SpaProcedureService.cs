@@ -9,6 +9,7 @@ using static FitnessCenterApp.Common.ErrorMessages.SpaProcedure;
 using static FitnessCenterApp.Common.ErrorMessages.Roles;
 using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
 using static FitnessCenterApp.Common.EntityValidationConstants.SpaProcedure;
+using static FitnessCenterApp.Common.ErrorMessages.General;
 
 namespace FitnessCenterApp.Services.Data;
 
@@ -149,6 +150,8 @@ public class SpaProcedureService : ISpaProcedureService
     /// <inheritdoc />
     public async Task<IEnumerable<AllSpaProceduresViewModel>> GetMySpaProceduresAsync(string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         return await _context.SpaRegistrations
             .Where(sr => sr.MemberId == userId)
             .Select(sr => new AllSpaProceduresViewModel
@@ -167,6 +170,8 @@ public class SpaProcedureService : ISpaProcedureService
     /// <inheritdoc />
     public async Task AddToMySpaAppointmentsAsync(string userId, EditSpaProcedureViewModel spaProcedure, DateTime appointmentDateTime)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         if (appointmentDateTime < DateTime.Now)
         {
             throw new InvalidOperationException(PastAppointmentDate);
@@ -227,6 +232,8 @@ public class SpaProcedureService : ISpaProcedureService
     /// <inheritdoc />
     public async Task RemoveFromMySpaAppointmentsAsync(string userId, EditSpaProcedureViewModel spaProcedure)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var registration = await _context.SpaRegistrations
             .FirstOrDefaultAsync(sr => sr.MemberId == userId && sr.SpaProcedureId == spaProcedure.Id);
 
@@ -258,6 +265,8 @@ public class SpaProcedureService : ISpaProcedureService
     /// <inheritdoc />
     public async Task AddSpaProcedureAsync(AddSpaProcedureViewModel model, string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var user = await _userManager.FindByIdAsync(userId);
         var isAdmin = user != null && await _userManager.IsInRoleAsync(user, AdminRole);
 
@@ -285,6 +294,8 @@ public class SpaProcedureService : ISpaProcedureService
     /// <inheritdoc />
     public async Task EditSpaProcedureAsync(EditSpaProcedureViewModel model, string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var user = await _userManager.FindByIdAsync(userId);
         var isAdmin = user != null && await _userManager.IsInRoleAsync(user, AdminRole);
 
@@ -337,6 +348,8 @@ public class SpaProcedureService : ISpaProcedureService
     /// <inheritdoc />
     public async Task DeleteSpaProcedureAsync(int id, string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var user = await _userManager.FindByIdAsync(userId);
         var isAdmin = user != null && await _userManager.IsInRoleAsync(user, AdminRole);
 

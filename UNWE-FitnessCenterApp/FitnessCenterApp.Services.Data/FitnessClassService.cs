@@ -6,10 +6,11 @@ using FitnessCenterApp.Web.ViewModels.Instructor;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static FitnessCenterApp.Common.ApplicationsConstants;
-using static FitnessCenterApp.Common.ErrorMessages.FitnessClass;
-using static FitnessCenterApp.Common.ErrorMessages.Roles;
-using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
 using static FitnessCenterApp.Common.EntityValidationConstants.FitnessClass;
+using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
+using static FitnessCenterApp.Common.ErrorMessages.FitnessClass;
+using static FitnessCenterApp.Common.ErrorMessages.General;
+using static FitnessCenterApp.Common.ErrorMessages.Roles;
 
 namespace FitnessCenterApp.Services.Data;
 
@@ -155,6 +156,8 @@ public class FitnessClassService : IFitnessClassService
     /// <inheritdoc />
     public async Task<IEnumerable<AllFitnessClassesViewModel>> GetMyClassesAsync(string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         return await _context.FitnessClassRegistrations
             .Where(cr => cr.MemberId == userId)
             .Select(cr => new AllFitnessClassesViewModel

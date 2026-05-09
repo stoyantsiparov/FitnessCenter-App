@@ -8,6 +8,7 @@ using static FitnessCenterApp.Common.ApplicationsConstants;
 using static FitnessCenterApp.Common.ErrorMessages.MembershipType;
 using static FitnessCenterApp.Common.ErrorMessages.Roles;
 using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
+using static FitnessCenterApp.Common.ErrorMessages.General;
 
 namespace FitnessCenterApp.Services.Data;
 
@@ -77,6 +78,8 @@ public class MembershipTypeService : IMembershipTypeService
     /// <inheritdoc />
     public async Task<IEnumerable<AllMembershipTypeViewModel>> GetMyMembershipTypesAsync(string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         return await _context.MembershipRegistrations
             .Where(r => r.MemberId == userId)
             .Select(r => new AllMembershipTypeViewModel
@@ -94,6 +97,8 @@ public class MembershipTypeService : IMembershipTypeService
     /// <inheritdoc />
     public async Task AddMyMembershipAsync(string userId, EditMembershipTypeViewModel? membershipTypeViewModel)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         if (membershipTypeViewModel != null)
         {
             var membershipType = await _context.MembershipTypes.FindAsync(membershipTypeViewModel.Id);
@@ -141,6 +146,8 @@ public class MembershipTypeService : IMembershipTypeService
     /// <inheritdoc />
     public async Task RemoveMyMembershipAsync(string userId, EditMembershipTypeViewModel? membershipTypeViewModel)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var registration = await _context.MembershipRegistrations
             .FirstOrDefaultAsync(r => membershipTypeViewModel != null && r.MemberId == userId && r.MembershipTypeId == membershipTypeViewModel.Id);
 
@@ -181,6 +188,8 @@ public class MembershipTypeService : IMembershipTypeService
     /// <inheritdoc />
     public async Task AddMembershipTypeAsync(AddMembershipTypeViewModel model, string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null || !await _userManager.IsInRoleAsync(user, AdminRole))
         {
@@ -204,6 +213,8 @@ public class MembershipTypeService : IMembershipTypeService
     /// <inheritdoc />
     public async Task EditMembershipTypeAsync(EditMembershipTypeViewModel model, string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null || !await _userManager.IsInRoleAsync(user, AdminRole))
         {
@@ -253,6 +264,8 @@ public class MembershipTypeService : IMembershipTypeService
     /// <inheritdoc />
     public async Task DeleteMembershipTypeAsync(int id, string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null || !await _userManager.IsInRoleAsync(user, AdminRole))
         {

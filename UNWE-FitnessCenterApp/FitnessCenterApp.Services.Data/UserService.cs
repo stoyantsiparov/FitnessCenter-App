@@ -2,6 +2,7 @@
 using FitnessCenterApp.Web.ViewModels.Admin.UserManagement;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static FitnessCenterApp.Common.ErrorMessages.General;
 
 namespace FitnessCenterApp.Services.Data;
 
@@ -40,6 +41,8 @@ public class UserService : IUserService
     /// <inheritdoc />
     public async Task<bool> UserExistsByIdAsync(string userId)
     {
+        if (string.IsNullOrEmpty(userId)) return false;
+
         var user = await _userManager.FindByIdAsync(userId);
 
         return user != null;
@@ -48,6 +51,8 @@ public class UserService : IUserService
     /// <inheritdoc />
     public async Task<bool> AssignUserToRoleAsync(string userId, string role)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null)
         {
@@ -74,6 +79,8 @@ public class UserService : IUserService
     /// <inheritdoc />
     public async Task<bool> RemoveUserRoleAsync(string userId, string role)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null)
         {
@@ -100,6 +107,8 @@ public class UserService : IUserService
     /// <inheritdoc />
     public async Task<bool> DeleteUserAsync(string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null)
         {

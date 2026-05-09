@@ -9,6 +9,7 @@ using static FitnessCenterApp.Common.ErrorMessages.FitnessEvent;
 using static FitnessCenterApp.Common.ErrorMessages.Roles;
 using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
 using static FitnessCenterApp.Common.EntityValidationConstants.FitnessEvent;
+using static FitnessCenterApp.Common.ErrorMessages.General;
 
 namespace FitnessCenterApp.Services.Data;
 
@@ -113,6 +114,8 @@ public class FitnessEventService : IFitnessEventService
     /// <inheritdoc />
     public async Task<IEnumerable<AllFitnessEventsViewModel>> GetMyFitnessEventsAsync(string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         return await _context.FitnessEventRegistrations
             .Where(r => r.MemberId == userId)
             .Select(r => new AllFitnessEventsViewModel
@@ -132,6 +135,8 @@ public class FitnessEventService : IFitnessEventService
     /// <inheritdoc />
     public async Task AddToMyFitnessEventsAsync(string userId, EditFitnessEventViewModel? fitnessEventViewModel)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         if (fitnessEventViewModel == null)
         {
             throw new ArgumentNullException(nameof(fitnessEventViewModel));
@@ -181,6 +186,8 @@ public class FitnessEventService : IFitnessEventService
     /// <inheritdoc />
     public async Task RemoveFromMyFitnessEventsAsync(string userId, EditFitnessEventViewModel? fitnessEventViewModel)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         if (fitnessEventViewModel == null)
         {
             throw new ArgumentNullException(nameof(fitnessEventViewModel));
@@ -217,6 +224,8 @@ public class FitnessEventService : IFitnessEventService
     /// <inheritdoc />
     public async Task AddFitnessEventAsync(AddFitnessEventViewModel model, string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         if (model == null)
         {
             throw new ArgumentNullException(nameof(model));
@@ -257,6 +266,8 @@ public class FitnessEventService : IFitnessEventService
     /// <inheritdoc />
     public async Task EditFitnessEventAsync(EditFitnessEventViewModel model, string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var user = await _userManager.FindByIdAsync(userId);
         var isAdmin = user != null && await _userManager.IsInRoleAsync(user, AdminRole);
 
@@ -323,6 +334,8 @@ public class FitnessEventService : IFitnessEventService
     /// <inheritdoc />
     public async Task DeleteFitnessEventAsync(int id, string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var user = await _userManager.FindByIdAsync(userId);
         var isAdmin = user != null && await _userManager.IsInRoleAsync(user, AdminRole);
 

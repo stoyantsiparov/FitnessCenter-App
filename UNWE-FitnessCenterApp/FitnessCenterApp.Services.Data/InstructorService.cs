@@ -8,6 +8,7 @@ using static FitnessCenterApp.Common.ApplicationsConstants;
 using static FitnessCenterApp.Common.ErrorMessages.Instructor;
 using static FitnessCenterApp.Common.ErrorMessages.Roles;
 using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
+using static FitnessCenterApp.Common.ErrorMessages.General;
 
 namespace FitnessCenterApp.Services.Data;
 
@@ -138,6 +139,8 @@ public class InstructorService : IInstructorService
     /// <inheritdoc />
     public async Task AddInstructorAsync(AddInstructorViewModel model, string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var user = await _userManager.FindByIdAsync(userId);
 
         if (user == null || !await _userManager.IsInRoleAsync(user, AdminRole))
@@ -162,6 +165,8 @@ public class InstructorService : IInstructorService
     /// <inheritdoc />
     public async Task EditInstructorAsync(EditInstructorViewModel model, string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var user = await _userManager.FindByIdAsync(userId);
 
         if (user == null || !await _userManager.IsInRoleAsync(user, AdminRole))
@@ -212,6 +217,8 @@ public class InstructorService : IInstructorService
     /// <inheritdoc />
     public async Task DeleteInstructorAsync(int id, string userId)
     {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
         var user = await _userManager.FindByIdAsync(userId);
 
         if (user == null || !await _userManager.IsInRoleAsync(user, AdminRole))
