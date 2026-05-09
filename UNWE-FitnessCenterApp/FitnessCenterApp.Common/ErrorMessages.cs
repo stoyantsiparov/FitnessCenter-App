@@ -36,7 +36,6 @@ public static class ErrorMessages
         public const string AlreadyRegisteredForClass = "You have already signed up for this fitness class.";
         public const string UserNotRegisteredForClass = "You are not registered for this fitness class.";
         public const string ClassViewModelCannotBeNull = "Fitness class view model cannot be null.";
-        public const string UserIdCannotBeEmpty = "User ID cannot be null or empty.";
         public const string ClassWithTheSameNameAndScheduleAlreadyExists = "A fitness class with the same name and schedule already exists.";
         public const string InvalidScheduleFormat = "Invalid schedule format.";
         public const string OnlyMembersCanRegisterForThisClass = "Only members can register for fitness classes.";
