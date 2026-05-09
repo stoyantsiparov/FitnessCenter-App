@@ -5,10 +5,10 @@ using FitnessCenterApp.Web.ViewModels.Instructor;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static FitnessCenterApp.Common.ApplicationsConstants;
-using static FitnessCenterApp.Common.ErrorMessages.Instructor;
-using static FitnessCenterApp.Common.ErrorMessages.Roles;
 using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
+using static FitnessCenterApp.Common.ErrorMessages.Instructor;
 using static FitnessCenterApp.Common.ErrorMessages.General;
+using static FitnessCenterApp.Common.ErrorMessages.Roles;
 
 namespace FitnessCenterApp.Services.Data;
 
@@ -24,7 +24,7 @@ public class InstructorService : IInstructorService
     }
 
     /// <inheritdoc />
-    public async Task<PaginatedInstructorsViewModel> GetAllInstructorsPaginationAsync(string? searchQuery = null, string? sortOrder = null, int pageNumber = 1, int pageSize = 3)
+    public async Task<PaginatedInstructorsViewModel> GetAllInstructorsPaginationAsync(string? searchQuery = null, string? sortOrder = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
     {
         var query = _context.Instructors.AsQueryable();
 

@@ -5,11 +5,11 @@ using FitnessCenterApp.Web.ViewModels.SpaProcedure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static FitnessCenterApp.Common.ApplicationsConstants;
-using static FitnessCenterApp.Common.ErrorMessages.SpaProcedure;
-using static FitnessCenterApp.Common.ErrorMessages.Roles;
-using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
 using static FitnessCenterApp.Common.EntityValidationConstants.SpaProcedure;
+using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
+using static FitnessCenterApp.Common.ErrorMessages.SpaProcedure;
 using static FitnessCenterApp.Common.ErrorMessages.General;
+using static FitnessCenterApp.Common.ErrorMessages.Roles;
 
 namespace FitnessCenterApp.Services.Data;
 
@@ -25,7 +25,7 @@ public class SpaProcedureService : ISpaProcedureService
     }
 
     /// <inheritdoc />
-    public async Task<PaginatedSpaProceduresViewModel> GetAllSpaProceduresPaginationAsync(string? searchQuery = null, string? sortOrder = null, int pageNumber = 1, int pageSize = 4)
+    public async Task<PaginatedSpaProceduresViewModel> GetAllSpaProceduresPaginationAsync(string? searchQuery = null, string? sortOrder = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
     {
         var query = _context.SpaProcedures.AsQueryable();
 
@@ -388,7 +388,7 @@ public class SpaProcedureService : ISpaProcedureService
                 participantsList.Add(new SpaParticipantViewModel
                 {
                     UserId = user.Id,
-                    Email = user.Email ?? "Unknown Email"
+                    Email = user.Email ?? UnknownEmail
                 });
             }
         }
@@ -414,7 +414,7 @@ public class SpaProcedureService : ISpaProcedureService
 
         if (registration == null)
         {
-            throw new InvalidOperationException("User is not booked for this procedure.");
+            throw new InvalidOperationException(SpaAppointmentNotBooked);
         }
 
         _context.SpaRegistrations.Remove(registration);

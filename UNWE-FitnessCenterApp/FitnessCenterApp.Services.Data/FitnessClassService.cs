@@ -58,7 +58,7 @@ public class FitnessClassService : IFitnessClassService
     }
 
     /// <inheritdoc />
-    public async Task<PaginatedFitnessClassesViewModel> GetAllClassesPaginationAsync(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, string? sortOrder = null, int pageNumber = 1, int pageSize = 6)
+    public async Task<PaginatedFitnessClassesViewModel> GetAllClassesPaginationAsync(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, string? sortOrder = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
     {
         var query = _context.FitnessClasses.AsQueryable();
 
@@ -404,7 +404,7 @@ public class FitnessClassService : IFitnessClassService
                 participantsList.Add(new FitnessClassParticipantViewModel
                 {
                     UserId = user.Id,
-                    Email = user.Email ?? "Unknown Email"
+                    Email = user.Email ?? UnknownEmail
                 });
             }
         }
@@ -430,7 +430,7 @@ public class FitnessClassService : IFitnessClassService
 
         if (registration == null)
         {
-            throw new InvalidOperationException("User is not registered for this class.");
+            throw new InvalidOperationException(UserNotRegisteredForClass);
         }
 
         _context.FitnessClassRegistrations.Remove(registration);

@@ -5,11 +5,11 @@ using FitnessCenterApp.Web.ViewModels.FitnessEvent;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static FitnessCenterApp.Common.ApplicationsConstants;
-using static FitnessCenterApp.Common.ErrorMessages.FitnessEvent;
-using static FitnessCenterApp.Common.ErrorMessages.Roles;
-using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
 using static FitnessCenterApp.Common.EntityValidationConstants.FitnessEvent;
+using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
+using static FitnessCenterApp.Common.ErrorMessages.FitnessEvent;
 using static FitnessCenterApp.Common.ErrorMessages.General;
+using static FitnessCenterApp.Common.ErrorMessages.Roles;
 
 namespace FitnessCenterApp.Services.Data;
 
@@ -25,7 +25,7 @@ public class FitnessEventService : IFitnessEventService
     }
 
     /// <inheritdoc />
-    public async Task<PaginatedFitnessEventsViewModel> GetAllFitnessEventsAsync(string? searchTerm = null, string? sortOrder = null, int pageNumber = 1, int pageSize = 6)
+    public async Task<PaginatedFitnessEventsViewModel> GetAllFitnessEventsAsync(string? searchTerm = null, string? sortOrder = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
     {
         var query = _context.FitnessEvents.AsQueryable();
 
@@ -376,7 +376,7 @@ public class FitnessEventService : IFitnessEventService
                 participantsList.Add(new ParticipantViewModel
                 {
                     UserId = user.Id,
-                    Email = user.Email ?? "Unknown Email"
+                    Email = user.Email ?? UnknownEmail
                 });
             }
         }
@@ -402,7 +402,7 @@ public class FitnessEventService : IFitnessEventService
 
         if (registration == null)
         {
-            throw new InvalidOperationException("User is not registered for this event.");
+            throw new InvalidOperationException(UserNotRegisteredForEvent);
         }
 
         _context.FitnessEventRegistrations.Remove(registration);

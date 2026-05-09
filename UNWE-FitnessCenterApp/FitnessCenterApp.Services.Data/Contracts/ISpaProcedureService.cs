@@ -1,4 +1,5 @@
 ﻿using FitnessCenterApp.Web.ViewModels.SpaProcedure;
+using static FitnessCenterApp.Common.ApplicationsConstants;
 
 namespace FitnessCenterApp.Services.Data.Contracts;
 
@@ -7,7 +8,7 @@ public interface ISpaProcedureService
     /// <summary>
     /// Retrieves a paginated list of spa procedures with optional search, sorting order, and pagination parameters.
     /// </summary>
-    Task<PaginatedSpaProceduresViewModel> GetAllSpaProceduresPaginationAsync(string? searchQuery = null, string? sortOrder = null, int pageNumber = 1, int pageSize = 4);
+    Task<PaginatedSpaProceduresViewModel> GetAllSpaProceduresPaginationAsync(string? searchQuery = null, string? sortOrder = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage);
 
     /// <summary>
     /// Retrieves all spa procedures based on optional search, duration filters, and sorting order.

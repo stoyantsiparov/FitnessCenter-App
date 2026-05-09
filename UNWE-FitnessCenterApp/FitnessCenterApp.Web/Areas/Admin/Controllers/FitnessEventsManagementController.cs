@@ -22,7 +22,7 @@ public class FitnessEventsManagementController : BaseController
 
     public async Task<IActionResult> Index()
     {
-        var fitnessEvents = await _fitnessEventService.GetAllFitnessEventsAsync(null, null, 1, 100);
+        var fitnessEvents = await _fitnessEventService.GetAllFitnessEventsAsync(null, null, DefaultPageNumber, 100);
         return View(fitnessEvents.FitnessEvents);
     }
 
@@ -147,7 +147,7 @@ public class FitnessEventsManagementController : BaseController
         try
         {
             await _fitnessEventService.RemoveParticipantFromEventAdminAsync(eventId, userId);
-            TempData["SuccessMessage"] = "Participant removed successfully.";
+            TempData["SuccessMessage"] = ParticipantRemovedSuccessfully;
         }
         catch (InvalidOperationException ex)
         {

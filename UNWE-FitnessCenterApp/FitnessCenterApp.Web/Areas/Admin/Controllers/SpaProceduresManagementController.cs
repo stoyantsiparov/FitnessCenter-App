@@ -145,7 +145,7 @@ public class SpaProceduresManagementController : BaseController
         try
         {
             await _spaService.RemoveParticipantFromSpaAdminAsync(procedureId, userId);
-            TempData["SuccessMessage"] = "Participant removed successfully.";
+            TempData["SuccessMessage"] = ParticipantRemovedSuccessfully;
         }
         catch (InvalidOperationException ex)
         {

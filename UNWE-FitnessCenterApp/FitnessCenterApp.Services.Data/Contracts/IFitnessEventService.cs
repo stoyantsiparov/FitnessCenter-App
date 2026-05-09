@@ -1,4 +1,5 @@
 ﻿using FitnessCenterApp.Web.ViewModels.FitnessEvent;
+using static FitnessCenterApp.Common.ApplicationsConstants;
 
 namespace FitnessCenterApp.Services.Data.Contracts;
 
@@ -7,7 +8,7 @@ public interface IFitnessEventService
     /// <summary>
     /// Retrieves a paginated list of fitness events with optional search term and sorting order.
     /// </summary>
-    Task<PaginatedFitnessEventsViewModel> GetAllFitnessEventsAsync(string? searchTerm = null, string? sortOrder = null, int pageNumber = 1, int pageSize = 6);
+    Task<PaginatedFitnessEventsViewModel> GetAllFitnessEventsAsync(string? searchTerm = null, string? sortOrder = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage);
 
     /// <summary>
     /// Retrieves a fitness event by its identifier for editing purposes.

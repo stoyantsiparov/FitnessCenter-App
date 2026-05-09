@@ -7,6 +7,7 @@ public static class ApplicationsConstants
     public const string MemberRole = "Member";
     public const string AdminRole = "Admin";
     public const string InvalidData = "Invalid data. Please correct the errors and try again.";
+    public const string UnknownEmail = "Unknown Email";
     public const int DefaultPageNumber = 1;
     public const int DefaultEntitiesPerPage = 6;
 }

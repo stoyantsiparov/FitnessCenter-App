@@ -9,6 +9,7 @@ public static class SuccessfulValidationMessages
         public const string SpaProcedureUpdatedSuccessfully = "Spa procedure updated successfully.";
         public const string SpaProcedureDeletedSuccessfully = "Spa procedure deleted successfully.";
         public const string SpaProcedureBookedSuccessfully = "Spa procedure booked successfully.";
+        public const string ParticipantRemovedSuccessfully = "Participant removed successfully.";
     }
 
     public static class FitnessClass
@@ -18,6 +19,7 @@ public static class SuccessfulValidationMessages
         public const string ClassUpdatedSuccessfully = "Fitness class updated successfully.";
         public const string ClassDeletedSuccessfully = "Fitness class deleted successfully.";
         public const string ClassBookedSuccessfully = "Successfully signed up for the fitness class.";
+        public const string ParticipantRemovedSuccessfully = "Participant removed successfully.";
     }
 
     public static class Instructor
@@ -43,6 +45,7 @@ public static class SuccessfulValidationMessages
         public const string FitnessEventUpdatedSuccessfully = "Fitness event updated successfully.";
         public const string FitnessEventDeletedSuccessfully = "Fitness event deleted successfully.";
         public const string FitnessEventBookedSuccessfully = "Successfully signed up for the event.";
+        public const string ParticipantRemovedSuccessfully = "Participant removed successfully.";
     }
 
     public static class User

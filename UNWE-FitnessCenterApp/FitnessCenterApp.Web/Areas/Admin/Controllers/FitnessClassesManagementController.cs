@@ -157,7 +157,7 @@ public class FitnessClassesManagementController : BaseController
         try
         {
             await _fitnessClassService.RemoveParticipantFromClassAdminAsync(classId, userId);
-            TempData["SuccessMessage"] = "Participant removed successfully.";
+            TempData["SuccessMessage"] = ParticipantRemovedSuccessfully;
         }
         catch (InvalidOperationException ex)
         {

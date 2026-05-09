@@ -1,4 +1,5 @@
 ﻿using FitnessCenterApp.Web.ViewModels.FitnessClass;
+using static FitnessCenterApp.Common.ApplicationsConstants;
 
 namespace FitnessCenterApp.Services.Data.Contracts;
 
@@ -12,7 +13,7 @@ public interface IFitnessClassService
     /// <summary>
     /// Retrieves a paginated list of fitness classes with optional search, duration filters, and sorting order.
     /// </summary>
-    Task<PaginatedFitnessClassesViewModel> GetAllClassesPaginationAsync(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, string? sortOrder = null, int pageNumber = 1, int pageSize = 6);
+    Task<PaginatedFitnessClassesViewModel> GetAllClassesPaginationAsync(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, string? sortOrder = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage);
 
     /// <summary>
     /// Retrieves a fitness class by its identifier for editing purposes.

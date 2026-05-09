@@ -5,10 +5,10 @@ using FitnessCenterApp.Web.ViewModels.MembershipType;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static FitnessCenterApp.Common.ApplicationsConstants;
-using static FitnessCenterApp.Common.ErrorMessages.MembershipType;
-using static FitnessCenterApp.Common.ErrorMessages.Roles;
 using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
+using static FitnessCenterApp.Common.ErrorMessages.MembershipType;
 using static FitnessCenterApp.Common.ErrorMessages.General;
+using static FitnessCenterApp.Common.ErrorMessages.Roles;
 
 namespace FitnessCenterApp.Services.Data;
 

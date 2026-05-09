@@ -1,4 +1,5 @@
 ﻿using FitnessCenterApp.Web.ViewModels.Instructor;
+using static FitnessCenterApp.Common.ApplicationsConstants;
 
 namespace FitnessCenterApp.Services.Data.Contracts;
 
@@ -7,7 +8,7 @@ public interface IInstructorService
     /// <summary>
     /// Retrieves a paginated list of instructors with optional search term and sorting order.
     /// </summary>
-    Task<PaginatedInstructorsViewModel> GetAllInstructorsPaginationAsync(string? searchQuery = null, string? sortOrder = null, int pageNumber = 1, int pageSize = 3);
+    Task<PaginatedInstructorsViewModel> GetAllInstructorsPaginationAsync(string? searchQuery = null, string? sortOrder = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage);
 
     /// <summary>
     /// Retrieves all instructors without pagination.
