@@ -2,6 +2,11 @@
 
 public static class ErrorMessages
 {
+    public static class General
+    {
+        public const string UserIdCannotBeEmpty = "User ID cannot be null or empty.";
+    }
+
     public static class SpaProcedure
     {
         public const string PastAppointmentDate = "Appointment date and time cannot be in the past.";
@@ -53,7 +58,6 @@ public static class ErrorMessages
     {
         public const string InstructorNotFound = "Instructor not found.";
         public const string InstructorViewModelCannotBeNull = "Instructor view model cannot be null.";
-        public const string UserIdCannotBeEmpty = "User ID cannot be null or empty.";
         public const string InvalidInstructorId = "Invalid instructor ID.";
     }
 
