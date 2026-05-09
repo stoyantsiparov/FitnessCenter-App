@@ -55,9 +55,6 @@ public static class ErrorMessages
         public const string InstructorViewModelCannotBeNull = "Instructor view model cannot be null.";
         public const string UserIdCannotBeEmpty = "User ID cannot be null or empty.";
         public const string InvalidInstructorId = "Invalid instructor ID.";
-        public const string InstructorAddError = "An error occurred while adding the instructor.";
-        public const string InstructorEditError = "An error occurred while editing the instructor.";
-        public const string InstructorDeleteError = "An error occurred while deleting the instructor.";
     }
 
     public static class Roles
