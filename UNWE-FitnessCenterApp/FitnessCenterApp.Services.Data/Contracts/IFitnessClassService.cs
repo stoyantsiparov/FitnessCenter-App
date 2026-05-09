@@ -63,4 +63,14 @@ public interface IFitnessClassService
     /// Deletes a fitness class from the database.
     /// </summary>
     Task DeleteClassAsync(int id, string userId);
+
+    /// <summary>
+    /// Retrieves a list of all participants registered for a specific fitness class.
+    /// </summary>
+    Task<FitnessClassParticipantsViewModel?> GetClassParticipantsAsync(int classId);
+
+    /// <summary>
+    /// Admin action to remove a specific user from a fitness class.
+    /// </summary>
+    Task RemoveParticipantFromClassAdminAsync(int classId, string userId);
 }

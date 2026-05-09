@@ -55,6 +55,9 @@
                             <td class="text-center">@classModel.Duration min</td>
                             <td class="text-center">@classModel.Capacity spots</td>
                             <td class="text-center">
+                                <a asp-action="Participants" asp-route-id="@classModel.Id" class="btn btn-info btn-sm">
+                                    <i class="fas fa-users"></i> Participants
+                                </a>
                                 <a asp-action="Edit" asp-route-id="@classModel.Id" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i> Edit
                                 </a>

@@ -384,4 +384,56 @@ public class FitnessClassService : IFitnessClassService
             await _context.SaveChangesAsync();
         }
     }
+
+    /// <inheritdoc />
+    public async Task<FitnessClassParticipantsViewModel?> GetClassParticipantsAsync(int classId)
+    {
+        var fitnessClass = await _context.FitnessClasses
+            .Include(c => c.FitnessClassRegistrations)
+            .FirstOrDefaultAsync(c => c.Id == classId);
+
+        if (fitnessClass == null) return null;
+
+        var participantsList = new List<FitnessClassParticipantViewModel>();
+
+        foreach (var registration in fitnessClass.FitnessClassRegistrations)
+        {
+            var user = await _userManager.FindByIdAsync(registration.MemberId);
+            if (user != null)
+            {
+                participantsList.Add(new FitnessClassParticipantViewModel
+                {
+                    UserId = user.Id,
+                    Email = user.Email ?? "Unknown Email"
+                });
+            }
+        }
+
+        return new FitnessClassParticipantsViewModel
+        {
+            ClassId = fitnessClass.Id,
+            ClassName = fitnessClass.Name,
+            Schedule = fitnessClass.ScheduleDateTime.ToString(ScheduleDateTimeFormat),
+            Capacity = fitnessClass.Capacity,
+            CurrentParticipantsCount = participantsList.Count,
+            Participants = participantsList
+        };
+    }
+
+    /// <inheritdoc />
+    public async Task RemoveParticipantFromClassAdminAsync(int classId, string userId)
+    {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
+        var registration = await _context.FitnessClassRegistrations
+            .FirstOrDefaultAsync(r => r.FitnessClassId == classId && r.MemberId == userId);
+
+        if (registration == null)
+        {
+            throw new InvalidOperationException("User is not registered for this class.");
+        }
+
+        _context.FitnessClassRegistrations.Remove(registration);
+        await _context.SaveChangesAsync();
+    }
 }
