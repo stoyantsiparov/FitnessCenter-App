@@ -63,7 +63,7 @@ public class FitnessClassController : BaseController
         try
         {
             await _fitnessClassService.AddToMyClassesAsync(userId, model);
-            TempData["SuccessMessage"] = ClassAddedSuccessfully;
+            TempData["SuccessMessage"] = ClassBookedSuccessfully;
         }
         catch (InvalidOperationException ex)
         {

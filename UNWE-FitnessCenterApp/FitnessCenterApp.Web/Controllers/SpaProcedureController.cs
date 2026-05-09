@@ -64,7 +64,7 @@ public class SpaProcedureController : BaseController
         try
         {
             await _spaService.AddToMySpaAppointmentsAsync(userId, model, appointmentDateTime);
-            TempData["SuccessMessage"] = SpaProcedureAddedSuccessfully;
+            TempData["SuccessMessage"] = SpaProcedureBookedSuccessfully;
         }
         catch (InvalidOperationException ex)
         {

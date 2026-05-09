@@ -63,7 +63,7 @@ public class FitnessEventController : BaseController
         try
         {
             await _fitnessEventService.AddToMyFitnessEventsAsync(userId, model);
-            TempData["SuccessMessage"] = FitnessEventAddedSuccessfully;
+            TempData["SuccessMessage"] = FitnessEventBookedSuccessfully;
         }
         catch (InvalidOperationException ex)
         {
