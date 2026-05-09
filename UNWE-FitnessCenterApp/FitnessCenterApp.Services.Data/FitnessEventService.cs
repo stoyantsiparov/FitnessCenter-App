@@ -356,4 +356,56 @@ public class FitnessEventService : IFitnessEventService
             throw new InvalidOperationException(FitnessEventDoesNotExist);
         }
     }
+
+    /// <inheritdoc />
+    public async Task<EventParticipantsViewModel?> GetEventParticipantsAsync(int eventId)
+    {
+        var fitnessEvent = await _context.FitnessEvents
+            .Include(e => e.FitnessEventRegistrations)
+            .FirstOrDefaultAsync(e => e.Id == eventId);
+
+        if (fitnessEvent == null) return null;
+
+        var participantsList = new List<ParticipantViewModel>();
+
+        foreach (var registration in fitnessEvent.FitnessEventRegistrations)
+        {
+            var user = await _userManager.FindByIdAsync(registration.MemberId);
+            if (user != null)
+            {
+                participantsList.Add(new ParticipantViewModel
+                {
+                    UserId = user.Id,
+                    Email = user.Email ?? "Unknown Email"
+                });
+            }
+        }
+
+        return new EventParticipantsViewModel
+        {
+            EventId = fitnessEvent.Id,
+            EventTitle = fitnessEvent.Title,
+            StartDate = fitnessEvent.StartDate.ToString(DateTimeFormat),
+            Capacity = fitnessEvent.Capacity,
+            CurrentParticipantsCount = participantsList.Count,
+            Participants = participantsList
+        };
+    }
+
+    /// <inheritdoc />
+    public async Task RemoveParticipantFromEventAdminAsync(int eventId, string userId)
+    {
+        if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
+
+        var registration = await _context.FitnessEventRegistrations
+            .FirstOrDefaultAsync(r => r.EventId == eventId && r.MemberId == userId);
+
+        if (registration == null)
+        {
+            throw new InvalidOperationException("User is not registered for this event.");
+        }
+
+        _context.FitnessEventRegistrations.Remove(registration);
+        await _context.SaveChangesAsync();
+    }
 }

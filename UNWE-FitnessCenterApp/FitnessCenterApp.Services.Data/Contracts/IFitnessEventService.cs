@@ -58,4 +58,14 @@ public interface IFitnessEventService
     /// Deletes a fitness event from the database.
     /// </summary>
     Task DeleteFitnessEventAsync(int id, string userId);
+
+    /// <summary>
+    /// Retrieves a list of all participants registered for a specific event.
+    /// </summary>
+    Task<EventParticipantsViewModel?> GetEventParticipantsAsync(int eventId);
+
+    /// <summary>
+    /// Admin action to remove a specific user from an event.
+    /// </summary>
+    Task RemoveParticipantFromEventAdminAsync(int eventId, string userId);
 }

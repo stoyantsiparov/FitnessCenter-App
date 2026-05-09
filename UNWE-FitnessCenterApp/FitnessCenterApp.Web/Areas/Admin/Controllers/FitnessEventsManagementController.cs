@@ -126,4 +126,34 @@ public class FitnessEventsManagementController : BaseController
 
         return RedirectToAction(nameof(Index));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Participants(int id)
+    {
+        var model = await _fitnessEventService.GetEventParticipantsAsync(id);
+
+        if (model == null)
+        {
+            TempData["ErrorMessage"] = FitnessEventNotFound;
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> RemoveParticipant(int eventId, string userId)
+    {
+        try
+        {
+            await _fitnessEventService.RemoveParticipantFromEventAdminAsync(eventId, userId);
+            TempData["SuccessMessage"] = "Participant removed successfully.";
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+        }
+
+        return RedirectToAction(nameof(Participants), new { id = eventId });
+    }
 }

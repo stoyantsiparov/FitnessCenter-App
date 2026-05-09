@@ -57,6 +57,9 @@
                             <td class="text-center">@eventModel.EndDateTime</td>
                             <td class="text-center">@eventModel.Capacity</td>
                             <td class="text-center">
+                                <a asp-action="Participants" asp-route-id="@eventModel.Id" class="btn btn-info btn-sm">
+                                    <i class="fas fa-users"></i> Participants
+                                </a>
                                 <a asp-action="Edit" asp-route-id="@eventModel.Id" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i> Edit
                                 </a>
