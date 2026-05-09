@@ -16,8 +16,8 @@
         </a>
     </div>
 
-    <div class="table-responsive shadow-sm">
-        <table class="table table-bordered table-striped table-hover mb-0">
+    <div class="table-responsive shadow-sm pb-3">
+        <table id="dataTable" class="table table-bordered table-striped table-hover mb-0">
             <thead class="table-dark text-center">
                 <tr>
                     <th style="width: 100px;">Image</th>
@@ -69,3 +69,22 @@
         </table>
     </div>
 </div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+        $('#dataTable').DataTable({
+        "paging": true,
+        "ordering": true,
+        "info": true,
+        "order": [],
+        "columnDefs": [
+        { "orderable": false, "targets": [0, -1] }
+        ]
+        });
+        });
+    </script>
+}
