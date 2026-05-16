@@ -4,6 +4,7 @@ using FitnessCenterApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessCenterApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260516150607_MoveAppointmentDateToRegistration")]
+    partial class MoveAppointmentDateToRegistration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,7 +97,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Duration = 60,
                             ImageUrl = "https://yogajala.com/wp-content/uploads/8-Benefits-Of-Morning-Yoga.jpg",
                             InstructorId = 1,
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1358),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(661),
                             Name = "Morning Yoga",
                             Price = 50.00m,
                             ScheduleDateTime = new DateTime(2024, 12, 5, 7, 0, 0, 0, DateTimeKind.Unspecified)
@@ -107,7 +110,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Duration = 45,
                             ImageUrl = "https://i.ytimg.com/vi/66_hHeSUrzU/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQjZQw/2.jpg",
                             InstructorId = 2,
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1368),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(672),
                             Name = "HIIT Challenge",
                             Price = 50.00m,
                             ScheduleDateTime = new DateTime(2024, 12, 5, 18, 0, 0, 0, DateTimeKind.Unspecified)
@@ -120,7 +123,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Duration = 60,
                             ImageUrl = "https://i.ytimg.com/vi/N3wBXogMYfM/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGGUgUihUMA8=&rs=AOn4CLD9yvCPKa7mHvL_lLUQr-TvnlNYRw",
                             InstructorId = 3,
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1374),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(679),
                             Name = "Zumba Dance",
                             Price = 90.00m,
                             ScheduleDateTime = new DateTime(2024, 12, 6, 10, 0, 0, 0, DateTimeKind.Unspecified)
@@ -133,7 +136,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Duration = 60,
                             ImageUrl = "https://media.self.com/photos/5b9c24c208e0b96633983ce8/2:1/w_2580,c_limit/pilates-butt-core-workout.jpg",
                             InstructorId = 4,
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1380),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(684),
                             Name = "Pilates Core",
                             Price = 85.00m,
                             ScheduleDateTime = new DateTime(2024, 12, 7, 8, 30, 0, 0, DateTimeKind.Unspecified)
@@ -146,7 +149,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Duration = 45,
                             ImageUrl = "https://www.jefit.com/_next/image?url=https%3A%2F%2Fcdn.jefit.com%2Fuc%2Ffile%2Fc34238b8cd6e3cf7%2F1.jpg&w=3840&q=75",
                             InstructorId = 5,
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1385),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(689),
                             Name = "Strength Training Basics",
                             Price = 95.00m,
                             ScheduleDateTime = new DateTime(2024, 12, 7, 17, 0, 0, 0, DateTimeKind.Unspecified)
@@ -159,7 +162,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Duration = 30,
                             ImageUrl = "https://mf.b37mrtl.ru/rbthmedia/images/2018.02/article/5a93bf3385600a57b0096f7e.jpg",
                             InstructorId = 6,
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1391),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(694),
                             Name = "ММА Essentials",
                             Price = 150.00m,
                             ScheduleDateTime = new DateTime(2024, 12, 8, 20, 0, 0, 0, DateTimeKind.Unspecified)
@@ -257,7 +260,7 @@ namespace FitnessCenterApp.Data.Migrations
                             EndDate = new DateTime(2025, 4, 12, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "https://www.chicagospringhalf.com/wp-content/uploads/sites/32/2023/05/2022_SPRCHI_RaceDay_Ali_282-1024x683.jpg",
                             Location = "Downtown City Center",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1568),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(855),
                             StartDate = new DateTime(2025, 4, 12, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Spring City Marathon"
                         },
@@ -269,7 +272,7 @@ namespace FitnessCenterApp.Data.Migrations
                             EndDate = new DateTime(2025, 7, 15, 15, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "https://www.reserveamerica.com/articles/wp-content/uploads/2024/07/11174967-1e85-45df-8097-ac30b3bb1c34.jpg",
                             Location = "Rocky Mountain Trail",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1576),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(865),
                             StartDate = new DateTime(2025, 7, 15, 6, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Mountain Peak Hike"
                         },
@@ -281,7 +284,7 @@ namespace FitnessCenterApp.Data.Migrations
                             EndDate = new DateTime(2025, 10, 8, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "https://images.stockcake.com/public/c/a/0/ca09354d-17f0-4693-b9d3-fb2d399a07c1_large/autumn-lakeside-walk-stockcake.jpg",
                             Location = "Autumn Lake Park",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1583),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(872),
                             StartDate = new DateTime(2025, 10, 8, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Autumn Lake Walk"
                         },
@@ -293,7 +296,7 @@ namespace FitnessCenterApp.Data.Migrations
                             EndDate = new DateTime(2025, 12, 5, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "https://cdn.shopify.com/s/files/1/0203/9788/3467/files/Craft_AW22_ADV_SubZ_Wool-LS-Tee_4_1024x1024.jpg?v=1695349527",
                             Location = "Snowy Pines Park",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1589),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(880),
                             StartDate = new DateTime(2025, 12, 5, 8, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Winter Wonderland Run"
                         },
@@ -305,7 +308,7 @@ namespace FitnessCenterApp.Data.Migrations
                             EndDate = new DateTime(2025, 6, 20, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "https://www.townofbethanybeach.com/ImageRepository/Document?documentID=7156",
                             Location = "Golden Sands Beach",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1596),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(888),
                             StartDate = new DateTime(2025, 6, 20, 7, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Summer Beach Yoga"
                         },
@@ -317,7 +320,7 @@ namespace FitnessCenterApp.Data.Migrations
                             EndDate = new DateTime(2025, 9, 25, 16, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "https://daysym.com/wp-content/uploads/2024/01/dream-about-scuba-diving.jpg",
                             Location = "Blue hole",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1604),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(896),
                             StartDate = new DateTime(2025, 9, 25, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Diving"
                         });
@@ -407,7 +410,7 @@ namespace FitnessCenterApp.Data.Migrations
                             FirstName = "Natalie",
                             ImageUrl = "https://horizonweekly.ca/wp-content/uploads/2021/01/Nat-2.jpg",
                             LastName = "Asatryan",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1640),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(933),
                             Specialization = "Yoga"
                         },
                         new
@@ -417,7 +420,7 @@ namespace FitnessCenterApp.Data.Migrations
                             FirstName = "Warren",
                             ImageUrl = "https://images.squarespace-cdn.com/content/v1/651489d366d19e59b7bbf9cf/a68428a6-992f-45a4-adfc-1b5a75e5cfda/Warren_square500.jpg",
                             LastName = "Scott",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1642),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(934),
                             Specialization = "HIIT"
                         },
                         new
@@ -427,7 +430,7 @@ namespace FitnessCenterApp.Data.Migrations
                             FirstName = "Emily",
                             ImageUrl = "https://d29za44huniau5.cloudfront.net/uploads/2023/11/first-class-mobile.png",
                             LastName = "Johnson",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1644),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(936),
                             Specialization = "Zumba"
                         },
                         new
@@ -437,7 +440,7 @@ namespace FitnessCenterApp.Data.Migrations
                             FirstName = "Olivia",
                             ImageUrl = "https://www.clubpilates.com/hubfs/Leah-Pfrommer-Club-Pilates-instructor-exclusive-interview-with-Athletech-News-1.jpg",
                             LastName = "Williams",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1646),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(938),
                             Specialization = "Pilates"
                         },
                         new
@@ -447,7 +450,7 @@ namespace FitnessCenterApp.Data.Migrations
                             FirstName = "Wolff",
                             ImageUrl = "https://jwfitnesssystems.com/wp-content/uploads/2023/02/CW1_7335-scaled.jpg",
                             LastName = "Jameson",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1647),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(939),
                             Specialization = "Strength Training"
                         },
                         new
@@ -457,7 +460,7 @@ namespace FitnessCenterApp.Data.Migrations
                             FirstName = "Conor",
                             ImageUrl = "https://a.espncdn.com/i/headshots/mma/players/full/3022677.png",
                             LastName = "McGregor",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1649),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(941),
                             Specialization = "ММА"
                         });
                 });
@@ -577,7 +580,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "A basic membership that grants access to all regular classes and gym facilities.",
                             Duration = 30,
                             ImageUrl = "https://i0.wp.com/poolstats.co/wp-content/uploads/2019/01/Basic-Membership.png?fit=400%2C327&ssl=1",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1680),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(974),
                             Name = "Basic",
                             Price = 59.99m
                         },
@@ -587,7 +590,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "An elite membership offering access to all classes, gym facilities, and spa treatments.",
                             Duration = 60,
                             ImageUrl = "https://cdn.vectorstock.com/i/500p/49/16/elite-gold-label-vector-2944916.jpg",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1682),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(976),
                             Name = "Elite",
                             Price = 99.99m
                         },
@@ -597,7 +600,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "A premium membership offering access to all classes, gym facilities, and spa treatments.",
                             Duration = 180,
                             ImageUrl = "https://thumbs.dreamstime.com/b/premium-membership-badge-stamp-golden-red-ribbon-text-30827692.jpg",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1684),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(978),
                             Name = "Premium",
                             Price = 299.99m
                         },
@@ -607,7 +610,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "An exclusive membership with additional perks including priority booking for events and personal training.",
                             Duration = 365,
                             ImageUrl = "https://cdn11.bigcommerce.com/s-2ooutu2zpl/images/stencil/original/products/35315/51564/VIP_Badge_2__62906.1641934958.png?c=2",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1686),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(980),
                             Name = "VIP",
                             Price = 499.99m
                         });
@@ -673,7 +676,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "A soothing massage to relieve tension and stress.",
                             Duration = 60,
                             ImageUrl = "https://www.dshieldsusa.com/wp-content/uploads/2021/05/relaxing-massage-slide.jpg",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1717),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(1011),
                             Name = "Relaxing Massage",
                             Price = 50.00m
                         },
@@ -684,7 +687,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "A rejuvenating facial to nourish and hydrate your skin.",
                             Duration = 45,
                             ImageUrl = "https://spamd.net/wp-content/uploads/2022/03/medications-facial-treatments.jpg",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1719),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(1013),
                             Name = "Facial Treatment",
                             Price = 40.00m
                         },
@@ -695,7 +698,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "A session using essential oils to promote relaxation and well-being.",
                             Duration = 30,
                             ImageUrl = "https://elementsmassage.com/files/shared/AZ%20-%20Elements%20Massage%205-1864269.jpg",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1721),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(1015),
                             Name = "Aromatherapy Session",
                             Price = 30.00m
                         },
@@ -706,7 +709,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "A therapeutic massage using smooth, heated stones to ease tension.",
                             Duration = 75,
                             ImageUrl = "https://images-prod.healthline.com/hlcmsresource/images/topic_centers/1296x728_HEADER_benefits-of-hot-stone-massage.jpg",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1723),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(1017),
                             Name = "Hot Stone Massage",
                             Price = 70.00m
                         },
@@ -717,7 +720,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "A massage targeting deeper layers of muscle tissue to release chronic tension.",
                             Duration = 60,
                             ImageUrl = "https://propelphysiotherapy.com/wp-content/uploads/2023/08/what-is-deep-tissue-massage-therapy-propel-physiotherapy.jpg",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1725),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(1018),
                             Name = "Deep Tissue Massage",
                             Price = 60.00m
                         },
@@ -728,7 +731,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "A detoxifying wrap using nutrient-rich seaweed to revitalize your skin.",
                             Duration = 90,
                             ImageUrl = "https://s3.amazonaws.com/salonclouds-uploads/blog/blog_1605466361125864114.png",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 14, 45, 939, DateTimeKind.Utc).AddTicks(1727),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 16, 15, 6, 4, 928, DateTimeKind.Utc).AddTicks(1020),
                             Name = "Seaweed Body Wrap",
                             Price = 85.00m
                         });
@@ -736,32 +739,22 @@ namespace FitnessCenterApp.Data.Migrations
 
             modelBuilder.Entity("FitnessCenterApp.Data.Models.SpaRegistration", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasComment("Primary key for the registration");
+                    b.Property<string>("MemberId")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<int>("SpaProcedureId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("AppointmentDateTime")
                         .HasColumnType("datetime2")
                         .HasComment("The specific date and time the user booked this procedure");
-
-                    b.Property<string>("MemberId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("ModifiedOn_22180022")
                         .IsConcurrencyToken()
                         .HasColumnType("datetime2")
                         .HasComment("Date and time of the last modification");
 
-                    b.Property<int>("SpaProcedureId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MemberId");
+                    b.HasKey("MemberId", "SpaProcedureId");
 
                     b.HasIndex("SpaProcedureId");
 

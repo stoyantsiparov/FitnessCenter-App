@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using static FitnessCenterApp.Common.ApplicationsConstants;
 using static FitnessCenterApp.Common.EntityValidationConstants.SpaProcedure;
 using static FitnessCenterApp.Common.ErrorMessages.ConcurrencyControl;
-using static FitnessCenterApp.Common.ErrorMessages.SpaProcedure;
 using static FitnessCenterApp.Common.ErrorMessages.General;
 using static FitnessCenterApp.Common.ErrorMessages.Roles;
+using static FitnessCenterApp.Common.ErrorMessages.SpaProcedure;
 
 namespace FitnessCenterApp.Services.Data;
 
@@ -53,8 +53,7 @@ public class SpaProcedureService : ISpaProcedureService
                 Name = sp.Name,
                 Description = sp.Description,
                 ImageUrl = sp.ImageUrl,
-                Capacity = sp.Capacity,
-                AppointmentDateTime = sp.AppointmentDateTime.ToString(AppointmentDateTimeFormat)
+                Capacity = sp.Capacity
             })
             .AsNoTracking()
             .ToListAsync();
@@ -103,8 +102,7 @@ public class SpaProcedureService : ISpaProcedureService
                 Name = sp.Name,
                 Description = sp.Description,
                 ImageUrl = sp.ImageUrl,
-                Capacity = sp.Capacity,
-                AppointmentDateTime = sp.AppointmentDateTime.ToString(AppointmentDateTimeFormat)
+                Capacity = sp.Capacity
             })
             .AsNoTracking()
             .ToListAsync();
@@ -161,7 +159,8 @@ public class SpaProcedureService : ISpaProcedureService
                 ImageUrl = sr.SpaProcedure.ImageUrl,
                 Description = sr.SpaProcedure.Description,
                 Capacity = sr.SpaProcedure.Capacity,
-                AppointmentDateTime = sr.SpaProcedure.AppointmentDateTime.ToString(AppointmentDateTimeFormat)
+                // ТУК ЧЕТЕМ ЧАСА ОТ РЕГИСТРАЦИЯТА!
+                AppointmentDateTime = sr.AppointmentDateTime.ToString(AppointmentDateTimeFormat)
             })
             .AsNoTracking()
             .ToListAsync();
@@ -172,18 +171,30 @@ public class SpaProcedureService : ISpaProcedureService
     {
         if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
 
-        if (appointmentDateTime < DateTime.Now)
+        var now = DateTime.Now;
+
+        if (appointmentDateTime < now)
         {
             throw new InvalidOperationException(PastAppointmentDate);
         }
 
-        TimeSpan timeOfDay = appointmentDateTime.TimeOfDay;
-        TimeSpan startTime = new TimeSpan(9, 0, 0);
-        TimeSpan endTime = new TimeSpan(18, 0, 0);
-
-        if (timeOfDay < startTime || timeOfDay > endTime)
+        if (appointmentDateTime > now.AddDays(7))
         {
-            throw new InvalidOperationException("Appointments can only be booked between 09:00 and 18:00.");
+            throw new InvalidOperationException(CannotBookMoreThanOneWeekAhead);
+        }
+
+        var procedureEntity = await _context.SpaProcedures
+            .FirstOrDefaultAsync(sp => sp.Id == spaProcedure.Id);
+
+        if (procedureEntity == null) throw new InvalidOperationException(SpaProcedureNotFound);
+
+        var appointmentEndTime = appointmentDateTime.AddMinutes(procedureEntity.Duration);
+
+        var openTime = new TimeSpan(9, 0, 0);
+        var closeTime = new TimeSpan(18, 0, 0);
+        if (appointmentDateTime.TimeOfDay < openTime || appointmentEndTime.TimeOfDay > closeTime)
+        {
+            throw new InvalidOperationException(OutsideWorkingHours);
         }
 
         var user = await _userManager.FindByIdAsync(userId);
@@ -192,40 +203,73 @@ public class SpaProcedureService : ISpaProcedureService
             throw new InvalidOperationException(OnlyMembersCanBookSpaProcedures);
         }
 
-        var procedureEntity = await _context.SpaProcedures
-            .Include(sp => sp.SpaRegistrations)
-            .FirstOrDefaultAsync(sp => sp.Id == spaProcedure.Id);
+        var hasBookedThisWeek = await _context.SpaRegistrations
+            .AnyAsync(r => r.MemberId == userId &&
+                           r.SpaProcedureId == spaProcedure.Id &&
+                           r.AppointmentDateTime >= appointmentDateTime.AddDays(-7) &&
+                           r.AppointmentDateTime <= appointmentDateTime.AddDays(7));
 
-        if (procedureEntity == null)
+        if (hasBookedThisWeek)
         {
-            throw new InvalidOperationException(SpaProcedureNotFound);
+            throw new InvalidOperationException(AlreadyBookedThisTypeForWeek);
         }
 
-        if (procedureEntity.SpaRegistrations.Count >= procedureEntity.Capacity)
+        var searchMinDate = appointmentDateTime.AddDays(-1);
+        var searchMaxDate = appointmentDateTime.AddDays(1);
+
+        var userRegistrations = await _context.SpaRegistrations
+            .Include(r => r.SpaProcedure)
+            .Where(r => r.MemberId == userId &&
+                        r.AppointmentDateTime >= searchMinDate &&
+                        r.AppointmentDateTime <= searchMaxDate)
+            .ToListAsync();
+
+        foreach (var reg in userRegistrations)
         {
-            throw new InvalidOperationException(SpaProcedureFull);
+            var regStart = reg.AppointmentDateTime;
+            var regEnd = regStart.AddMinutes(reg.SpaProcedure.Duration);
+
+            var regStartWithBuffer = regStart.AddMinutes(-30);
+            var regEndWithBuffer = regEnd.AddMinutes(30);
+
+            if (appointmentDateTime < regEndWithBuffer && appointmentEndTime > regStartWithBuffer)
+            {
+                throw new InvalidOperationException(OverlappingAppointmentWithBuffer);
+            }
         }
 
-        var existingRegistration = await _context.SpaRegistrations
-            .FirstOrDefaultAsync(sr => sr.MemberId == userId && sr.SpaProcedureId == spaProcedure.Id);
+        var overlappingGlobalBookings = await _context.SpaRegistrations
+            .Include(r => r.SpaProcedure)
+            .Where(r => r.SpaProcedureId == spaProcedure.Id &&
+                        r.AppointmentDateTime >= searchMinDate &&
+                        r.AppointmentDateTime <= searchMaxDate)
+            .ToListAsync();
 
-        if (existingRegistration != null)
+        int activeConcurrentSessions = 0;
+        foreach (var booking in overlappingGlobalBookings)
         {
-            throw new InvalidOperationException(AlreadyBookedAppointment);
+            var bookingEnd = booking.AppointmentDateTime.AddMinutes(booking.SpaProcedure.Duration);
+
+            if (appointmentDateTime < bookingEnd && appointmentEndTime > booking.AppointmentDateTime)
+            {
+                activeConcurrentSessions++;
+            }
+        }
+
+        if (activeConcurrentSessions >= procedureEntity.Capacity)
+        {
+            throw new InvalidOperationException(SpaProcedureFullAtThisTime);
         }
 
         var spaRegistration = new SpaRegistration
         {
             MemberId = userId,
             SpaProcedureId = spaProcedure.Id,
+            AppointmentDateTime = appointmentDateTime,
             ModifiedOn_22180022 = DateTime.UtcNow
         };
 
         await _context.SpaRegistrations.AddAsync(spaRegistration);
-
-        procedureEntity.AppointmentDateTime = appointmentDateTime;
-        procedureEntity.ModifiedOn_22180022 = DateTime.UtcNow;
-
         await _context.SaveChangesAsync();
     }
 
@@ -283,7 +327,6 @@ public class SpaProcedureService : ISpaProcedureService
             Duration = model.Duration,
             Price = model.Price,
             Capacity = model.Capacity,
-            AppointmentDateTime = DateTime.UtcNow,
             ModifiedOn_22180022 = DateTime.UtcNow
         };
 
@@ -388,7 +431,8 @@ public class SpaProcedureService : ISpaProcedureService
                 participantsList.Add(new SpaParticipantViewModel
                 {
                     UserId = user.Id,
-                    Email = user.Email ?? UnknownEmail
+                    Email = user.Email ?? UnknownEmail,
+                    AppointmentTime = registration.AppointmentDateTime.ToString(AppointmentDateTimeFormat)
                 });
             }
         }
@@ -397,7 +441,6 @@ public class SpaProcedureService : ISpaProcedureService
         {
             ProcedureId = spaProcedure.Id,
             ProcedureName = spaProcedure.Name,
-            AppointmentDateTime = spaProcedure.AppointmentDateTime.ToString(AppointmentDateTimeFormat),
             Capacity = spaProcedure.Capacity,
             CurrentParticipantsCount = participantsList.Count,
             Participants = participantsList

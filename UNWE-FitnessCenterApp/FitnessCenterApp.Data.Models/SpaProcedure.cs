@@ -34,12 +34,6 @@ public class SpaProcedure : BaseEntity
     public decimal Price { get; set; }
 
     [Required]
-    [DataType(DataType.DateTime)]
-    [DisplayFormat(DataFormatString = AppointmentDateTimeFormat, ApplyFormatInEditMode = true)]
-    [Comment("Appointment date and time for the spa service")]
-    public DateTime AppointmentDateTime { get; set; }
-
-    [Required]
     [Range(CapacityMinValue, CapacityMaxValue)]
     [Comment("Maximum capacity for the procedure")]
     public int Capacity { get; set; } = CapacityDefaultValue;

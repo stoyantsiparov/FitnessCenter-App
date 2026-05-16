@@ -96,7 +96,6 @@ public class SpaProcedureController : BaseController
         catch (InvalidOperationException ex)
         {
             TempData["ErrorMessage"] = ex.Message;
-            return RedirectToAction(nameof(MySpaAppointments));
         }
 
         return RedirectToAction(nameof(MySpaAppointments));
