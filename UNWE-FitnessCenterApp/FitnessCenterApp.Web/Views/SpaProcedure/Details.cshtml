@@ -34,6 +34,7 @@
 							<div class="form-group mb-3">
 								<label for="appointmentDateTime" class="form-label fw-bold">Select Appointment Date and Time:</label>
 								<input type="datetime-local" name="appointmentDateTime" id="appointmentDateTime" class="form-control border-primary" required />
+								<span class="text-danger" id="timeErrorSpan"></span>
 							</div>
                             
 							<button type="submit" class="btn btn-primary w-100 fw-bold">Book Now</button>
@@ -69,13 +70,19 @@
 		document.getElementById("appointmentDateTime").setAttribute("max", maxDate);
 
 		document.getElementById("appointmentDateTime").closest("form").addEventListener("submit", function (e) {
+			var errorSpan = document.getElementById("timeErrorSpan");
+			errorSpan.innerText = "";
+
 			if (document.getElementById("appointmentDateTime").value) {
 				var selectedDate = new Date(document.getElementById("appointmentDateTime").value);
 				var hours = selectedDate.getHours();
 				var minutes = selectedDate.getMinutes();
+
 				if (hours < 9 || hours > 18 || (hours === 18 && minutes > 0)) {
 					e.preventDefault();
-					alert("Appointments can only be booked between 09:00 and 18:00. Please select a valid time.");
+                    
+					toastr.warning("Appointments can only be booked between 09:00 and 18:00.");
+					errorSpan.innerText = "Please select a valid time between 09:00 and 18:00.";
 				}
 			}
 		});

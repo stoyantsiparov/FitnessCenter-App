@@ -15,6 +15,11 @@ public static class ErrorMessages
         public const string SpaProcedureNotFound = "Spa procedure not found.";
         public const string OnlyMembersCanBookSpaProcedures = "Only members can book spa procedures.";
         public const string SpaProcedureFull = "There are no more available spots for this spa procedure.";
+        public const string CannotBookMoreThanOneWeekAhead = "You can only book appointments up to 7 days in advance.";
+        public const string OutsideWorkingHours = "Appointments must start and finish within our working hours (09:00 - 18:00).";
+        public const string AlreadyBookedThisTypeForWeek = "You can only book this type of procedure once per 7 days.";
+        public const string OverlappingAppointmentWithBuffer = "You have another procedure booked around this time. A 30-minute rest buffer is required between procedures.";
+        public const string SpaProcedureFullAtThisTime = "There are no available spots for this procedure at the selected time.";
     }
 
     public static class FitnessEvent
