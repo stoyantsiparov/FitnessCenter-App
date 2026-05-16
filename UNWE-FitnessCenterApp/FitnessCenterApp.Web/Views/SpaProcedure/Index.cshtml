@@ -65,7 +65,7 @@
 {
 	<nav aria-label="Page navigation" class="mt-5">
 		<ul class="pagination justify-content-center">
-			@if (Model.PageNumber > 1)
+			@if (Model.HasPreviousPage)
 			{
 				<li class="page-item">
 					<a class="page-link" asp-action="Index" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-searchQuery="@Model.SearchQuery" asp-route-sortOrder="@ViewData["CurrentSort"]">Previous</a>
@@ -79,7 +79,7 @@
 				</li>
 			}
 
-			@if (Model.PageNumber < Model.TotalPages)
+			@if (Model.HasNextPage)
 			{
 				<li class="page-item">
 					<a class="page-link" asp-action="Index" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-searchQuery="@Model.SearchQuery" asp-route-sortOrder="@ViewData["CurrentSort"]">Next</a>
