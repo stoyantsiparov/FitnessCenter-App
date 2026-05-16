@@ -26,34 +26,57 @@
 					else
 					{
 						<img src="~/img/no-image-available-02.jpg" alt="No Image Available" style="height: 220px; width: 100%; object-fit: cover;">
-						}
+					}
 
-						<div class="card-body d-flex flex-column text-center">
-							<div class="alert py-3 mb-4 mt-2" style="background-color: #EDE8F5; border-color: #ADBBDA; border-radius: 10px;">
-								<p class="mb-0 text-dark fs-5">Duration: @membership.Duration days</p>
-							</div>
+					<div class="card-body d-flex flex-column text-center">
+						<div class="alert py-3 mb-4 mt-2" style="background-color: #EDE8F5; border-color: #ADBBDA; border-radius: 10px;">
+							<p class="mb-0 text-dark fs-5">Duration: @membership.Duration days</p>
+						</div>
 
-							<div class="mt-auto d-flex flex-column gap-2">
-								<form method="post" asp-action="RemoveMyMembership" asp-route-id="@membership.Id" onsubmit="return confirm('Are you sure you want to cancel your membership? You will lose access immediately.');">
-									<button type="submit" class="btn btn-danger w-100 py-2 fw-bold">CANCEL MEMBERSHIP</button>
-								</form>
-								<a asp-controller="MembershipType" asp-action="Details" asp-route-id="@membership.Id" class="btn btn-outline-primary w-100 py-2">VIEW DETAILS</a>
-							</div>
+						<div class="mt-auto d-flex flex-column gap-2">
+							<form id="cancelForm-@membership.Id" method="post" asp-action="RemoveMyMembership" asp-route-id="@membership.Id">
+								<button type="button" class="btn btn-danger w-100 py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#cancelModal-@membership.Id">
+									CANCEL MEMBERSHIP
+								</button>
+							</form>
+							<a asp-controller="MembershipType" asp-action="Details" asp-route-id="@membership.Id" class="btn btn-outline-primary w-100 py-2">VIEW DETAILS</a>
 						</div>
 					</div>
 				</div>
-			}
-		</div>
-	}
-else
-	{
-		<div class="text-center mt-5">
-			<i class="bi bi-card-checklist text-muted" style="font-size: 4rem;"></i>
-			<h4 class="text-muted mt-3">You currently have no active membership.</h4>
-			<a asp-action="Index" class="btn btn-primary mt-3 px-5 py-2 fw-bold">BROWSE PLANS</a>
-		</div>
-	}
+			</div>
 
-	@section Scripts {
-		<partial name="_ValidationScriptsPartial" />
-	}
+			<div class="modal fade" id="cancelModal-@membership.Id" tabindex="-1" aria-labelledby="cancelModalLabel-@membership.Id" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header bg-danger text-white">
+							<h5 class="modal-title" id="cancelModalLabel-@membership.Id"><i class="bi bi-exclamation-triangle-fill me-2"></i>Cancel Membership</h5>
+							<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body text-start">
+							<p class="fs-5 mb-3">Are you sure you want to cancel your <strong>@membership.Name</strong> plan?</p>
+							<div class="alert alert-warning mb-0" style="border-left: 5px solid #ffc107;">
+								<strong>Warning:</strong> You will lose access immediately and this action cannot be undone.
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal">Go Back</button>
+							<button type="button" class="btn btn-danger fw-bold" onclick="document.getElementById('cancelForm-@membership.Id').submit();">Yes, Cancel It</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+}
+else
+{
+	<div class="text-center mt-5">
+		<i class="bi bi-card-checklist text-muted" style="font-size: 4rem;"></i>
+		<h4 class="text-muted mt-3">You currently have no active membership.</h4>
+		<a asp-action="Index" class="btn btn-primary mt-3 px-5 py-2 fw-bold">BROWSE PLANS</a>
+	</div>
+}
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

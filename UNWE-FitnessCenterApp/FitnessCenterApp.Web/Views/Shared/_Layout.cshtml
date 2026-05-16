@@ -4,7 +4,6 @@
     string footerNote = (ReleaseYear == currentYear) ?
         $"{ReleaseYear}" : $"{ReleaseYear} - {currentYear}";
 }
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,6 +13,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FitnessCenterApp.Web.styles.css" asp-append-version="true" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 </head>
 <body>
     <header>
@@ -85,21 +86,6 @@
 
     <div class="container">
         <main role="main" class="pb-3">
-            @if (TempData["SuccessMessage"] != null)
-            {
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    @TempData["SuccessMessage"]
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            }
-            @if (TempData["ErrorMessage"] != null)
-            {
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    @TempData["ErrorMessage"]
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            }
-
             @RenderBody()
         </main>
     </div>
@@ -113,6 +99,28 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "positionClass": "toast-bottom-right",
+        "timeOut": "5000"
+        };
+
+        var successMessage = '@Html.Raw(TempData["SuccessMessage"])';
+        var errorMessage = '@Html.Raw(TempData["ErrorMessage"])';
+
+        if (successMessage && successMessage !== '') {
+        toastr.success(successMessage, "Success");
+        }
+
+        if (errorMessage && errorMessage !== '') {
+        toastr.error(errorMessage, "Error");
+        }
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
