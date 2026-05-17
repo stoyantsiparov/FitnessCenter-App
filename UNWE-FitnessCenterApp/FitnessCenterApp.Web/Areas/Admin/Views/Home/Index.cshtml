@@ -1,11 +1,11 @@
 ﻿@{
-    ViewData["Title"] = "Admin Dashboard";
+    ViewData["Title"] = "Административно табло";
 }
 
 <div class="container mt-5">
     <div class="text-center">
-        <h1 class="display-4 mb-4 text-primary">Welcome to the Admin Dashboard</h1>
-        <p class="lead mb-5 text-muted">Manage your application using the sections below:</p>
+        <h1 class="display-4 mb-4 text-primary">Добре дошли в Административното табло</h1>
+        <p class="lead mb-5 text-muted">Управлявайте приложението чрез секциите по-долу:</p>
     </div>
 
     <div class="row g-4">
@@ -13,10 +13,23 @@
             <div class="card shadow h-100 border-0">
                 <div class="card-body d-flex flex-column align-items-center text-center">
                     <i class="fas fa-users fa-3x text-primary mb-3"></i>
-                    <h5 class="card-title">Manage Users</h5>
-                    <p class="card-text text-muted">Add, edit, or remove users and assign roles.</p>
+                    <h5 class="card-title">Управление на потребители</h5>
+                    <p class="card-text text-muted">Добавяйте, редактирайте или изтривайте потребители и техните роли.</p>
                     <a asp-area="Admin" asp-controller="UserManagement" asp-action="Index" class="btn btn-primary mt-auto w-100">
-                        Go to Users
+                        Към Потребители
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow h-100 border-0">
+                <div class="card-body d-flex flex-column align-items-center text-center">
+                    <i class="fas fa-id-card fa-3x text-primary mb-3"></i>
+                    <h5 class="card-title">Абонаментни планове</h5>
+                    <p class="card-text text-muted">Добавяйте, редактирайте или изтривайте типове абонаменти.</p>
+                    <a asp-area="Admin" asp-controller="MembershipTypesManagement" asp-action="Index" class="btn btn-primary mt-auto w-100">
+                        Към Абонаментни планове
                     </a>
                 </div>
             </div>
@@ -26,10 +39,10 @@
             <div class="card shadow h-100 border-0">
                 <div class="card-body d-flex flex-column align-items-center text-center">
                     <i class="fas fa-user-tie fa-3x text-primary mb-3"></i>
-                    <h5 class="card-title">Manage Instructors</h5>
-                    <p class="card-text text-muted">Add, edit, or remove instructors.</p>
+                    <h5 class="card-title">Управление на инструктори</h5>
+                    <p class="card-text text-muted">Управлявайте екипа от треньори и инструктори.</p>
                     <a asp-area="Admin" asp-controller="InstructorsManagement" asp-action="Index" class="btn btn-primary mt-auto w-100">
-                        Go to Instructors
+                        Към Инструктори
                     </a>
                 </div>
             </div>
@@ -38,11 +51,11 @@
         <div class="col-md-4">
             <div class="card shadow h-100 border-0">
                 <div class="card-body d-flex flex-column align-items-center text-center">
-                    <i class="fas fa-dumbbell fa-3x text-danger mb-3"></i>
-                    <h5 class="card-title">Manage Fitness Classes</h5>
-                    <p class="card-text text-muted">Manage classes, schedules, and details.</p>
-                    <a asp-area="Admin" asp-controller="FitnessClassesManagement" asp-action="Index" class="btn btn-success mt-auto w-100">
-                        Go to Fitness Classes
+                    <i class="fas fa-dumbbell fa-3x text-primary mb-3"></i>
+                    <h5 class="card-title">Управление на фитнес класове</h5>
+                    <p class="card-text text-muted">Управлявайте груповите тренировки и техните детайли.</p>
+                    <a asp-area="Admin" asp-controller="FitnessClassesManagement" asp-action="Index" class="btn btn-primary mt-auto w-100">
+                        Към Фитнес класове
                     </a>
                 </div>
             </div>
@@ -51,11 +64,11 @@
         <div class="col-md-4">
             <div class="card shadow h-100 border-0">
                 <div class="card-body d-flex flex-column align-items-center text-center">
-                    <i class="fas fa-spa fa-3x text-success mb-3"></i>
-                    <h5 class="card-title">Manage Spa Procedures</h5>
-                    <p class="card-text text-muted">Create, update, or delete spa procedures.</p>
-                    <a asp-area="Admin" asp-controller="SpaProceduresManagement" asp-action="Index" class="btn btn-success mt-auto w-100">
-                        Go to Spa Procedures
+                    <i class="fas fa-calendar-alt fa-3x text-primary mb-3"></i>
+                    <h5 class="card-title">Управление на фитнес събития</h5>
+                    <p class="card-text text-muted">Организирайте и управлявайте специални фитнес събития.</p>
+                    <a asp-area="Admin" asp-controller="FitnessEventsManagement" asp-action="Index" class="btn btn-primary mt-auto w-100">
+                        Към Фитнес събития
                     </a>
                 </div>
             </div>
@@ -64,24 +77,11 @@
         <div class="col-md-4">
             <div class="card shadow h-100 border-0">
                 <div class="card-body d-flex flex-column align-items-center text-center">
-                    <i class="fas fa-calendar-alt fa-3x text-warning mb-3"></i>
-                    <h5 class="card-title">Manage Fitness Events</h5>
-                    <p class="card-text text-muted">Organize and manage fitness events.</p>
-                    <a asp-area="Admin" asp-controller="FitnessEventsManagement" asp-action="Index" class="btn btn-warning mt-auto w-100">
-                        Go to Fitness Events
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card shadow h-100 border-0">
-                <div class="card-body d-flex flex-column align-items-center text-center">
-                    <i class="fas fa-id-card fa-3x text-info mb-3"></i>
-                    <h5 class="card-title">Manage Membership Types</h5>
-                    <p class="card-text text-muted">Add, edit, or remove membership types.</p>
-                    <a asp-area="Admin" asp-controller="MembershipTypesManagement" asp-action="Index" class="btn btn-info mt-auto w-100">
-                        Go to Membership Types
+                    <i class="fas fa-spa fa-3x text-primary mb-3"></i>
+                    <h5 class="card-title">Управление на спа процедури</h5>
+                    <p class="card-text text-muted">Създавайте, обновявайте или изтривайте спа услуги.</p>
+                    <a asp-area="Admin" asp-controller="SpaProceduresManagement" asp-action="Index" class="btn btn-primary mt-auto w-100">
+                        Към Спа процедури
                     </a>
                 </div>
             </div>

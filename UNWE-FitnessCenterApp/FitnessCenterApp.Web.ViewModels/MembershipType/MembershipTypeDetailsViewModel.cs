@@ -8,4 +8,5 @@ public class MembershipTypeDetailsViewModel
     public int Duration { get; set; }
     public string Description { get; set; } = null!;
     public string? ImageUrl { get; set; }
+    public int AllowedSpaProceduresPerWeek { get; set; }
 }

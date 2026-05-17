@@ -1,15 +1,15 @@
 ﻿@model FitnessCenterApp.Web.ViewModels.FitnessEvent.EditFitnessEventViewModel
 
 @{
-    ViewData["Title"] = "Edit Fitness Event";
+    ViewData["Title"] = "Редактиране на фитнес събитие";
 }
 
 <div class="container mt-5 mb-5">
-    <h1 class="text-primary mb-4">Edit Fitness Event</h1>
+    <h1 class="text-primary mb-4">Редактиране на фитнес събитие</h1>
 
     <form asp-action="Edit" method="post" id="editFitnessEventForm">
-	    <input type="hidden" asp-for="Id" />
-	    <input type="hidden" asp-for="ModifiedOn_22180022" />
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" name="ModifiedOn_22180022" value="@Model.ModifiedOn_22180022.ToString("O")" />
 
         <div class="form-group mb-3">
             <label asp-for="Title" class="fw-bold"></label>
@@ -18,7 +18,7 @@
         </div>
 
         <div class="form-group mb-3">
-            <label asp-for="ImageUrl" class="fw-bold">Image URL</label>
+            <label asp-for="ImageUrl" class="fw-bold">URL на снимка</label>
             <input asp-for="ImageUrl" class="form-control" />
             <span asp-validation-for="ImageUrl" class="text-danger"></span>
         </div>
@@ -43,21 +43,25 @@
 
         <div class="row">
             <div class="col-md-6 form-group mb-3">
-                <label asp-for="StartDate" class="fw-bold">Start Date and Time</label>
+                <label asp-for="StartDate" class="fw-bold">Начална дата и час</label>
                 <input asp-for="StartDate" class="form-control" type="datetime-local" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
 
             <div class="col-md-6 form-group mb-3">
-                <label asp-for="EndDate" class="fw-bold">End Date and Time</label>
+                <label asp-for="EndDate" class="fw-bold">Крайна дата и час</label>
                 <input asp-for="EndDate" class="form-control" type="datetime-local" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
         </div>
 
         <div class="form-group d-flex justify-content-start mt-4">
-            <button type="submit" class="btn btn-primary me-2" style="width: 200px;">Save Changes</button>
-            <a asp-action="Index" class="btn btn-secondary" style="width: 200px;">Cancel</a>
+            <button type="submit" class="btn btn-warning me-2" style="width: 200px;">
+                <i class="fas fa-edit"></i> Обнови събитието
+            </button>
+            <a asp-action="Index" class="btn btn-secondary" style="width: 200px;">
+                <i class="fas fa-arrow-left"></i> Отказ
+            </a>
         </div>
     </form>
 </div>
@@ -77,7 +81,7 @@
 
                 if (endDate <= startDate) {
                     event.preventDefault();
-                    alert("End Date must be later than Start Date.");
+                    toastr.warning("Крайната дата трябва да бъде след началната.", "Внимание");
                 }
             }
         };

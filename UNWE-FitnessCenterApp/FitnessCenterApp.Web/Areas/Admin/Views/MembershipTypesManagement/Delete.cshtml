@@ -1,7 +1,7 @@
 ﻿@model FitnessCenterApp.Web.ViewModels.MembershipType.DeleteMembershipTypeViewModel
 
 @{
-	ViewData["Title"] = "Delete Membership Type";
+	ViewData["Title"] = "Изтриване на абонаментен план";
 }
 
 <div class="container mt-5">
@@ -13,15 +13,15 @@
 			<div class="card border-0 shadow">
 				<div class="card-body">
 					<h3 class="card-title text-center">@Model.Name</h3>
-					<p class="mb-0"><strong>Description:</strong> @Model.Description</p>
-					<p class="text-danger mt-3 text-center fw-bold">Are you sure you want to delete this membership type?</p>
+					<p class="mb-0"><strong>Описание:</strong> @Model.Description</p>
+					<p class="text-danger mt-3 text-center fw-bold">Сигурни ли сте, че искате да изтриете този абонаментен план?</p>
 				</div>
 				<div class="card-footer bg-white border-0">
 					<form asp-action="Delete" method="post">
 						<input type="hidden" asp-for="Id" />
-                        
-						<button type="submit" class="btn btn-danger w-100 mb-2">Confirm Delete</button>
-						<a asp-area="Admin" asp-controller="MembershipTypesManagement" asp-action="Index" class="btn btn-warning w-100">Cancel</a>
+
+						<button type="submit" class="btn btn-danger w-100 mb-2">Потвърди изтриването</button>
+						<a asp-area="Admin" asp-controller="MembershipTypesManagement" asp-action="Index" class="btn btn-warning w-100">Отказ</a>
 					</form>
 				</div>
 			</div>

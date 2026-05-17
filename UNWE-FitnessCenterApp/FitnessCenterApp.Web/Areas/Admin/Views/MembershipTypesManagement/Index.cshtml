@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FitnessCenterApp.Web.ViewModels.MembershipType.AllMembershipTypeViewModel>
 
 @{
-    ViewData["Title"] = "Manage Membership Types";
+    ViewData["Title"] = "Управление на абонаментни планове";
 }
 
 <div class="container mt-5">
@@ -9,10 +9,10 @@
 
     <div class="d-flex justify-content-between mb-3">
         <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back to Dashboard
+            <i class="fas fa-arrow-left"></i> Обратно към таблото
         </a>
         <a asp-action="Add" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Add Membership Type
+            <i class="fas fa-plus"></i> Добави абонаментен план
         </a>
     </div>
 
@@ -20,18 +20,19 @@
         <table id="dataTable" class="table table-bordered table-striped table-hover mb-0">
             <thead class="table-dark text-center">
                 <tr>
-                    <th style="width: 100px;">Image</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Duration (in days)</th>
-                    <th style="width: 250px;">Actions</th>
+                    <th style="width: 100px;">Снимка</th>
+                    <th>Име</th>
+                    <th>Цена</th>
+                    <th>Продълж. (дни)</th>
+                    <th>Спа лимит / седм.</th>
+                    <th style="width: 250px;">Действия</th>
                 </tr>
             </thead>
             <tbody class="align-middle">
                 @if (Model == null || !Model.Any())
                 {
                     <tr>
-                        <td colspan="5" class="text-center text-muted py-4">No membership types found.</td>
+                        <td colspan="6" class="text-center text-muted py-4">Не са намерени абонаментни планове.</td>
                     </tr>
                 }
                 else
@@ -46,18 +47,19 @@
                                 }
                                 else
                                 {
-                                    <img src="~/img/no-image-available-02.jpg" alt="No Image" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover;" />
+                                    <img src="~/img/no-image-available-02.jpg" alt="Няма снимка" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover;" />
                                 }
                             </td>
                             <td class="fw-bold">@membershipType.Name</td>
                             <td class="text-center">@membershipType.Price.ToString("C")</td>
                             <td class="text-center">@membershipType.Duration</td>
+                            <td class="text-center fw-bold text-primary">@membershipType.AllowedSpaProceduresPerWeek</td>
                             <td class="text-center">
                                 <a asp-action="Edit" asp-route-id="@membershipType.Id" class="btn btn-warning btn-sm">
-                                    <i class="fas fa-edit"></i> Edit
+                                    <i class="fas fa-edit"></i> Редактирай
                                 </a>
                                 <a asp-action="Delete" asp-route-id="@membershipType.Id" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-trash"></i> Delete
+                                    <i class="fas fa-trash"></i> Изтрий
                                 </a>
                             </td>
                         </tr>
@@ -81,7 +83,10 @@
         "order": [],
         "columnDefs": [
         { "orderable": false, "targets": [0, -1] }
-        ]
+        ],
+        "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.13.7/i18n/bg.json"
+        }
         });
         });
     </script>

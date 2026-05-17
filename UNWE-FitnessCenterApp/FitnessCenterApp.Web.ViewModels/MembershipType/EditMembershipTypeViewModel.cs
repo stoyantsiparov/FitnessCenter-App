@@ -27,5 +27,8 @@ public class EditMembershipTypeViewModel
 
     public string? ImageUrl { get; set; }
 
+    [Required]
+    public int AllowedSpaProceduresPerWeek { get; set; }
+
     public DateTime ModifiedOn_22180022 { get; set; }
 }

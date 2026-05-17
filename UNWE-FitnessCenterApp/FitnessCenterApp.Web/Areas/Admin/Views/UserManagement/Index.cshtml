@@ -4,7 +4,7 @@
 @inject RoleManager<IdentityRole> roleManager
 
 @{
-    ViewData["Title"] = "Manage Users";
+    ViewData["Title"] = "Управление на потребители";
     var allRoles = await roleManager.Roles.Select(r => r.Name).ToListAsync();
 }
 
@@ -13,7 +13,7 @@
 
     <div class="d-flex justify-content-start mb-3">
         <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back to Dashboard
+            <i class="fas fa-arrow-left"></i> Обратно към таблото
         </a>
     </div>
 
@@ -21,9 +21,9 @@
         <table id="dataTable" class="table table-bordered table-striped table-hover mb-0">
             <thead class="table-dark text-center align-middle">
                 <tr>
-                    <th>Email</th>
-                    <th>Current Roles</th>
-                    <th style="width: 480px;">Actions</th>
+                    <th>Имейл</th>
+                    <th>Текущи роли</th>
+                    <th style="width: 480px;">Действия</th>
                 </tr>
             </thead>
             <tbody class="align-middle text-center">
@@ -43,12 +43,12 @@
                                 }
                                 else
                                 {
-                                    <span class="text-muted">No Roles</span>
+                                    <span class="text-muted">Няма роли</span>
                                 }
                             </td>
                             <td>
                                 <div class="d-flex justify-content-center align-items-center gap-2 flex-nowrap">
-                                    
+
                                     <form method="post" asp-action="AssignRole" asp-controller="UserManagement" asp-area="Admin" class="m-0 d-flex align-items-center">
                                         <input type="hidden" name="userId" value="@user.Id" />
                                         <select name="role" class="form-select form-select-sm me-1" style="width: 100px;">
@@ -57,7 +57,7 @@
                                                 <option value="@role">@role</option>
                                             }
                                         </select>
-                                        <button type="submit" class="btn btn-success btn-sm text-nowrap">Assign</button>
+                                        <button type="submit" class="btn btn-success btn-sm text-nowrap">Назначи</button>
                                     </form>
 
                                     @if (user.Roles != null && user.Roles.Any())
@@ -70,7 +70,7 @@
                                                     <option value="@role">@role</option>
                                                 }
                                             </select>
-                                            <button type="submit" class="btn btn-warning btn-sm text-nowrap">Remove</button>
+                                            <button type="submit" class="btn btn-warning btn-sm text-nowrap">Премахни</button>
                                         </form>
                                     }
                                     else
@@ -78,9 +78,9 @@
                                         <div style="width: 175px;"></div>
                                     }
 
-                                    <form method="post" asp-action="DeleteUser" asp-controller="UserManagement" asp-area="Admin" class="m-0" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                    <form method="post" asp-action="DeleteUser" asp-controller="UserManagement" asp-area="Admin" class="m-0" onsubmit="return confirm('Сигурни ли сте, че искате да изтриете този потребител?');">
                                         <input type="hidden" name="userId" value="@user.Id" />
-                                        <button type="submit" class="btn btn-danger btn-sm text-nowrap">Delete</button>
+                                        <button type="submit" class="btn btn-danger btn-sm text-nowrap">Изтрий</button>
                                     </form>
 
                                 </div>
@@ -91,7 +91,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="3" class="text-center text-muted py-4">No users found.</td>
+                        <td colspan="3" class="text-center text-muted py-4">Не са намерени потребители.</td>
                     </tr>
                 }
             </tbody>
@@ -112,7 +112,10 @@
         "order": [],
         "columnDefs": [
         { "orderable": false, "targets": [-1] }
-        ]
+        ],
+        "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.13.7/i18n/bg.json"
+        }
         });
         });
     </script>

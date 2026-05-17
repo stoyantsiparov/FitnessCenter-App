@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FitnessCenterApp.Web.ViewModels.Instructor.AllInstructorsViewModel>
 
 @{
-    ViewData["Title"] = "Manage Instructors";
+    ViewData["Title"] = "Управление на инструктори";
 }
 
 <div class="container mt-5">
@@ -9,10 +9,10 @@
 
     <div class="d-flex justify-content-between mb-3">
         <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back to Dashboard
+            <i class="fas fa-arrow-left"></i> Обратно към таблото
         </a>
         <a asp-action="Add" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Add New Instructor
+            <i class="fas fa-plus"></i> Добави нов инструктор
         </a>
     </div>
 
@@ -20,17 +20,17 @@
         <table id="dataTable" class="table table-bordered table-striped table-hover mb-0">
             <thead class="table-dark text-center">
                 <tr>
-                    <th style="width: 100px;">Image</th>
-                    <th>Name</th>
-                    <th>Specialization</th>
-                    <th style="width: 250px;">Actions</th>
+                    <th style="width: 100px;">Снимка</th>
+                    <th>Име</th>
+                    <th>Специализация</th>
+                    <th style="width: 250px;">Действия</th>
                 </tr>
             </thead>
             <tbody class="align-middle">
                 @if (!Model.Any())
                 {
                     <tr>
-                        <td colspan="4" class="text-center text-muted py-4">No instructors found.</td>
+                        <td colspan="4" class="text-center text-muted py-4">Не са намерени инструктори.</td>
                     </tr>
                 }
                 else
@@ -45,17 +45,17 @@
                                 }
                                 else
                                 {
-                                    <img src="~/img/no-image-available-02.jpg" alt="No image" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover;" />
+                                    <img src="~/img/no-image-available-02.jpg" alt="Няма снимка" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover;" />
                                 }
                             </td>
                             <td>@instructor.FirstName @instructor.LastName</td>
                             <td class="text-center">@instructor.Specialization</td>
                             <td class="text-center">
                                 <a asp-action="Edit" asp-route-id="@instructor.Id" class="btn btn-warning btn-sm">
-                                    <i class="fas fa-edit"></i> Edit
+                                    <i class="fas fa-edit"></i> Редактирай
                                 </a>
                                 <a asp-action="Delete" asp-route-id="@instructor.Id" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-trash"></i> Delete
+                                    <i class="fas fa-trash"></i> Изтрий
                                 </a>
                             </td>
                         </tr>
@@ -79,7 +79,10 @@
         "order": [],
         "columnDefs": [
         { "orderable": false, "targets": [0, -1] }
-        ]
+        ],
+        "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.13.7/i18n/bg.json"
+        }
         });
         });
     </script>

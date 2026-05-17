@@ -24,4 +24,7 @@ public class AddMembershipTypeViewModel
     public string Description { get; set; } = null!;
 
     public string? ImageUrl { get; set; }
+
+    [Required]
+    public int AllowedSpaProceduresPerWeek { get; set; }
 }

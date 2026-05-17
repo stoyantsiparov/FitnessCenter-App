@@ -1,11 +1,11 @@
 ﻿@model FitnessCenterApp.Web.ViewModels.MembershipType.AddMembershipTypeViewModel
 
 @{
-    ViewData["Title"] = "Add Membership Type";
+    ViewData["Title"] = "Добавяне на абонаментен план";
 }
 
 <div class="container mt-5 mb-5">
-    <h1 class="text-primary mb-4">Add New Membership Type</h1>
+    <h1 class="text-primary mb-4">Добавяне на нов абонаментен план</h1>
 
     <form asp-action="Add" method="post" id="addMembershipTypeForm">
         <div class="form-group mb-3">
@@ -15,23 +15,29 @@
         </div>
 
         <div class="form-group mb-3">
-            <label asp-for="ImageUrl" class="fw-bold">Image URL</label>
+            <label asp-for="ImageUrl" class="fw-bold">URL на снимка</label>
             <input asp-for="ImageUrl" class="form-control" />
             <span asp-validation-for="ImageUrl" class="text-danger"></span>
         </div>
 
         <div class="row">
             <div class="col-md-6 form-group mb-3">
-                <label asp-for="Price" class="fw-bold">Price</label>
+                <label asp-for="Price" class="fw-bold">Цена</label>
                 <input asp-for="Price" class="form-control" type="number" step="0.01" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
 
             <div class="col-md-6 form-group mb-3">
-                <label asp-for="Duration" class="fw-bold">Duration (in days)</label>
+                <label asp-for="Duration" class="fw-bold">Продължителност (в дни)</label>
                 <input asp-for="Duration" class="form-control" type="number" />
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="AllowedSpaProceduresPerWeek" class="fw-bold">Позволени спа процедури на седмица (0 за без достъп)</label>
+            <input asp-for="AllowedSpaProceduresPerWeek" class="form-control" type="number" min="0" />
+            <span asp-validation-for="AllowedSpaProceduresPerWeek" class="text-danger"></span>
         </div>
 
         <div class="form-group mb-3">
@@ -41,8 +47,8 @@
         </div>
 
         <div class="form-group d-flex justify-content-start mt-4">
-            <button type="submit" class="btn btn-primary me-2" style="width: 200px;">Add</button>
-            <a asp-action="Index" class="btn btn-secondary" style="width: 200px;">Back</a>
+            <button type="submit" class="btn btn-primary me-2" style="width: 200px;">Добави</button>
+            <a asp-action="Index" class="btn btn-secondary" style="width: 200px;">Назад</a>
         </div>
     </form>
 </div>
@@ -58,7 +64,7 @@
 
             if (price <= 0 || duration <= 0) {
                 event.preventDefault();
-                alert("Price and Duration must be positive values.");
+                toastr.warning("Цената и продължителността трябва да са положителни стойности.", "Внимание");
             }
         };
     </script>

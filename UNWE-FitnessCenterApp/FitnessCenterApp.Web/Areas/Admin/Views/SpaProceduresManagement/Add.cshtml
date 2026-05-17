@@ -1,7 +1,7 @@
 ﻿@model FitnessCenterApp.Web.ViewModels.SpaProcedure.AddSpaProcedureViewModel
 
 @{
-    ViewData["Title"] = "Add Spa Procedure";
+    ViewData["Title"] = "Добавяне на спа процедура";
 }
 
 <div class="container mt-5 mb-5">
@@ -21,24 +21,24 @@
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="ImageUrl" class="form-label fw-bold">Image URL</label>
+                            <label asp-for="ImageUrl" class="form-label fw-bold">URL на снимка</label>
                             <input asp-for="ImageUrl" class="form-control" />
                             <span asp-validation-for="ImageUrl" class="text-danger"></span>
                         </div>
 
                         <div class="row">
                             <div class="col-md-4 mb-3">
-                                <label asp-for="Price" class="form-label fw-bold">Price ($)</label>
+                                <label asp-for="Price" class="form-label fw-bold">Цена (лв.)</label>
                                 <input asp-for="Price" class="form-control" type="number" step="0.01" />
                                 <span asp-validation-for="Price" class="text-danger"></span>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label asp-for="Duration" class="form-label fw-bold">Duration (min)</label>
+                                <label asp-for="Duration" class="form-label fw-bold">Продължителност (мин)</label>
                                 <input asp-for="Duration" class="form-control" type="number" />
                                 <span asp-validation-for="Duration" class="text-danger"></span>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label asp-for="Capacity" class="form-label fw-bold">Capacity</label>
+                                <label asp-for="Capacity" class="form-label fw-bold">Капацитет</label>
                                 <input asp-for="Capacity" class="form-control" type="number" />
                                 <span asp-validation-for="Capacity" class="text-danger"></span>
                             </div>
@@ -51,10 +51,10 @@
                         </div>
 
                         <button type="submit" class="btn btn-success w-100 mb-2">
-                            <i class="fas fa-save"></i> Save Procedure
+                            <i class="fas fa-save"></i> Запази процедурата
                         </button>
                         <a asp-action="Index" class="btn btn-secondary w-100">
-                            <i class="fas fa-arrow-left"></i> Back to List
+                            <i class="fas fa-arrow-left"></i> Обратно към списъка
                         </a>
                     </form>
                 </div>

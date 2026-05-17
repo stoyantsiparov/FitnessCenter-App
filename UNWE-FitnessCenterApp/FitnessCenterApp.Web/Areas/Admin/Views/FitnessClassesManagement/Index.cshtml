@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FitnessCenterApp.Web.ViewModels.FitnessClass.AllFitnessClassesViewModel>
 
 @{
-    ViewData["Title"] = "Manage Fitness Classes";
+    ViewData["Title"] = "Управление на фитнес класове";
 }
 
 <div class="container mt-5">
@@ -9,10 +9,10 @@
 
     <div class="d-flex justify-content-between mb-3">
         <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back to Dashboard
+            <i class="fas fa-arrow-left"></i> Обратно към таблото
         </a>
         <a asp-action="Add" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Add New Fitness Class
+            <i class="fas fa-plus"></i> Добави фитнес клас
         </a>
     </div>
 
@@ -20,19 +20,19 @@
         <table id="dataTable" class="table table-bordered table-striped table-hover mb-0">
             <thead class="table-dark text-center">
                 <tr>
-                    <th style="width: 100px;">Image</th>
-                    <th>Class Name</th>
-                    <th>Schedule</th>
-                    <th>Duration</th>
-                    <th>Capacity</th>
-                    <th style="width: 250px;">Actions</th>
+                    <th style="width: 100px;">Снимка</th>
+                    <th>Име на клас</th>
+                    <th>График</th>
+                    <th>Продълж.</th>
+                    <th>Капацитет</th>
+                    <th style="min-width: 320px;">Действия</th>
                 </tr>
             </thead>
             <tbody class="align-middle">
                 @if (Model == null || !Model.Any())
                 {
                     <tr>
-                        <td colspan="6" class="text-center text-muted py-4">No fitness classes found.</td>
+                        <td colspan="6" class="text-center text-muted py-4">Не са намерени фитнес класове.</td>
                     </tr>
                 }
                 else
@@ -47,23 +47,25 @@
                                 }
                                 else
                                 {
-                                    <img src="~/img/no-image-available-02.jpg" alt="No image" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover;" />
+                                    <img src="~/img/no-image-available-02.jpg" alt="Няма снимка" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover;" />
                                 }
                             </td>
                             <td class="fw-bold">@classModel.Name</td>
                             <td class="text-center">@classModel.Schedule</td>
-                            <td class="text-center">@classModel.Duration min</td>
-                            <td class="text-center">@classModel.Capacity spots</td>
-                            <td class="text-center">
-                                <a asp-action="Participants" asp-route-id="@classModel.Id" class="btn btn-info btn-sm">
-                                    <i class="fas fa-users"></i> Participants
-                                </a>
-                                <a asp-action="Edit" asp-route-id="@classModel.Id" class="btn btn-warning btn-sm">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                                <a asp-action="Delete" asp-route-id="@classModel.Id" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-trash"></i> Delete
-                                </a>
+                            <td class="text-center">@classModel.Duration мин</td>
+                            <td class="text-center">@classModel.Capacity места</td>
+                            <td>
+                                <div class="d-flex justify-content-center align-items-center gap-2 flex-nowrap">
+                                    <a asp-action="Participants" asp-route-id="@classModel.Id" class="btn btn-info btn-sm text-nowrap">
+                                        <i class="fas fa-users"></i> Участници
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@classModel.Id" class="btn btn-warning btn-sm text-nowrap">
+                                        <i class="fas fa-edit"></i> Редактирай
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@classModel.Id" class="btn btn-danger btn-sm text-nowrap">
+                                        <i class="fas fa-trash"></i> Изтрий
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     }
@@ -86,7 +88,10 @@
         "order": [],
         "columnDefs": [
         { "orderable": false, "targets": [0, -1] }
-        ]
+        ],
+        "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.13.7/i18n/bg.json"
+        }
         });
         });
     </script>
