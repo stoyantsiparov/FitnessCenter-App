@@ -7,4 +7,5 @@ public class AllMembershipTypeViewModel
     public decimal Price { get; set; }
     public int Duration { get; set; }
     public string? ImageUrl { get; set; }
+    public int DaysRemaining { get; set; }
 }

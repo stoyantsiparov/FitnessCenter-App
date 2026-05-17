@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FitnessCenterApp.Web.ViewModels.FitnessClass.AllFitnessClassesViewModel>
 
 @{
-	ViewData["Title"] = "My Registered Classes";
+	ViewData["Title"] = "Моите фитнес класове";
 }
 
 <h2 class="text-center mt-4">@ViewData["Title"]</h2>
@@ -10,8 +10,8 @@
 @if (!Model.Any())
 {
 	<div class="text-center">
-		<h4 class="text-muted">You haven't registered for any classes yet.</h4>
-		<a asp-controller="FitnessClass" asp-action="Index" class="btn btn-primary mt-3">Browse Classes</a>
+		<h4 class="text-muted">Все още не сте се записали за нито един клас.</h4>
+		<a asp-controller="FitnessClass" asp-action="Index" class="btn btn-primary mt-3">Разгледай класовете</a>
 	</div>
 }
 else
@@ -20,40 +20,40 @@ else
 		@foreach (var fitnessClass in Model)
 		{
 			<div class="col">
-				<div class="card h-100" style="border-color: #8697C4;">
+				<div class="card h-100">
 					@if (!string.IsNullOrEmpty(fitnessClass.ImageUrl))
 					{
 						<img class="card-img-top" src="@fitnessClass.ImageUrl" alt="@fitnessClass.Name" style="height: 200px; object-fit: cover;">
 					}
 					else
 					{
-						<img class="card-img-top" src="~/img/no-image-available-02.jpg" alt="No Image Available" style="height: 200px; object-fit: cover;">
-						}
+						<img class="card-img-top" src="~/img/no-image-available-02.jpg" alt="Няма налична снимка" style="height: 200px; object-fit: cover;">
+					}
 
-						<div class="card-body d-flex flex-column">
-							<h5 class="card-title text-center text-primary">@fitnessClass.Name</h5>
-							<hr class="mt-2 mb-3" />
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title text-center text-primary">@fitnessClass.Name</h5>
+						<hr class="mt-2 mb-3" />
 
-							<p class="card-text flex-grow-1 text-center">
-								<strong><i class="bi bi-calendar-week"></i> Schedule:</strong><br /> @fitnessClass.Schedule
-							</p>
+						<p class="card-text flex-grow-1 text-center">
+							<strong><i class="bi bi-calendar-week"></i> График:</strong><br /> @fitnessClass.Schedule
+						</p>
 
-							<div class="alert text-center py-2 mb-3" style="background-color: #EDE8F5; border-color: #ADBBDA; font-size: 0.9rem;">
-								<strong>Duration:</strong> @fitnessClass.Duration min
-							</div>
+						<div class="alert bg-sidecar border text-center py-2 mb-3" style="font-size: 0.9rem;">
+							<strong>Продължителност:</strong> @fitnessClass.Duration мин
+						</div>
 
-							<div class="mt-auto">
-								<form method="post" asp-controller="FitnessClass" asp-action="RemoveFromMyClasses" asp-route-id="@fitnessClass.Id">
-									<button type="submit" class="btn btn-danger w-100">Leave Class</button>
-								</form>
-							</div>
+						<div class="mt-auto">
+							<form method="post" asp-controller="FitnessClass" asp-action="RemoveFromMyClasses" asp-route-id="@fitnessClass.Id">
+								<button type="submit" class="btn btn-danger w-100">Отпиши се</button>
+							</form>
 						</div>
 					</div>
 				</div>
-			}
-		</div>
-	}
+			</div>
+		}
+	</div>
+}
 
-	@section Scripts {
-		<partial name="_ValidationScriptsPartial" />
-	}
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

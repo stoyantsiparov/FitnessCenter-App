@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FitnessCenterApp.Web.ViewModels.MembershipType.AllMembershipTypeViewModel>
 
 @{
-	ViewData["Title"] = "Available Membership Plans";
+	ViewData["Title"] = "Налични абонаментни планове";
 }
 
 <h2 class="text-center mt-4">@ViewData["Title"]</h2>
@@ -11,7 +11,7 @@
 	@foreach (var membershipType in Model)
 	{
 		<div class="col-auto">
-			<div class="card h-100 shadow-sm" style="width: 22rem; border-color: #8697C4; border-width: 1px; border-radius: 15px; overflow: hidden;">
+			<div class="card h-100 shadow-sm" style="width: 22rem; overflow: hidden;">
                 
 				<div class="text-center pt-4 pb-2 bg-white">
 					<h4 class="card-title text-primary fw-bold mb-0">@membershipType.Name</h4>
@@ -23,20 +23,20 @@
 				}
 				else
 				{
-					<img src="~/img/no-image-available-02.jpg" alt="No Image Available" style="height: 220px; width: 100%; object-fit: cover;">
+					<img src="~/img/no-image-available-02.jpg" alt="Няма налична снимка" style="height: 220px; width: 100%; object-fit: cover;">
 				}
 
 				<div class="card-body d-flex flex-column text-center">
-					<div class="alert py-3 mb-4 mt-2" style="background-color: #EDE8F5; border-color: #ADBBDA; border-radius: 10px;">
+					<div class="alert bg-sidecar border py-3 mb-4 mt-2" style="border-radius: 10px;">
 						<p class="mb-1 text-dark fs-5 fw-bold">@membershipType.Price.ToString("C")</p>
-						<p class="mb-0 text-muted">Valid for @membershipType.Duration days</p>
+						<p class="mb-0 text-muted">Валиден за @membershipType.Duration дни</p>
 					</div>
 
 					<div class="mt-auto d-flex flex-column gap-2">
 						<form method="post" asp-controller="MembershipType" asp-action="AddMyMembership" asp-route-id="@membershipType.Id">
-							<button type="submit" class="btn btn-primary w-100 py-2 fw-bold">BUY MEMBERSHIP</button>
+							<button type="submit" class="btn btn-primary w-100 py-2 fw-bold">КУПИ АБОНАМЕНТ</button>
 						</form>
-						<a asp-controller="MembershipType" asp-action="Details" asp-route-id="@membershipType.Id" class="btn btn-outline-primary w-100 py-2">VIEW DETAILS</a>
+						<a asp-controller="MembershipType" asp-action="Details" asp-route-id="@membershipType.Id" class="btn btn-outline-primary w-100 py-2">ВИЖ ДЕТАЙЛИ</a>
 					</div>
 				</div>
 			</div>

@@ -80,18 +80,31 @@ public class MembershipTypeService : IMembershipTypeService
     {
         if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
 
-        return await _context.MembershipRegistrations
+        var registrations = await _context.MembershipRegistrations
             .Where(r => r.MemberId == userId)
-            .Select(r => new AllMembershipTypeViewModel
+            .Select(r => new
             {
                 Id = r.MembershipType.Id,
                 Name = r.MembershipType.Name,
                 Price = r.MembershipType.Price,
                 Duration = r.MembershipType.Duration,
-                ImageUrl = r.MembershipType.ImageUrl
+                ImageUrl = r.MembershipType.ImageUrl,
+                RegistrationDate = r.RegistrationDate
             })
             .AsNoTracking()
             .ToListAsync();
+
+        var currentDate = DateTime.UtcNow;
+
+        return registrations.Select(r => new AllMembershipTypeViewModel
+        {
+            Id = r.Id,
+            Name = r.Name,
+            Price = r.Price,
+            Duration = r.Duration,
+            ImageUrl = r.ImageUrl,
+            DaysRemaining = Math.Max(0, (int)Math.Ceiling((r.RegistrationDate.AddDays(r.Duration) - currentDate).TotalDays))
+        });
     }
 
     /// <inheritdoc />

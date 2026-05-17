@@ -1,14 +1,14 @@
 ﻿@model FitnessCenterApp.Web.ViewModels.Instructor.InstructorDetailsViewModel
 
 @{
-	ViewData["Title"] = "Instructor Details";
+	ViewData["Title"] = "Детайли за инструктора";
 }
 
 <div class="container mt-5 mb-5">
 	<h2 class="text-center">@Model.FirstName @Model.LastName</h2>
 	<hr class="mb-5" />
 
-	<div class="card shadow-sm mx-auto" style="max-width: 900px; border-color: #8697C4; border-radius: 15px; overflow: hidden;">
+	<div class="card shadow-sm mx-auto" style="max-width: 900px; border-radius: 15px; overflow: hidden;">
 		<div class="row g-0">
             
 			<div class="col-md-5 d-flex align-items-center justify-content-center bg-light p-0">
@@ -18,7 +18,7 @@
 				}
 				else
 				{
-					<img src="~/img/no-image-available-02.jpg" class="img-fluid w-100" alt="No Image Available" style="height: 100%; min-height: 400px; object-fit: cover;" />
+					<img src="~/img/no-image-available-02.jpg" class="img-fluid w-100" alt="Няма налична снимка" style="height: 100%; min-height: 400px; object-fit: cover;" />
 				}
 			</div>
 
@@ -27,11 +27,11 @@
 					<h3 class="card-title text-primary fw-bold mb-2">@Model.FirstName @Model.LastName</h3>
 					<h5 class="text-muted mb-4"><i class="bi bi-star-fill text-warning me-2"></i>@Model.Specialization</h5>
                     
-					<div class="alert flex-grow-1 p-4 text-start" style="background-color: #EDE8F5; border-color: #ADBBDA; border-radius: 10px;">
+					<div class="alert bg-sidecar border flex-grow-1 p-4 text-start" style="border-radius: 10px;">
 						<div class="d-flex">
 							<i class="bi bi-person-lines-fill me-2 fs-5 text-dark"></i>
 							<div>
-								<h6 class="text-dark fw-bold mb-2">Biography:</h6>
+								<h6 class="text-dark fw-bold mb-2">Биография:</h6>
 								<p class="mb-0 text-dark" style="line-height: 1.6; text-align: justify;">
 									@Model.Bio
 								</p>
@@ -40,7 +40,7 @@
 					</div>
 
 					<div class="mt-4">
-						<a asp-controller="Instructor" asp-action="Index" class="btn btn-outline-secondary w-100 py-2">Back to Instructors</a>
+						<a asp-controller="Instructor" asp-action="Index" class="btn btn-outline-secondary w-100 py-2">Назад към инструкторите</a>
 					</div>
 				</div>
 			</div>
