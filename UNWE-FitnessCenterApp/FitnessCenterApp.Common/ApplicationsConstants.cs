@@ -6,8 +6,8 @@ public static class ApplicationsConstants
     public const string UserRole = "User";
     public const string MemberRole = "Member";
     public const string AdminRole = "Admin";
-    public const string InvalidData = "Invalid data. Please correct the errors and try again.";
-    public const string UnknownEmail = "Unknown Email";
+    public const string InvalidData = "Невалидни данни. Моля, коригирайте грешките и опитайте отново.";
+    public const string UnknownEmail = "Неизвестен имейл";
     public const int DefaultPageNumber = 1;
     public const int DefaultEntitiesPerPage = 6;
 }

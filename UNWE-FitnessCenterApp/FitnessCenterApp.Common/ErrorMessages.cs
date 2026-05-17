@@ -4,83 +4,83 @@ public static class ErrorMessages
 {
     public static class General
     {
-        public const string UserIdCannotBeEmpty = "User ID cannot be null or empty.";
+        public const string UserIdCannotBeEmpty = "Потребителският ID не може да бъде празен.";
     }
 
     public static class SpaProcedure
     {
-        public const string PastAppointmentDate = "Appointment date and time cannot be in the past.";
-        public const string SpaAppointmentNotBooked = "You haven't booked a spa appointment";
-        public const string SpaProcedureNotFound = "Spa procedure not found.";
-        public const string OnlyMembersCanBookSpaProcedures = "Only members can book spa procedures.";
-        public const string CannotBookMoreThanOneWeekAhead = "You can only book appointments up to 7 days in advance.";
-        public const string OutsideWorkingHours = "Appointments must start and finish within our working hours (09:00 - 18:00).";
-        public const string AlreadyBookedThisTypeForWeek = "You can only book this type of procedure once per 7 days.";
-        public const string OverlappingAppointmentWithBuffer = "You have another procedure booked around this time. A 30-minute rest buffer is required between procedures.";
-        public const string SpaProcedureFullAtThisTime = "There are no available spots for this procedure at the selected time.";
+        public const string PastAppointmentDate = "Датата и часът на резервацията не могат да бъдат в миналото.";
+        public const string SpaAppointmentNotBooked = "Нямате резервирана спа процедура.";
+        public const string SpaProcedureNotFound = "Спа процедурата не е намерена.";
+        public const string OnlyMembersCanBookSpaProcedures = "Само членове могат да резервират спа процедури.";
+        public const string CannotBookMoreThanOneWeekAhead = "Можете да резервирате часове само до 7 дни напред.";
+        public const string OutsideWorkingHours = "Часовете трябва да бъдат в рамките на работното време (09:00 - 18:00).";
+        public const string AlreadyBookedThisTypeForWeek = "Можете да резервирате този тип процедура само веднъж на 7 дни.";
+        public const string OverlappingAppointmentWithBuffer = "Имате друга резервация около този час. Изисква се 30 минути почивка между процедурите.";
+        public const string SpaProcedureFullAtThisTime = "Няма свободни места за тази процедура в избрания час.";
     }
 
     public static class FitnessEvent
     {
-        public const string FitnessEventDoesNotExist = "The specified event does not exist.";
-        public const string FitnessEventNotFound = "Fitness event not found.";
-        public const string AlreadyRegisteredForEvent = "You have already signed up for this event.";
-        public const string UserNotRegisteredForEvent = "You are not registered for this event.";
-        public const string EndDateMustBeLaterThanStartDate = "End Date must be later than Start Date.";
-        public const string StartDateCannotBeInThePast = "Start Date cannot be in the past.";
-        public const string OnlyMembersCanRegisterForThisEvent = "Only members can register for fitness events.";
-        public const string EventFull = "There are no more available spots for this event.";
+        public const string FitnessEventDoesNotExist = "Посоченото събитие не съществува.";
+        public const string FitnessEventNotFound = "Фитнес събитието не е намерено.";
+        public const string AlreadyRegisteredForEvent = "Вече сте записани за това събитие.";
+        public const string UserNotRegisteredForEvent = "Не сте записани за това събитие.";
+        public const string EndDateMustBeLaterThanStartDate = "Крайният срок трябва да е след началната дата.";
+        public const string StartDateCannotBeInThePast = "Началната дата не може да бъде в миналото.";
+        public const string OnlyMembersCanRegisterForThisEvent = "Само членове могат да се записват за фитнес събития.";
+        public const string EventFull = "Няма повече свободни места за това събитие.";
     }
 
     public static class FitnessClass
     {
-        public const string FitnessClassDoesNotExist = "The specified fitness class does not exist.";
-        public const string ClassNotFound = "Fitness class not found.";
-        public const string AlreadyRegisteredForClass = "You have already signed up for this fitness class.";
-        public const string UserNotRegisteredForClass = "You are not registered for this fitness class.";
-        public const string ClassViewModelCannotBeNull = "Fitness class view model cannot be null.";
-        public const string ClassWithTheSameNameAndScheduleAlreadyExists = "A fitness class with the same name and schedule already exists.";
-        public const string InvalidScheduleFormat = "Invalid schedule format.";
-        public const string OnlyMembersCanRegisterForThisClass = "Only members can register for fitness classes.";
-        public const string ClassNameAndScheduleAreRequired = "Name and Schedule are required.";
-        public const string ClassFull = "There are no more available spots for this fitness class.";
+        public const string FitnessClassDoesNotExist = "Посоченият фитнес клас не съществува.";
+        public const string ClassNotFound = "Фитнес класът не е намерен.";
+        public const string AlreadyRegisteredForClass = "Вече сте записани за този фитнес клас.";
+        public const string UserNotRegisteredForClass = "Не сте записани за този фитнес клас.";
+        public const string ClassViewModelCannotBeNull = "Моделът на класа не може да бъде празен.";
+        public const string ClassWithTheSameNameAndScheduleAlreadyExists = "Вече съществува фитнес клас със същото име и график.";
+        public const string InvalidScheduleFormat = "Невалиден формат на графика.";
+        public const string OnlyMembersCanRegisterForThisClass = "Само членове могат да се записват за фитнес класове.";
+        public const string ClassNameAndScheduleAreRequired = "Името и графикът са задължителни.";
+        public const string ClassFull = "Няма повече свободни места за този фитнес клас.";
     }
 
     public static class MembershipType
     {
-        public const string MembershipTypeDoesNotExist = "The membership type does not exist.";
-        public const string MembershipNotFound = "Membership type not found.";
-        public const string OnlyOneMembershipTypeAllowed = "You can only have one membership type at a time.";
-        public const string MembershipNotPurchased = "You have not purchased a membership.";
-        public const string FailedToAssignMemberRole = "Failed to assign Member role.";
-        public const string FailedToRemoveMemberRole = "Failed to remove Member role.";
+        public const string MembershipTypeDoesNotExist = "Типът абонамент не съществува.";
+        public const string MembershipNotFound = "Абонаментът не е намерен.";
+        public const string OnlyOneMembershipTypeAllowed = "Можете да имате само един активен абонамент.";
+        public const string MembershipNotPurchased = "Нямате закупен абонамент.";
+        public const string FailedToAssignMemberRole = "Неуспешно добавяне на роля 'Член'.";
+        public const string FailedToRemoveMemberRole = "Неуспешно премахване на роля 'Член'.";
     }
 
     public static class Instructor
     {
-        public const string InstructorNotFound = "Instructor not found.";
-        public const string InstructorViewModelCannotBeNull = "Instructor view model cannot be null.";
-        public const string InvalidInstructorId = "Invalid instructor ID.";
+        public const string InstructorNotFound = "Инструкторът не е намерен.";
+        public const string InstructorViewModelCannotBeNull = "Моделът на инструктора не може да бъде празен.";
+        public const string InvalidInstructorId = "Невалиден идентификатор на инструктор.";
     }
 
     public static class Roles
     {
-        public const string YouAreNotAuthorizedToAdd = "You are not authorized to add this element.";
-        public const string YouAreNotAuthorizedToEdit = "You are not authorized to edit this element.";
-        public const string YouAreNotAuthorizedToDelete = "You are not authorized to delete this element.";
+        public const string YouAreNotAuthorizedToAdd = "Нямате права да добавяте този елемент.";
+        public const string YouAreNotAuthorizedToEdit = "Нямате права да редактирате този елемент.";
+        public const string YouAreNotAuthorizedToDelete = "Нямате права да изтриете този елемент.";
     }
 
     public static class User
     {
-        public const string UserIdOrRoleCannotBeEmpty = "User ID or role cannot be empty.";
-        public const string UserDoesNotExist = "User does not exist.";
-        public const string FailedToAssignRole = "Failed to assign role. Please try again.";
-        public const string FailedToRemoveRole = "Failed to remove role. Please try again.";
-        public const string FailedToDeleteRole = "Failed to delete user. Please try again.";
+        public const string UserIdOrRoleCannotBeEmpty = "Потребителският ID или ролята не могат да бъдат празни.";
+        public const string UserDoesNotExist = "Потребителят не съществува.";
+        public const string FailedToAssignRole = "Неуспешно задаване на роля. Моля, опитайте отново.";
+        public const string FailedToRemoveRole = "Неуспешно премахване на роля. Моля, опитайте отново.";
+        public const string FailedToDeleteRole = "Неуспешно изтриване на потребител. Моля, опитайте отново.";
     }
 
     public static class ConcurrencyControl
     {
-        public const string ConcurrencyControlMessage = "An error occurred while processing your request. Please try again later.";
+        public const string ConcurrencyControlMessage = "Възникна грешка при обработката на заявката. Моля, опитайте по-късно.";
     }
 }
