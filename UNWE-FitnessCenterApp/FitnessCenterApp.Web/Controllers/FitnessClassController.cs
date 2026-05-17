@@ -1,9 +1,11 @@
-﻿using FitnessCenterApp.Services.Data.Contracts;
+﻿using System.Globalization;
+using FitnessCenterApp.Services.Data.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static FitnessCenterApp.Common.ErrorMessages.FitnessClass;
 using static FitnessCenterApp.Common.SuccessfulValidationMessages.FitnessClass;
 using static FitnessCenterApp.Common.ApplicationsConstants;
+using static FitnessCenterApp.Common.EntityValidationConstants;
 
 namespace FitnessCenterApp.Web.Controllers;
 
@@ -42,6 +44,14 @@ public class FitnessClassController : BaseController
         if (model == null)
         {
             TempData["ErrorMessage"] = FitnessClassDoesNotExist;
+            return RedirectToAction(nameof(Index));
+        }
+
+        DateTime schedule = DateTime.ParseExact(model.Schedule, FitnessClass.ScheduleDateTimeFormat, CultureInfo.InvariantCulture);
+
+        if (schedule.AddMinutes(model.Duration) < DateTime.Now)
+        {
+            TempData["ErrorMessage"] = ClassHasEnded;
             return RedirectToAction(nameof(Index));
         }
 
