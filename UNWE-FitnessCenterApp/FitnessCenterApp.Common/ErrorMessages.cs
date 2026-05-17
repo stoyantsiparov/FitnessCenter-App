@@ -18,6 +18,9 @@ public static class ErrorMessages
         public const string AlreadyBookedThisTypeForWeek = "Можете да резервирате този тип процедура само веднъж на 7 дни.";
         public const string OverlappingAppointmentWithBuffer = "Имате друга резервация около този час. Изисква се 30 минути почивка между процедурите.";
         public const string SpaProcedureFullAtThisTime = "Няма свободни места за тази процедура в избрания час.";
+        public const string MustHaveActiveMembership = "Трябва да имате активен абонамент, за да резервирате спа процедури.";
+        public const string MembershipDoesNotIncludeSpa = "Вашият абонамент не включва спа процедури.";
+        public const string WeeklySpaLimitReached = "Достигнахте седмичния си лимит от {0} спа процедури.";
     }
 
     public static class FitnessEvent
