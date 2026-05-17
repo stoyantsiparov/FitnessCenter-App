@@ -33,6 +33,10 @@ public class MembershipType : BaseEntity
     [Comment("Description of the plan benefits")]
     public string Description { get; set; } = null!;
 
+    [Required]
+    [Comment("Number of allowed spa procedures per week. 0 means no access.")]
+    public int AllowedSpaProceduresPerWeek { get; set; }
+
     [Comment("Members registered for this membership type")]
     public virtual ICollection<MembershipRegistration> MembershipRegistrations { get; set; } = new List<MembershipRegistration>();
 }
