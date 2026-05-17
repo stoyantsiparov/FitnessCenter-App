@@ -33,7 +33,8 @@ public class MembershipTypeService : IMembershipTypeService
                 Name = m.Name,
                 Price = m.Price,
                 Duration = m.Duration,
-                ImageUrl = m.ImageUrl
+                ImageUrl = m.ImageUrl,
+                AllowedSpaProceduresPerWeek = m.AllowedSpaProceduresPerWeek
             })
             .AsNoTracking()
             .ToListAsync();
@@ -52,6 +53,7 @@ public class MembershipTypeService : IMembershipTypeService
                 Duration = m.Duration,
                 Description = m.Description,
                 ImageUrl = m.ImageUrl,
+                AllowedSpaProceduresPerWeek = m.AllowedSpaProceduresPerWeek,
                 ModifiedOn_22180022 = m.ModifiedOn_22180022
             })
             .FirstOrDefaultAsync();
@@ -69,7 +71,8 @@ public class MembershipTypeService : IMembershipTypeService
                 Price = m.Price,
                 Duration = m.Duration,
                 Description = m.Description,
-                ImageUrl = m.ImageUrl
+                ImageUrl = m.ImageUrl,
+                AllowedSpaProceduresPerWeek = m.AllowedSpaProceduresPerWeek
             })
             .AsNoTracking()
             .FirstOrDefaultAsync();
@@ -89,6 +92,7 @@ public class MembershipTypeService : IMembershipTypeService
                 Price = r.MembershipType.Price,
                 Duration = r.MembershipType.Duration,
                 ImageUrl = r.MembershipType.ImageUrl,
+                AllowedSpaProceduresPerWeek = r.MembershipType.AllowedSpaProceduresPerWeek,
                 RegistrationDate = r.RegistrationDate
             })
             .AsNoTracking()
@@ -103,6 +107,7 @@ public class MembershipTypeService : IMembershipTypeService
             Price = r.Price,
             Duration = r.Duration,
             ImageUrl = r.ImageUrl,
+            AllowedSpaProceduresPerWeek = r.AllowedSpaProceduresPerWeek,
             DaysRemaining = Math.Max(0, (int)Math.Ceiling((r.RegistrationDate.AddDays(r.Duration) - currentDate).TotalDays))
         });
     }
@@ -192,7 +197,8 @@ public class MembershipTypeService : IMembershipTypeService
             ImageUrl = string.Empty,
             Description = string.Empty,
             Price = 0.0m,
-            Duration = 0
+            Duration = 0,
+            AllowedSpaProceduresPerWeek = 0
         };
 
         return await Task.FromResult(model);
@@ -216,6 +222,7 @@ public class MembershipTypeService : IMembershipTypeService
             Description = model.Description,
             Price = model.Price,
             Duration = model.Duration,
+            AllowedSpaProceduresPerWeek = model.AllowedSpaProceduresPerWeek,
             ModifiedOn_22180022 = DateTime.UtcNow
         };
 
@@ -248,6 +255,7 @@ public class MembershipTypeService : IMembershipTypeService
         membershipType.Duration = model.Duration;
         membershipType.Description = model.Description;
         membershipType.ImageUrl = model.ImageUrl ?? string.Empty;
+        membershipType.AllowedSpaProceduresPerWeek = model.AllowedSpaProceduresPerWeek;
         membershipType.ModifiedOn_22180022 = DateTime.UtcNow;
 
         try

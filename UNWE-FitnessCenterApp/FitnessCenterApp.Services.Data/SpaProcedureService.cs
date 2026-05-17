@@ -159,7 +159,6 @@ public class SpaProcedureService : ISpaProcedureService
                 ImageUrl = sr.SpaProcedure.ImageUrl,
                 Description = sr.SpaProcedure.Description,
                 Capacity = sr.SpaProcedure.Capacity,
-                // ТУК ЧЕТЕМ ЧАСА ОТ РЕГИСТРАЦИЯТА!
                 AppointmentDateTime = sr.AppointmentDateTime.ToString(AppointmentDateTimeFormat)
             })
             .AsNoTracking()
@@ -201,6 +200,37 @@ public class SpaProcedureService : ISpaProcedureService
         if (user == null || !await _userManager.IsInRoleAsync(user, MemberRole))
         {
             throw new InvalidOperationException(OnlyMembersCanBookSpaProcedures);
+        }
+
+        var userRegistration = await _context.MembershipRegistrations
+            .Include(r => r.MembershipType)
+            .FirstOrDefaultAsync(r => r.MemberId == userId);
+
+        if (userRegistration == null)
+        {
+            throw new InvalidOperationException("Трябва да имате активен абонамент, за да резервирате спа процедури.");
+        }
+
+        int allowedPerWeek = userRegistration.MembershipType.AllowedSpaProceduresPerWeek;
+        if (allowedPerWeek == 0)
+        {
+            throw new InvalidOperationException("Вашият абонамент не включва спа процедури.");
+        }
+
+        DateTime today = appointmentDateTime.Date;
+        int diff = (7 + (today.DayOfWeek - DayOfWeek.Monday)) % 7;
+        DateTime startOfWeek = today.AddDays(-1 * diff).Date;
+        DateTime endOfWeek = startOfWeek.AddDays(7).AddTicks(-1);
+
+        int existingBookingsThisWeek = await _context.SpaRegistrations
+            .Where(sr => sr.MemberId == userId &&
+                         sr.AppointmentDateTime >= startOfWeek &&
+                         sr.AppointmentDateTime <= endOfWeek)
+            .CountAsync();
+
+        if (existingBookingsThisWeek >= allowedPerWeek)
+        {
+            throw new InvalidOperationException($"Достигнахте седмичния си лимит от {allowedPerWeek} спа процедури.");
         }
 
         var hasBookedThisWeek = await _context.SpaRegistrations
