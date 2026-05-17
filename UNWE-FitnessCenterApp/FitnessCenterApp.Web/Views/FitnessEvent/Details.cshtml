@@ -1,47 +1,62 @@
 ﻿@model FitnessCenterApp.Web.ViewModels.FitnessEvent.FitnessEventDetailsViewModel
 
+@{
+    ViewData["Title"] = Model.Title;
+}
+
 <div class="container mt-5 mb-5">
-	<h2 class="text-center">@Model.Title</h2>
-	<hr class="mb-4" />
+    <h2 class="text-center">@Model.Title</h2>
+    <hr class="mb-4" />
 
-	<div class="card shadow-sm mx-auto" style="max-width: 900px;">
-		<div class="row g-0">
-			<div class="col-md-5 d-flex align-items-center justify-content-center p-3">
-				@if (!string.IsNullOrEmpty(Model.ImageUrl))
-				{
-					<img src="@Model.ImageUrl" class="img-fluid rounded" alt="@Model.Title" style="max-height: 400px; object-fit: cover;" />
-				}
-				else
-				{
-					<img src="~/img/no-image-available-02.jpg" class="img-fluid rounded" alt="Няма налична снимка" style="max-height: 400px; object-fit: cover;" />
-				}
-			</div>
+    <div class="card shadow border-0 overflow-hidden mx-auto" style="max-width: 1000px;">
+        <div class="row g-0">
+            <div class="col-md-6">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" alt="@Model.Title" class="img-fluid h-100 w-100" style="object-fit: cover; min-height: 450px;" />
+                }
+                else
+                {
+                    <img src="~/img/no-image-available-02.jpg" alt="No image" class="img-fluid h-100 w-100" style="object-fit: cover; min-height: 450px;" />
+                }
+            </div>
+            <div class="col-md-6 p-4 d-flex flex-column">
+                <h4 class="card-title text-primary mb-3">Информация за събитието</h4>
 
-			<div class="col-md-7">
-				<div class="card-body d-flex flex-column h-100 p-4">
-					<h4 class="card-title text-primary mb-3">Информация за събитието</h4>
-                    
-					<p class="card-text"><strong><i class="bi bi-geo-alt"></i> Местоположение:</strong> @Model.Location</p>
-					<p class="card-text flex-grow-1"><strong>Описание:</strong> @Model.Description</p>
-                    
-					<div class="alert bg-sidecar border py-2 mb-4">
-						<p class="mb-1"><strong>Начало:</strong> @Model.StartDateTime</p>
-						<p class="mb-1"><strong>Край:</strong> @Model.EndDateTime</p>
-						<p class="mb-0"><strong>Капацитет:</strong> @Model.Capacity места</p>
-					</div>
+                <p class="card-text flex-grow-1 text-muted" style="text-align: justify;">
+                    <strong>Описание:</strong><br /> @Model.Description
+                </p>
 
-					<div class="mt-auto d-flex gap-2">
-						<form method="post" asp-action="AddToMyFitnessEvents" asp-route-id="@Model.Id" class="w-50">
-							<button type="submit" class="btn btn-primary w-100">Запиши се</button>
-						</form>
-						<a asp-controller="FitnessEvent" asp-action="Index" class="btn btn-outline-secondary w-50">Назад към списъка</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                <div class="alert bg-sidecar border-0 py-3 mb-4">
+                    <p class="mb-2">
+                        <i class="bi bi-geo-alt text-primary me-2"></i>
+                        <strong>Местоположение:</strong> @Model.Location
+                    </p>
+                    <p class="mb-2">
+                        <i class="bi bi-calendar-event text-primary me-2"></i>
+                        <strong>Начало:</strong> @Model.StartDateTime
+                    </p>
+                    <p class="mb-2">
+                        <i class="bi bi-calendar-check text-primary me-2"></i>
+                        <strong>Край:</strong> @Model.EndDateTime
+                    </p>
+                    <p class="mb-0">
+                        <i class="bi bi-people text-primary me-2"></i>
+                        <strong>Капацитет:</strong> @Model.Capacity места
+                    </p>
+                </div>
+
+                <div class="mt-auto d-flex gap-2">
+                    <form method="post" asp-action="AddToMyFitnessEvents" asp-route-id="@Model.Id" class="w-50">
+                        <button type="submit" class="btn btn-primary w-100 fw-bold">Запиши се</button>
+                    </form>
+                    <a asp-controller="FitnessEvent" asp-action="Index" class="btn btn-outline-secondary w-50">Назад към списъка</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
-	<partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
 }

@@ -1,45 +1,44 @@
 ﻿@model FitnessCenterApp.Web.ViewModels.MembershipType.MembershipTypeDetailsViewModel
 
-<div class="container mt-5 mb-5">
-	<h2 class="text-center">План @Model.Name</h2>
-	<hr class="mb-4" />
-
-	<div class="card shadow-sm mx-auto" style="max-width: 800px;">
-		<div class="row g-0">
-			<div class="col-md-5 d-flex align-items-center justify-content-center p-3">
-				@if (!string.IsNullOrEmpty(Model.ImageUrl))
-				{
-					<img src="@Model.ImageUrl" class="img-fluid rounded" alt="@Model.Name" style="max-height: 400px; object-fit: cover;" />
-				}
-				else
-				{
-					<img src="~/img/no-image-available-02.jpg" class="img-fluid rounded" alt="Няма налична снимка" style="max-height: 400px; object-fit: cover;" />
-				}
-			</div>
-
-			<div class="col-md-7">
-				<div class="card-body d-flex flex-column h-100 p-4">
-					<h3 class="card-title text-primary mb-3">@Model.Name</h3>
-					<h4 class="text-dark mb-3">@Model.Price.ToString("C")</h4>
-                    
-					<p class="card-text flex-grow-1"><strong>Описание:</strong><br /> @Model.Description</p>
-                    
-					<div class="alert bg-sidecar border py-2 mb-4 text-center">
-						<strong><i class="bi bi-clock-history"></i> Валидност:</strong> @Model.Duration дни
-					</div>
-
-					<div class="mt-auto d-flex gap-2">
-						<form method="post" asp-action="AddMyMembership" asp-route-id="@Model.Id" class="w-50">
-							<button type="submit" class="btn btn-primary w-100 text-uppercase fw-bold">Купи сега</button>
-						</form>
-						<a asp-controller="MembershipType" asp-action="Index" class="btn btn-outline-secondary w-50">Назад към плановете</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-@section Scripts {
-	<partial name="_ValidationScriptsPartial" />
+@{
+    ViewData["Title"] = Model.Name;
 }
+
+<div class="container mt-5 mb-5">
+    <h2 class="text-center">План @Model.Name</h2>
+    <hr class="mb-4" />
+
+    <div class="card shadow border-0 overflow-hidden mx-auto" style="max-width: 1000px;">
+        <div class="row g-0">
+            <div class="col-md-6">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid h-100 w-100" style="object-fit: cover; min-height: 450px;" />
+                }
+                else
+                {
+                    <img src="~/img/no-image-available-02.jpg" alt="No image" class="img-fluid h-100 w-100" style="object-fit: cover; min-height: 450px;" />
+                }
+            </div>
+            <div class="col-md-6 p-4 d-flex flex-column">
+                <h3 class="card-title text-primary mb-1">@Model.Name</h3>
+                <h4 class="text-dark mb-4">@Model.Price.ToString("C")</h4>
+
+                <p class="card-text flex-grow-1 text-muted" style="text-align: justify;">
+                    <strong>Описание на плана:</strong><br /> @Model.Description
+                </p>
+
+                <div class="alert bg-sidecar border-0 py-3 mb-4 text-center">
+                    <strong><i class="bi bi-clock-history"></i> Валидност на абонамента:</strong> @Model.Duration дни
+                </div>
+
+                <div class="mt-auto d-flex gap-2">
+                    <form method="post" asp-action="AddMyMembership" asp-route-id="@Model.Id" class="w-50">
+                        <button type="submit" class="btn btn-primary w-100 text-uppercase fw-bold">Купи сега</button>
+                    </form>
+                    <a asp-controller="MembershipType" asp-action="Index" class="btn btn-outline-secondary w-50">Назад към плановете</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

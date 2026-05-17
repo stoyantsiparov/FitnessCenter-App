@@ -1,4 +1,6 @@
-﻿@model FitnessCenterApp.Web.ViewModels.FitnessEvent.PaginatedFitnessEventsViewModel
+﻿@using System.Globalization
+@using static FitnessCenterApp.Common.EntityValidationConstants
+@model FitnessCenterApp.Web.ViewModels.FitnessEvent.PaginatedFitnessEventsViewModel
 
 @{
 	ViewData["Title"] = "Налични фитнес събития";
@@ -31,7 +33,7 @@
 <div class="row row-cols-1 row-cols-md-3 g-4">
 	@foreach (var fitnessEvent in Model.FitnessEvents)
 	{
-		bool isExpired = DateTime.Parse(fitnessEvent.EndDateTime) < DateTime.Now;
+		bool isExpired = DateTime.ParseExact(fitnessEvent.EndDateTime, FitnessEvent.DateTimeFormat, CultureInfo.InvariantCulture) < DateTime.Now;
 
 		<div class="col">
 			<div class="card h-100 shadow-sm @(isExpired ? "opacity-75" : "")" style="@(isExpired ? "filter: grayscale(100%);" : "")">
@@ -75,7 +77,7 @@
 						else
 						{
 							<button class="btn btn-secondary w-100" disabled>Събитието изтече</button>
-							<a asp-controller="FitnessEvent" asp-action="Details" asp-route-id="@fitnessEvent.Id" class="btn btn-outline-secondary w-100">Виж детайли (Архив)</a>
+							<a href="javascript:void(0)" class="btn btn-outline-secondary w-100 disabled" style="pointer-events: none;">Детайли (Заключени)</a>
 						}
 					</div>
 				</div>
