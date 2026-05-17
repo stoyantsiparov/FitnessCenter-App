@@ -150,8 +150,10 @@ public class SpaProcedureService : ISpaProcedureService
     {
         if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
 
+        var now = DateTime.Now;
+
         return await _context.SpaRegistrations
-            .Where(sr => sr.MemberId == userId)
+            .Where(sr => sr.MemberId == userId && sr.AppointmentDateTime.AddMinutes(sr.SpaProcedure.Duration) >= now)
             .Select(sr => new AllSpaProceduresViewModel
             {
                 Id = sr.SpaProcedureId,
@@ -208,13 +210,13 @@ public class SpaProcedureService : ISpaProcedureService
 
         if (userRegistration == null)
         {
-            throw new InvalidOperationException("Трябва да имате активен абонамент, за да резервирате спа процедури.");
+            throw new InvalidOperationException(MustHaveActiveMembership);
         }
 
         int allowedPerWeek = userRegistration.MembershipType.AllowedSpaProceduresPerWeek;
         if (allowedPerWeek == 0)
         {
-            throw new InvalidOperationException("Вашият абонамент не включва спа процедури.");
+            throw new InvalidOperationException(MembershipDoesNotIncludeSpa);
         }
 
         DateTime today = appointmentDateTime.Date;
@@ -230,7 +232,7 @@ public class SpaProcedureService : ISpaProcedureService
 
         if (existingBookingsThisWeek >= allowedPerWeek)
         {
-            throw new InvalidOperationException($"Достигнахте седмичния си лимит от {allowedPerWeek} спа процедури.");
+            throw new InvalidOperationException(string.Format(WeeklySpaLimitReached, allowedPerWeek));
         }
 
         var hasBookedThisWeek = await _context.SpaRegistrations
@@ -452,8 +454,12 @@ public class SpaProcedureService : ISpaProcedureService
         if (spaProcedure == null) return null;
 
         var participantsList = new List<SpaParticipantViewModel>();
+        var now = DateTime.Now;
 
-        foreach (var registration in spaProcedure.SpaRegistrations)
+        var activeRegistrations = spaProcedure.SpaRegistrations
+            .Where(r => r.AppointmentDateTime.AddMinutes(spaProcedure.Duration) >= now);
+
+        foreach (var registration in activeRegistrations)
         {
             var user = await _userManager.FindByIdAsync(registration.MemberId);
             if (user != null)

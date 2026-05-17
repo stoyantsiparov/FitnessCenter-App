@@ -83,9 +83,11 @@ public class MembershipTypeService : IMembershipTypeService
     {
         if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
 
-        var registrations = await _context.MembershipRegistrations
-            .Where(r => r.MemberId == userId)
-            .Select(r => new
+        var currentDate = DateTime.UtcNow;
+
+        return await _context.MembershipRegistrations
+            .Where(r => r.MemberId == userId && r.RegistrationDate.AddDays(r.MembershipType.Duration) >= currentDate)
+            .Select(r => new AllMembershipTypeViewModel
             {
                 Id = r.MembershipType.Id,
                 Name = r.MembershipType.Name,
@@ -93,23 +95,10 @@ public class MembershipTypeService : IMembershipTypeService
                 Duration = r.MembershipType.Duration,
                 ImageUrl = r.MembershipType.ImageUrl,
                 AllowedSpaProceduresPerWeek = r.MembershipType.AllowedSpaProceduresPerWeek,
-                RegistrationDate = r.RegistrationDate
+                DaysRemaining = Math.Max(0, (int)Math.Ceiling((r.RegistrationDate.AddDays(r.MembershipType.Duration) - currentDate).TotalDays))
             })
             .AsNoTracking()
             .ToListAsync();
-
-        var currentDate = DateTime.UtcNow;
-
-        return registrations.Select(r => new AllMembershipTypeViewModel
-        {
-            Id = r.Id,
-            Name = r.Name,
-            Price = r.Price,
-            Duration = r.Duration,
-            ImageUrl = r.ImageUrl,
-            AllowedSpaProceduresPerWeek = r.AllowedSpaProceduresPerWeek,
-            DaysRemaining = Math.Max(0, (int)Math.Ceiling((r.RegistrationDate.AddDays(r.Duration) - currentDate).TotalDays))
-        });
     }
 
     /// <inheritdoc />

@@ -150,6 +150,7 @@ public class FitnessClassService : IFitnessClassService
                     ImageUrl = c.Instructor.ImageUrl
                 }
             })
+            .AsNoTracking()
             .FirstOrDefaultAsync();
     }
 
@@ -158,8 +159,10 @@ public class FitnessClassService : IFitnessClassService
     {
         if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
 
+        var now = DateTime.Now;
+
         return await _context.FitnessClassRegistrations
-            .Where(cr => cr.MemberId == userId)
+            .Where(cr => cr.MemberId == userId && cr.FitnessClass.ScheduleDateTime.AddMinutes(cr.FitnessClass.Duration) >= now)
             .Select(cr => new AllFitnessClassesViewModel
             {
                 Id = cr.FitnessClass.Id,
@@ -239,6 +242,7 @@ public class FitnessClassService : IFitnessClassService
                 FirstName = i.FirstName,
                 LastName = i.LastName
             })
+            .AsNoTracking()
             .ToListAsync();
 
         return new AddFitnessClassViewModel { Instructors = instructors };
@@ -395,8 +399,12 @@ public class FitnessClassService : IFitnessClassService
         if (fitnessClass == null) return null;
 
         var participantsList = new List<FitnessClassParticipantViewModel>();
+        var now = DateTime.Now;
 
-        foreach (var registration in fitnessClass.FitnessClassRegistrations)
+        var activeRegistrations = fitnessClass.FitnessClassRegistrations
+            .Where(r => fitnessClass.ScheduleDateTime.AddMinutes(fitnessClass.Duration) >= now);
+
+        foreach (var registration in activeRegistrations)
         {
             var user = await _userManager.FindByIdAsync(registration.MemberId);
             if (user != null)

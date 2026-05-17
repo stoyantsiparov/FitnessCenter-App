@@ -108,6 +108,7 @@ public class FitnessEventService : IFitnessEventService
                 EndDateTime = e.EndDate.ToString(DateTimeFormat),
                 Capacity = e.Capacity
             })
+            .AsNoTracking()
             .FirstOrDefaultAsync();
     }
 
@@ -116,8 +117,10 @@ public class FitnessEventService : IFitnessEventService
     {
         if (string.IsNullOrEmpty(userId)) throw new InvalidOperationException(UserIdCannotBeEmpty);
 
+        var now = DateTime.Now;
+
         return await _context.FitnessEventRegistrations
-            .Where(r => r.MemberId == userId)
+            .Where(r => r.MemberId == userId && r.FitnessEvent.EndDate >= now)
             .Select(r => new AllFitnessEventsViewModel
             {
                 Id = r.FitnessEvent.Id,
@@ -367,8 +370,12 @@ public class FitnessEventService : IFitnessEventService
         if (fitnessEvent == null) return null;
 
         var participantsList = new List<ParticipantViewModel>();
+        var now = DateTime.Now;
 
-        foreach (var registration in fitnessEvent.FitnessEventRegistrations)
+        var activeRegistrations = fitnessEvent.FitnessEventRegistrations
+            .Where(r => fitnessEvent.EndDate >= now);
+
+        foreach (var registration in activeRegistrations)
         {
             var user = await _userManager.FindByIdAsync(registration.MemberId);
             if (user != null)
