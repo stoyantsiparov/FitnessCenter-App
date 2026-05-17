@@ -1,3 +1,16 @@
+:root {
+    /* UNWE Official Colors */
+    --unwe-primary: #A22E43;
+    --unwe-primary-dark: #760E25;
+    --unwe-accent-light: #F5EEC0;
+    --unwe-bg-light: #F8F9FA;
+    /* Bootstrap 5 Core Overrides */
+    --bs-primary: #A22E43;
+    --bs-primary-rgb: 162, 46, 67;
+    --bs-link-color: #A22E43;
+    --bs-link-hover-color: #760E25;
+}
+
 html {
     font-size: 14px;
     position: relative;
@@ -12,60 +25,163 @@ html {
 
 body {
     margin-bottom: 60px;
-    background-color: #EDE8F5;
+    background-color: var(--unwe-bg-light);
 }
 
-h2, h5 {
-    color: #3D52A0;
+/* Global Color Overrides */
+h1, h2, h3, h4, h5, h6, .text-primary {
+    color: var(--unwe-primary) !important;
 }
 
-.btn:focus,
-.btn:active:focus,
-.btn-link.nav-link:focus,
-.form-control:focus,
-.form-check-input:focus {
-    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.bg-primary {
+    background-color: var(--unwe-primary) !important;
 }
 
-.form-control {
-    border: 1px solid #8697C4;
+/* Custom UNWE Sidecar Class */
+.bg-sidecar {
+    background-color: var(--unwe-accent-light) !important;
+    border: 1px solid #EAE3B8 !important;
+    color: #333333 !important;
 }
 
-.btn-primary, .btn {
-    background-color: #3D52A0;
-    color: #FFFFFF;
-    transition: background-color 0.3s ease;
+/* Links */
+a {
+    color: var(--unwe-primary);
+    text-decoration: none;
 }
 
-    .btn-primary:hover, .btn:hover {
-        background-color: #7091E6;
-        color: #FFFFFF;
+    a:hover {
+        color: var(--unwe-primary-dark);
     }
 
-.btn-warning {
-    border: none !important;
+    a.navbar-brand {
+        white-space: normal;
+        text-align: center;
+        word-break: break-all;
+    }
+
+/* Buttons */
+.btn-primary {
+    color: #fff !important;
+    background-color: var(--unwe-primary) !important;
+    border-color: var(--unwe-primary) !important;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
+    .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+        background-color: var(--unwe-primary-dark) !important;
+        border-color: var(--unwe-primary-dark) !important;
+        color: #fff !important;
+    }
+
+.btn-outline-primary {
+    color: var(--unwe-primary) !important;
+    border-color: var(--unwe-primary) !important;
+}
+
+    .btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active {
+        background-color: var(--unwe-primary) !important;
+        color: #fff !important;
+    }
+
 .btn-danger {
-    border: 1px solid #8697C4;
+    border: 1px solid var(--unwe-primary-dark);
     background-color: #FF4D4D;
     color: #FFFFFF;
 }
 
     .btn-danger:hover {
         background-color: #FF1A1A;
-        border: 1px solid #7091E6;
+        border: 1px solid var(--unwe-primary-dark);
+    }
+
+/* Forms and Focus States */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(162, 46, 67, 0.25) !important;
+    border-color: var(--unwe-primary) !important;
+}
+
+.form-control {
+    border: 1px solid var(--unwe-primary-dark);
+}
+
+/* General Dropdowns Override */
+.dropdown-item:focus, .dropdown-item:hover {
+    background-color: var(--unwe-accent-light);
+    color: var(--unwe-primary-dark);
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    background-color: var(--unwe-primary) !important;
+    color: #fff !important;
+}
+
+/* Pagination */
+.page-link {
+    color: var(--unwe-primary);
+}
+
+    .page-link:hover {
+        color: var(--unwe-primary-dark);
+        background-color: var(--unwe-bg-light);
+        border-color: #dee2e6;
+    }
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: var(--unwe-primary);
+    border-color: var(--unwe-primary);
+}
+
+.page-link:focus {
+    box-shadow: 0 0 0 0.25rem rgba(162, 46, 67, 0.25) !important;
+}
+
+/* Layout and Components */
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    min-height: 60px;
+    background-color: #ffffff;
+}
+
+    .footer a i {
+        transition: color 0.3s ease;
+    }
+
+    .footer a:hover i {
+        color: var(--unwe-primary) !important;
     }
 
 .card {
-    border: 1px solid #8697C4;
+    border: 1px solid #E0E0E0;
     border-radius: 10px;
     margin-bottom: 20px;
     transition: transform 0.3s ease;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 }
 
     .card:hover {
-        transform: scale(1.05);
+        transform: scale(1.02);
     }
 
 .card-img-top {
@@ -73,5 +189,83 @@ h2, h5 {
 }
 
 .card-footer {
-    background-color: #ADBBDA;
+    background-color: var(--unwe-accent-light);
+    border-top: 1px solid #E0E0E0;
 }
+
+/* UNWE OFFICIAL 2-TIER HEADER & DROPDOWNS */
+
+.unwe-header {
+    position: sticky;
+    top: 0;
+    z-index: 1050;
+}
+
+/* Top Bar (Logo and User Profile) */
+.unwe-top-bar {
+    background-color: var(--unwe-primary-dark);
+    position: relative;
+    z-index: 2;
+}
+
+/* Bottom Bar (Main Navigation) */
+.unwe-bottom-nav {
+    background-color: rgba(118, 14, 37, 0.85);
+    border-bottom: none;
+    backdrop-filter: blur(5px);
+    margin-top: -1px;
+}
+
+    /* Header Nav Links */
+    .unwe-bottom-nav .navbar-nav .nav-link {
+        color: #ffffff !important;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        transition: background-color 0.3s ease;
+        padding: 15px 25px !important;
+        border-radius: 0 !important;
+    }
+
+        /* Hover & Active State for Bottom Bar Links */
+        .unwe-bottom-nav .navbar-nav .nav-item:hover .nav-link,
+        .unwe-bottom-nav .navbar-nav .nav-link:focus,
+        .unwe-bottom-nav .navbar-nav .nav-link.show,
+        .unwe-bottom-nav .navbar-nav .nav-item.dropdown.show .nav-link {
+            background-color: var(--unwe-primary-dark) !important;
+            color: #ffffff !important;
+        }
+
+/* Dropdown Menus */
+.unwe-dropdown {
+    background-color: var(--unwe-primary-dark) !important;
+    border: none !important;
+    border-radius: 0 0 5px 5px !important;
+    padding: 0 !important;
+    margin-top: 0 !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    min-width: 100% !important;
+}
+
+    /* Dropdown Items Base */
+    .unwe-dropdown .dropdown-item {
+        color: #ffffff !important;
+        padding: 12px 20px;
+        transition: background-color 0.2s ease, padding-left 0.2s ease;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        white-space: nowrap;
+    }
+
+        .unwe-dropdown .dropdown-item:last-child {
+            border-bottom: none;
+            border-radius: 0 0 5px 5px !important;
+        }
+
+        /* Dropdown Items Hover */
+        .unwe-dropdown .dropdown-item:hover,
+        .unwe-dropdown .dropdown-item:focus,
+        .unwe-dropdown .dropdown-item.active,
+        .unwe-dropdown .dropdown-item:active {
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            color: #ffffff !important;
+            padding-left: 25px;
+        }
