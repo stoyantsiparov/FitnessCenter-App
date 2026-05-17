@@ -33,6 +33,7 @@ public static class ErrorMessages
         public const string StartDateCannotBeInThePast = "Началната дата не може да бъде в миналото.";
         public const string OnlyMembersCanRegisterForThisEvent = "Само членове могат да се записват за фитнес събития.";
         public const string EventFull = "Няма повече свободни места за това събитие.";
+        public const string EventHasEnded = "Това събитие вече е приключило и детайлите не са достъпни.";
     }
 
     public static class FitnessClass
@@ -47,6 +48,7 @@ public static class ErrorMessages
         public const string OnlyMembersCanRegisterForThisClass = "Само членове могат да се записват за фитнес класове.";
         public const string ClassNameAndScheduleAreRequired = "Името и графикът са задължителни.";
         public const string ClassFull = "Няма повече свободни места за този фитнес клас.";
+        public const string ClassHasEnded = "Този фитнес клас вече е приключил.";
     }
 
     public static class MembershipType
