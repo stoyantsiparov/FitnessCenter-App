@@ -53,7 +53,8 @@ public class SpaProcedureService : ISpaProcedureService
                 Name = sp.Name,
                 Description = sp.Description,
                 ImageUrl = sp.ImageUrl,
-                Capacity = sp.Capacity
+                Capacity = sp.Capacity,
+                ParticipantsCount = sp.SpaRegistrations.Count()
             })
             .AsNoTracking()
             .ToListAsync();
@@ -102,7 +103,8 @@ public class SpaProcedureService : ISpaProcedureService
                 Name = sp.Name,
                 Description = sp.Description,
                 ImageUrl = sp.ImageUrl,
-                Capacity = sp.Capacity
+                Capacity = sp.Capacity,
+                ParticipantsCount = sp.SpaRegistrations.Count()
             })
             .AsNoTracking()
             .ToListAsync();

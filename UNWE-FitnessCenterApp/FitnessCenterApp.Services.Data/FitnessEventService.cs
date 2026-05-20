@@ -57,7 +57,8 @@ public class FitnessEventService : IFitnessEventService
                 Location = e.Location,
                 StartDateTime = e.StartDate.ToString(DateTimeFormat),
                 EndDateTime = e.EndDate.ToString(DateTimeFormat),
-                Capacity = e.Capacity
+                Capacity = e.Capacity,
+                ParticipantsCount = e.FitnessEventRegistrations.Count()
             })
             .AsNoTracking()
             .ToListAsync();

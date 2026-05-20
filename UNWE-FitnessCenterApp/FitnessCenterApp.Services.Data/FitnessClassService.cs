@@ -51,7 +51,8 @@ public class FitnessClassService : IFitnessClassService
                 ImageUrl = c.ImageUrl,
                 Schedule = c.ScheduleDateTime.ToString(ScheduleDateTimeFormat),
                 Duration = c.Duration,
-                Capacity = c.Capacity
+                Capacity = c.Capacity,
+                ParticipantsCount = c.FitnessClassRegistrations.Count()
             })
             .AsNoTracking()
             .ToListAsync();
