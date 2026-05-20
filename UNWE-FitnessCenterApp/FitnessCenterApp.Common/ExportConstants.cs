@@ -21,4 +21,16 @@ public static class ExportConstants
         public const string ExportFileName = "SpaProcedures_Export.csv";
         public const string ExportHeader = "Име на процедура,Капацитет (места),Записани участници";
     }
+
+    public static class Reports
+    {
+        public const string ClassesReportFileName = "Classes_Period_Report.csv";
+        public const string ClassesReportHeader = "Име на клас,Дата и час,Капацитет,Записани,Генериран приход";
+
+        public const string EventsReportFileName = "Events_Period_Report.csv";
+        public const string EventsReportHeader = "Заглавие,Начало,Капацитет,Записани";
+
+        public const string SpaReportFileName = "Spa_Period_Report.csv";
+        public const string SpaReportHeader = "Процедура,Капацитет,Общ брой резервации,Генериран приход";
+    }
 }
