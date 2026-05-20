@@ -3,9 +3,12 @@ using FitnessCenterApp.Web.Controllers;
 using FitnessCenterApp.Web.ViewModels.FitnessClass;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 using static FitnessCenterApp.Common.ApplicationsConstants;
 using static FitnessCenterApp.Common.SuccessfulValidationMessages.FitnessClass;
 using static FitnessCenterApp.Common.ErrorMessages.FitnessClass;
+using static FitnessCenterApp.Common.ExportConstants;
+using static FitnessCenterApp.Common.ExportConstants.FitnessClass;
 
 namespace FitnessCenterApp.Web.Areas.Admin.Controllers;
 
@@ -165,5 +168,24 @@ public class FitnessClassesManagementController : BaseController
         }
 
         return RedirectToAction(nameof(Participants), new { id = classId });
+    }
+
+    public async Task<IActionResult> ExportClassesToCsv()
+    {
+        var classes = await _fitnessClassService.GetAllClassesAsync();
+        var builder = new StringBuilder();
+
+        builder.Append('\uFEFF');
+        builder.AppendLine(ExportHeader);
+
+        foreach (var fitnessClass in classes)
+        {
+            var name = $"\"{fitnessClass.Name?.Replace("\"", "\"\"")}\"";
+            var schedule = $"\"{fitnessClass.Schedule?.Replace("\"", "\"\"")}\"";
+
+            builder.AppendLine($"{name},{schedule},{fitnessClass.Duration},{fitnessClass.Capacity},{fitnessClass.ParticipantsCount}");
+        }
+
+        return File(Encoding.UTF8.GetBytes(builder.ToString()), CsvContentType, ExportFileName);
     }
 }

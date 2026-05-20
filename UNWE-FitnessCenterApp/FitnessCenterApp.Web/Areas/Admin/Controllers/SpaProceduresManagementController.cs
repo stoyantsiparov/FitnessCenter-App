@@ -3,9 +3,12 @@ using FitnessCenterApp.Web.Controllers;
 using FitnessCenterApp.Web.ViewModels.SpaProcedure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 using static FitnessCenterApp.Common.ApplicationsConstants;
 using static FitnessCenterApp.Common.SuccessfulValidationMessages.SpaProcedure;
 using static FitnessCenterApp.Common.ErrorMessages.SpaProcedure;
+using static FitnessCenterApp.Common.ExportConstants;
+using static FitnessCenterApp.Common.ExportConstants.SpaProcedure;
 
 namespace FitnessCenterApp.Web.Areas.Admin.Controllers;
 
@@ -153,5 +156,22 @@ public class SpaProceduresManagementController : BaseController
         }
 
         return RedirectToAction(nameof(Participants), new { id = procedureId });
+    }
+
+    public async Task<IActionResult> ExportSpaProceduresToCsv()
+    {
+        var procedures = await _spaService.GetAllSpaProceduresAsync();
+        var builder = new StringBuilder();
+
+        builder.Append('\uFEFF');
+        builder.AppendLine(ExportHeader);
+
+        foreach (var procedure in procedures)
+        {
+            var name = $"\"{procedure.Name?.Replace("\"", "\"\"")}\"";
+            builder.AppendLine($"{name},{procedure.Capacity},{procedure.ParticipantsCount}");
+        }
+
+        return File(Encoding.UTF8.GetBytes(builder.ToString()), CsvContentType, ExportFileName);
     }
 }

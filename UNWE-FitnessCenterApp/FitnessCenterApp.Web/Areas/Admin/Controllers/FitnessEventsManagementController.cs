@@ -3,9 +3,12 @@ using FitnessCenterApp.Web.Controllers;
 using FitnessCenterApp.Web.ViewModels.FitnessEvent;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 using static FitnessCenterApp.Common.ApplicationsConstants;
 using static FitnessCenterApp.Common.ErrorMessages.FitnessEvent;
 using static FitnessCenterApp.Common.SuccessfulValidationMessages.FitnessEvent;
+using static FitnessCenterApp.Common.ExportConstants;
+using static FitnessCenterApp.Common.ExportConstants.FitnessEvent;
 
 namespace FitnessCenterApp.Web.Areas.Admin.Controllers;
 
@@ -155,5 +158,26 @@ public class FitnessEventsManagementController : BaseController
         }
 
         return RedirectToAction(nameof(Participants), new { id = eventId });
+    }
+
+    public async Task<IActionResult> ExportEventsToCsv()
+    {
+        var model = await _fitnessEventService.GetAllFitnessEventsAsync(null, null, DefaultPageNumber, 10000);
+        var events = model.FitnessEvents;
+
+        var builder = new StringBuilder();
+        builder.Append('\uFEFF');
+
+        builder.AppendLine(ExportHeader);
+
+        foreach (var fitnessEvent in events)
+        {
+            var title = $"\"{fitnessEvent.Title?.Replace("\"", "\"\"")}\"";
+            var location = $"\"{fitnessEvent.Location?.Replace("\"", "\"\"")}\"";
+
+            builder.AppendLine($"{title},{location},{fitnessEvent.StartDateTime},{fitnessEvent.EndDateTime},{fitnessEvent.Capacity},{fitnessEvent.ParticipantsCount}");
+        }
+
+        return File(Encoding.UTF8.GetBytes(builder.ToString()), CsvContentType, ExportFileName);
     }
 }
