@@ -1,0 +1,278 @@
+﻿@{
+    ViewData["Title"] = "Интерактивни Бизнес Справки";
+    var classesReport = ViewBag.ClassesReport as IEnumerable<dynamic>;
+    var eventsReport = ViewBag.EventsReport as IEnumerable<dynamic>;
+    var spaReport = ViewBag.SpaReport as IEnumerable<dynamic>;
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex flex-column flex-xl-row justify-content-between align-items-xl-center mb-5 gap-3">
+        <div class="d-flex align-items-center gap-3">
+            <i class="fas fa-chart-pie fa-2x text-primary"></i>
+            <div>
+                <h2 class="text-primary fw-bold mb-0">Бизнес справки и Анализи</h2>
+                <p class="text-muted mt-1 mb-0">Интерактивно табло с агрегирани данни за вашите услуги</p>
+            </div>
+        </div>
+
+        <div class="d-flex flex-wrap align-items-center gap-3">
+            <form method="get" class="d-flex align-items-center gap-2 bg-sidecar p-1 rounded-pill shadow-sm border">
+                <span class="ps-3 text-primary"><i class="fas fa-calendar-alt"></i></span>
+                <input type="date" name="fromDate" value="@ViewBag.FromDate" class="form-control form-control-sm border-0 bg-transparent text-dark fw-bold" style="width: 130px; box-shadow: none;" />
+                <span class="text-muted fw-bold">→</span>
+                <input type="date" name="toDate" value="@ViewBag.ToDate" class="form-control form-control-sm border-0 bg-transparent text-dark fw-bold" style="width: 130px; box-shadow: none;" />
+                <button type="submit" class="btn btn-primary btn-sm rounded-pill px-4 fw-bold">
+                    <i class="fas fa-filter me-1"></i> Филтрирай
+                </button>
+            </form>
+
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary rounded-pill shadow-sm px-4">
+                <i class="fas fa-arrow-left me-1"></i> Назад
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100 rounded-3">
+                <div class="card-body">
+                    <h5 class="card-title text-center mb-3 fw-bold text-dark">Заетост Класове (%)</h5>
+                    <canvas id="classesChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100 rounded-3">
+                <div class="card-body">
+                    <h5 class="card-title text-center mb-3 fw-bold text-dark">Заетост Събития (%)</h5>
+                    <canvas id="eventsChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100 rounded-3">
+                <div class="card-body">
+                    <h5 class="card-title text-center mb-3 fw-bold text-dark">Заетост СПА (%)</h5>
+                    <canvas id="spaChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5">
+
+        <div class="mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="text-primary mb-0"><i class="fas fa-dumbbell me-2"></i> Фитнес Класове</h4>
+                <form asp-action="ExportClassesReport" method="post" class="m-0">
+                    <input type="hidden" name="fromDate" value="@ViewBag.FromDate" />
+                    <input type="hidden" name="toDate" value="@ViewBag.ToDate" />
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-file-excel"></i> Експорт (CSV)
+                    </button>
+                </form>
+            </div>
+            <div class="table-responsive shadow-sm pb-3">
+                <table id="classesTable" class="table table-bordered table-striped table-hover mb-0">
+                    <thead class="table-dark text-center">
+                        <tr>
+                            <th>Име на клас</th>
+                            <th>Дата</th>
+                            <th>Капацитет</th>
+                            <th>Записани</th>
+                            <th>Заетост</th>
+                            <th>Приход</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                        @if (classesReport == null || !classesReport.Any())
+                        {
+                            <tr><td colspan="6" class="text-center text-muted py-4">Няма данни за периода.</td></tr>
+                        }
+                        else
+                        {
+                            foreach (var item in classesReport)
+                            {
+                                double occupancy = item.Capacity > 0 ? Math.Round(((double)item.Registered / item.Capacity) * 100) : 0;
+                                <tr>
+                                    <td class="fw-bold ps-3">@item.Name</td>
+                                    <td class="text-center">@item.Schedule.ToString("dd-MM-yyyy HH:mm")</td>
+                                    <td class="text-center">@item.Capacity места</td>
+                                    <td class="text-center">@item.Registered</td>
+                                    <td class="text-center"><span class="badge @(occupancy >= 70 ? "bg-success" : occupancy >= 40 ? "bg-warning text-dark" : "bg-danger")">@occupancy%</span></td>
+                                    <td class="text-center fw-bold text-success">@item.Revenue.ToString("C")</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="text-primary mb-0"><i class="fas fa-calendar-alt me-2"></i> Фитнес Събития</h4>
+                <form asp-action="ExportEventsReport" method="post" class="m-0">
+                    <input type="hidden" name="fromDate" value="@ViewBag.FromDate" />
+                    <input type="hidden" name="toDate" value="@ViewBag.ToDate" />
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-file-excel"></i> Експорт (CSV)
+                    </button>
+                </form>
+            </div>
+            <div class="table-responsive shadow-sm pb-3">
+                <table id="eventsTable" class="table table-bordered table-striped table-hover mb-0">
+                    <thead class="table-dark text-center">
+                        <tr>
+                            <th>Заглавие</th>
+                            <th>Начало</th>
+                            <th>Капацитет</th>
+                            <th>Записани</th>
+                            <th>Заетост</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                        @if (eventsReport == null || !eventsReport.Any())
+                        {
+                            <tr><td colspan="5" class="text-center text-muted py-4">Няма данни за периода.</td></tr>
+                        }
+                        else
+                        {
+                            foreach (var item in eventsReport)
+                            {
+                                double occupancy = item.Capacity > 0 ? Math.Round(((double)item.Registered / item.Capacity) * 100) : 0;
+                                <tr>
+                                    <td class="fw-bold ps-3">@item.Title</td>
+                                    <td class="text-center">@item.StartDate.ToString("dd-MM-yyyy HH:mm")</td>
+                                    <td class="text-center">@item.Capacity места</td>
+                                    <td class="text-center">@item.Registered</td>
+                                    <td class="text-center"><span class="badge @(occupancy >= 70 ? "bg-success" : occupancy >= 40 ? "bg-warning text-dark" : "bg-danger")">@occupancy%</span></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="text-primary mb-0"><i class="fas fa-spa me-2"></i> СПА Процедури</h4>
+                <form asp-action="ExportSpaReport" method="post" class="m-0">
+                    <input type="hidden" name="fromDate" value="@ViewBag.FromDate" />
+                    <input type="hidden" name="toDate" value="@ViewBag.ToDate" />
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-file-excel"></i> Експорт (CSV)
+                    </button>
+                </form>
+            </div>
+            <div class="table-responsive shadow-sm pb-3">
+                <table id="spaTable" class="table table-bordered table-striped table-hover mb-0">
+                    <thead class="table-dark text-center">
+                        <tr>
+                            <th>Процедура</th>
+                            <th>Капацитет (сесия)</th>
+                            <th>Резервации (за периода)</th>
+                            <th>Заетост</th>
+                            <th>Оборот (за периода)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                        @if (spaReport == null || !spaReport.Any())
+                        {
+                            <tr><td colspan="5" class="text-center text-muted py-4">Няма данни за периода.</td></tr>
+                        }
+                        else
+                        {
+                            foreach (var item in spaReport)
+                            {
+                                double occupancy = item.Capacity > 0 ? Math.Round(((double)item.TotalBookings / item.Capacity) * 100) : 0;
+                                <tr>
+                                    <td class="fw-bold ps-3">@item.Name</td>
+                                    <td class="text-center">@item.Capacity места</td>
+                                    <td class="text-center">@item.TotalBookings</td>
+                                    <td class="text-center"><span class="badge @(occupancy >= 70 ? "bg-success" : occupancy >= 40 ? "bg-warning text-dark" : "bg-danger")">@occupancy%</span></td>
+                                    <td class="text-center fw-bold text-success">@item.Revenue.ToString("C")</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+        // Initialize DataTables for all report tables
+        $(document).ready(function () {
+        var dataTableOptions = {
+        "paging": true,
+        "ordering": true,
+        "info": true,
+        "order": [],
+        "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.13.7/i18n/bg.json"
+        }
+        };
+        $('#classesTable').DataTable(dataTableOptions);
+        $('#eventsTable').DataTable(dataTableOptions);
+        $('#spaTable').DataTable(dataTableOptions);
+        });
+
+        // Chart data preparation
+        var chartData = {
+        classes: { labels: @Html.Raw(Json.Serialize(ViewBag.ClassLabels)), data: @Html.Raw(Json.Serialize(ViewBag.ClassData)) },
+        events: { labels: @Html.Raw(Json.Serialize(ViewBag.EventLabels)), data: @Html.Raw(Json.Serialize(ViewBag.EventData)) },
+        spa: { labels: @Html.Raw(Json.Serialize(ViewBag.SpaLabels)), data: @Html.Raw(Json.Serialize(ViewBag.SpaData)) }
+        };
+
+        var bgColors = [
+        'rgba(164, 44, 52, 0.7)',
+        'rgba(54, 162, 235, 0.7)',
+        'rgba(75, 192, 192, 0.7)',
+        'rgba(255, 159, 64, 0.7)',
+        'rgba(153, 102, 255, 0.7)',
+        'rgba(255, 205, 86, 0.7)',
+        'rgba(201, 203, 207, 0.7)',
+        'rgba(255, 99, 132, 0.7)',
+        'rgba(46, 204, 113, 0.7)'
+        ];
+        var borderColors = bgColors.map(color => color.replace('0.7', '1'));
+
+        var createChart = (id, labels, data) => {
+        new Chart(document.getElementById(id), {
+        type: 'bar',
+        data: {
+        labels: labels,
+        datasets: [{
+        data: data,
+        backgroundColor: bgColors,
+        borderColor: borderColors,
+        borderWidth: 1
+        }]
+        },
+        options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: { y: { beginAtZero: true, max: 100, ticks: { callback: v => v + "%" } } },
+        plugins: { legend: { display: false } }
+        }
+        });
+        };
+
+        createChart('classesChart', chartData.classes.labels, chartData.classes.data);
+        createChart('eventsChart', chartData.events.labels, chartData.events.data);
+        createChart('spaChart', chartData.spa.labels, chartData.spa.data);
+        });
+    </script>
+}
