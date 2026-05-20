@@ -11,9 +11,14 @@
         <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Обратно към таблото
         </a>
-        <a asp-action="Add" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Добави фитнес събитие
-        </a>
+        <div class="d-flex gap-2">
+            <a asp-action="ExportEventsToCsv" class="btn btn-success">
+                <i class="fas fa-file-csv"></i> Експорт (CSV)
+            </a>
+            <a asp-action="Add" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Добави фитнес събитие
+            </a>
+        </div>
     </div>
 
     <div class="table-responsive shadow-sm pb-3">
