@@ -8,4 +8,5 @@ public class AllFitnessClassesViewModel
     public int Duration { get; set; }
     public string? ImageUrl { get; set; }
     public int Capacity { get; set; }
+    public int ParticipantsCount { get; set; }
 }

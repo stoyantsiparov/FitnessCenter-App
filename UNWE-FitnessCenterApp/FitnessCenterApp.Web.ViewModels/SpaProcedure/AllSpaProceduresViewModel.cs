@@ -8,4 +8,5 @@ public class AllSpaProceduresViewModel
     public string? ImageUrl { get; set; }
     public int Capacity { get; set; }
     public string? AppointmentDateTime { get; set; }
+    public int ParticipantsCount { get; set; }
 }

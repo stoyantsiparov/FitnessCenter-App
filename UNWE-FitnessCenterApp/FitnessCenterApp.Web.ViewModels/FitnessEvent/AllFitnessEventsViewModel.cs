@@ -9,4 +9,5 @@ public class AllFitnessEventsViewModel
     public string EndDateTime { get; set; } = null!;
     public string? ImageUrl { get; set; }
     public int Capacity { get; set; }
+    public int ParticipantsCount { get; set; }
 }
