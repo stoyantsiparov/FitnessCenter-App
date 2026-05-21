@@ -4,119 +4,115 @@
 @inject RoleManager<IdentityRole> roleManager
 
 @{
-    ViewData["Title"] = "Управление на потребители";
-    var allRoles = await roleManager.Roles.Select(r => r.Name).ToListAsync();
+	ViewData["Title"] = "Управление на потребители";
+	var allRoles = await roleManager.Roles.Select(r => r.Name).ToListAsync();
 }
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4 text-primary">@ViewData["Title"]</h2>
+	<h2 class="text-center mb-4 text-primary">@ViewData["Title"]</h2>
 
-    <div class="d-flex justify-content-start mb-3">
-        <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Обратно към таблото
-        </a>
-    </div>
+	<div class="d-flex justify-content-start mb-3">
+		<a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-secondary">
+			<i class="fas fa-arrow-left"></i> Обратно към таблото
+		</a>
+	</div>
 
-    <div class="table-responsive shadow-sm pb-3">
-        <table id="dataTable" class="table table-bordered table-striped table-hover mb-0">
-            <thead class="table-dark text-center align-middle">
-                <tr>
-                    <th>Имейл</th>
-                    <th>Текущи роли</th>
-                    <th style="width: 480px;">Действия</th>
-                </tr>
-            </thead>
-            <tbody class="align-middle text-center">
-                @if (Model != null && Model.Any())
-                {
-                    foreach (var user in Model)
-                    {
-                        <tr style="height: 70px;">
-                            <td class="fw-bold text-start ps-3">@user.Email</td>
-                            <td>
-                                @if (user.Roles != null && user.Roles.Any())
-                                {
-                                    @foreach (var role in user.Roles)
-                                    {
-                                        <span class="badge bg-info text-dark me-1" style="font-size: 0.9rem;">@role</span>
-                                    }
-                                }
-                                else
-                                {
-                                    <span class="text-muted">Няма роли</span>
-                                }
-                            </td>
-                            <td>
-                                <div class="d-flex justify-content-center align-items-center gap-2 flex-nowrap">
+	<div class="table-responsive shadow-sm pb-3">
+		<table id="userManagementTable" class="table table-bordered table-striped table-hover mb-0">
+			<thead class="table-dark text-center align-middle">
+				<tr>
+					<th>Имейл</th>
+					<th>Текущи роли</th>
+					<th style="width: 480px;">Действия</th>
+				</tr>
+			</thead>
+			<tbody class="align-middle text-center">
+				@if (Model != null && Model.Any())
+				{
+					foreach (var user in Model)
+					{
+						<tr>
+							<td class="fw-bold text-start ps-3">@user.Email</td>
+							<td>
+								@if (user.Roles != null && user.Roles.Any())
+								{
+									@foreach (var role in user.Roles)
+									{
+										<span class="badge bg-info text-dark me-1">@role</span>
+									}
+								}
+								else
+								{
+									<span class="text-muted">Няма роли</span>
+								}
+							</td>
+							<td>
+								<div class="d-flex justify-content-center align-items-center gap-2 flex-nowrap">
+									<form method="post" asp-action="AssignRole" asp-controller="UserManagement" asp-area="Admin" class="m-0 d-flex role-form">
+										<input type="hidden" name="userId" value="@user.Id" />
+										<select name="role" class="form-select form-select-sm me-1" style="width: 100px;">
+											@foreach (var role in allRoles)
+											{
+												<option value="@role">@role</option>
+											}
+										</select>
+										<button type="button" class="btn btn-success btn-sm assign-btn">Назначи</button>
+									</form>
 
-                                    <form method="post" asp-action="AssignRole" asp-controller="UserManagement" asp-area="Admin" class="m-0 d-flex align-items-center">
-                                        <input type="hidden" name="userId" value="@user.Id" />
-                                        <select name="role" class="form-select form-select-sm me-1" style="width: 100px;">
-                                            @foreach (var role in allRoles)
-                                            {
-                                                <option value="@role">@role</option>
-                                            }
-                                        </select>
-                                        <button type="submit" class="btn btn-success btn-sm text-nowrap">Назначи</button>
-                                    </form>
+									@if (user.Roles != null && user.Roles.Any())
+									{
+										<form method="post" asp-action="RemoveRole" asp-controller="UserManagement" asp-area="Admin" class="m-0 d-flex role-form">
+											<input type="hidden" name="userId" value="@user.Id" />
+											<select name="role" class="form-select form-select-sm me-1" style="width: 100px;">
+												@foreach (var role in user.Roles)
+												{
+													<option value="@role">@role</option>
+												}
+											</select>
+											<button type="button" class="btn btn-warning btn-sm remove-role-btn">Премахни</button>
+										</form>
+									}
 
-                                    @if (user.Roles != null && user.Roles.Any())
-                                    {
-                                        <form method="post" asp-action="RemoveRole" asp-controller="UserManagement" asp-area="Admin" class="m-0 d-flex align-items-center">
-                                            <input type="hidden" name="userId" value="@user.Id" />
-                                            <select name="role" class="form-select form-select-sm me-1" style="width: 100px;">
-                                                @foreach (var role in user.Roles)
-                                                {
-                                                    <option value="@role">@role</option>
-                                                }
-                                            </select>
-                                            <button type="submit" class="btn btn-warning btn-sm text-nowrap">Премахни</button>
-                                        </form>
-                                    }
-                                    else
-                                    {
-                                        <div style="width: 175px;"></div>
-                                    }
-
-                                    <form method="post" asp-action="DeleteUser" asp-controller="UserManagement" asp-area="Admin" class="m-0" onsubmit="return confirm('Сигурни ли сте, че искате да изтриете този потребител?');">
-                                        <input type="hidden" name="userId" value="@user.Id" />
-                                        <button type="submit" class="btn btn-danger btn-sm text-nowrap">Изтрий</button>
-                                    </form>
-
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="3" class="text-center text-muted py-4">Не са намерени потребители.</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+									<form method="post" asp-action="DeleteUser" asp-controller="UserManagement" asp-area="Admin" class="m-0 delete-form">
+										<input type="hidden" name="userId" value="@user.Id" />
+										<button type="button" class="btn btn-danger btn-sm delete-user-btn">Изтрий</button>
+									</form>
+								</div>
+							</td>
+						</tr>
+					}
+				}
+			</tbody>
+		</table>
+	</div>
 </div>
 
 @section Scripts {
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script>
-        $(document).ready(function () {
-        $('#dataTable').DataTable({
-        "paging": true,
-        "ordering": true,
-        "info": true,
-        "order": [],
-        "columnDefs": [
-        { "orderable": false, "targets": [-1] }
-        ],
-        "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.13.7/i18n/bg.json"
-        }
-        });
-        });
-    </script>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
+	<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<script>
+		$(document).ready(function () {
+		$('#userManagementTable').DataTable({
+		"language": { "url": "//cdn.datatables.net/plug-ins/1.13.7/i18n/bg.json" }
+		});
+
+		$('.assign-btn').on('click', function() {
+		var form = $(this).closest('form');
+		Swal.fire({ title: 'Назначаване?', icon: 'question', showCancelButton: true, confirmButtonText: 'Да', cancelButtonText: 'Отказ' }).then((r) => { if(r.isConfirmed) form.submit(); });
+		});
+
+		$('.remove-role-btn').on('click', function() {
+		var form = $(this).closest('form');
+		Swal.fire({ title: 'Премахване на роля?', icon: 'warning', showCancelButton: true, confirmButtonText: 'Да', cancelButtonText: 'Отказ', confirmButtonColor: '#ffc107' }).then((r) => { if(r.isConfirmed) form.submit(); });
+		});
+
+		$('.delete-user-btn').on('click', function() {
+		var form = $(this).closest('form');
+		Swal.fire({ title: 'Изтриване на потребител?', text: "Това действие е окончателно!", icon: 'error', showCancelButton: true, confirmButtonText: 'Изтрий', cancelButtonText: 'Отказ', confirmButtonColor: '#dc3545' }).then((r) => { if(r.isConfirmed) form.submit(); });
+		});
+		});
+	</script>
 }
