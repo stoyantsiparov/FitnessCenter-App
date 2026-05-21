@@ -11,6 +11,11 @@ public interface IFitnessClassService
     Task<IEnumerable<AllFitnessClassesViewModel>> GetAllClassesAsync(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, string? sortOrder = null);
 
     /// <summary>
+    /// Retrieves all fitness classes that have already finished (Archive).
+    /// </summary>
+    Task<IEnumerable<AllFitnessClassesViewModel>> GetPastClassesAsync();
+
+    /// <summary>
     /// Retrieves a paginated list of fitness classes with optional search, duration filters, and sorting order.
     /// </summary>
     Task<PaginatedFitnessClassesViewModel> GetAllClassesPaginationAsync(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, string? sortOrder = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage);

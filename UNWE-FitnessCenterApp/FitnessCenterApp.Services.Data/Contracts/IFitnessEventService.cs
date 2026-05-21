@@ -11,6 +11,11 @@ public interface IFitnessEventService
     Task<PaginatedFitnessEventsViewModel> GetAllFitnessEventsAsync(string? searchTerm = null, string? sortOrder = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage);
 
     /// <summary>
+    /// Retrieves all fitness events that have already ended (Archive).
+    /// </summary>
+    Task<IEnumerable<AllFitnessEventsViewModel>> GetPastFitnessEventsAsync();
+
+    /// <summary>
     /// Retrieves a fitness event by its identifier for editing purposes.
     /// </summary>
     Task<EditFitnessEventViewModel?> GetFitnessEventByIdAsync(int id);

@@ -27,7 +27,10 @@ public class FitnessEventService : IFitnessEventService
     /// <inheritdoc />
     public async Task<PaginatedFitnessEventsViewModel> GetAllFitnessEventsAsync(string? searchTerm = null, string? sortOrder = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
     {
-        var query = _context.FitnessEvents.AsQueryable();
+        var now = DateTime.Now;
+        var query = _context.FitnessEvents
+            .Where(e => e.EndDate >= now)
+            .AsQueryable();
 
         if (!string.IsNullOrEmpty(searchTerm))
         {
@@ -58,7 +61,8 @@ public class FitnessEventService : IFitnessEventService
                 StartDateTime = e.StartDate.ToString(DateTimeFormat),
                 EndDateTime = e.EndDate.ToString(DateTimeFormat),
                 Capacity = e.Capacity,
-                ParticipantsCount = e.FitnessEventRegistrations.Count()
+                ParticipantsCount = e.FitnessEventRegistrations.Count(),
+                UserIds = e.FitnessEventRegistrations.Select(r => r.MemberId).ToList()
             })
             .AsNoTracking()
             .ToListAsync();
@@ -71,6 +75,28 @@ public class FitnessEventService : IFitnessEventService
             TotalPages = totalPages,
             SearchQuery = searchTerm
         };
+    }
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<AllFitnessEventsViewModel>> GetPastFitnessEventsAsync()
+    {
+        var now = DateTime.Now;
+
+        return await _context.FitnessEvents
+            .Where(e => e.EndDate < now)
+            .Select(e => new AllFitnessEventsViewModel
+            {
+                Id = e.Id,
+                Title = e.Title,
+                ImageUrl = e.ImageUrl,
+                Location = e.Location,
+                StartDateTime = e.StartDate.ToString(DateTimeFormat),
+                EndDateTime = e.EndDate.ToString(DateTimeFormat),
+                Capacity = e.Capacity,
+                ParticipantsCount = e.FitnessEventRegistrations.Count()
+            })
+            .AsNoTracking()
+            .ToListAsync();
     }
 
     /// <inheritdoc />

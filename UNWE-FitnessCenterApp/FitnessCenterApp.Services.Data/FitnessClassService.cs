@@ -28,7 +28,10 @@ public class FitnessClassService : IFitnessClassService
     /// <inheritdoc />
     public async Task<IEnumerable<AllFitnessClassesViewModel>> GetAllClassesAsync(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, string? sortOrder = null)
     {
-        var query = _context.FitnessClasses.AsQueryable();
+        var now = DateTime.Now;
+        var query = _context.FitnessClasses
+            .Where(c => c.ScheduleDateTime.AddMinutes(c.Duration) >= now)
+            .AsQueryable();
 
         if (!string.IsNullOrEmpty(searchQuery)) query = query.Where(c => c.Name.Contains(searchQuery));
         if (minDuration.HasValue) query = query.Where(c => c.Duration >= minDuration.Value);
@@ -52,6 +55,28 @@ public class FitnessClassService : IFitnessClassService
                 Schedule = c.ScheduleDateTime.ToString(ScheduleDateTimeFormat),
                 Duration = c.Duration,
                 Capacity = c.Capacity,
+                ParticipantsCount = c.FitnessClassRegistrations.Count(),
+                UserIds = c.FitnessClassRegistrations.Select(r => r.MemberId).ToList()
+            })
+            .AsNoTracking()
+            .ToListAsync();
+    }
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<AllFitnessClassesViewModel>> GetPastClassesAsync()
+    {
+        var now = DateTime.Now;
+
+        return await _context.FitnessClasses
+            .Where(c => c.ScheduleDateTime.AddMinutes(c.Duration) < now)
+            .Select(c => new AllFitnessClassesViewModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                ImageUrl = c.ImageUrl,
+                Schedule = c.ScheduleDateTime.ToString(ScheduleDateTimeFormat),
+                Duration = c.Duration,
+                Capacity = c.Capacity,
                 ParticipantsCount = c.FitnessClassRegistrations.Count()
             })
             .AsNoTracking()
@@ -61,7 +86,10 @@ public class FitnessClassService : IFitnessClassService
     /// <inheritdoc />
     public async Task<PaginatedFitnessClassesViewModel> GetAllClassesPaginationAsync(string? searchQuery = null, int? minDuration = null, int? maxDuration = null, string? sortOrder = null, int pageNumber = DefaultPageNumber, int pageSize = DefaultEntitiesPerPage)
     {
-        var query = _context.FitnessClasses.AsQueryable();
+        var now = DateTime.Now;
+        var query = _context.FitnessClasses
+            .Where(c => c.ScheduleDateTime.AddMinutes(c.Duration) >= now)
+            .AsQueryable();
 
         if (!string.IsNullOrEmpty(searchQuery)) query = query.Where(c => c.Name.Contains(searchQuery));
         if (minDuration.HasValue) query = query.Where(c => c.Duration >= minDuration.Value);
@@ -89,7 +117,8 @@ public class FitnessClassService : IFitnessClassService
                 ImageUrl = c.ImageUrl,
                 Schedule = c.ScheduleDateTime.ToString(ScheduleDateTimeFormat),
                 Duration = c.Duration,
-                Capacity = c.Capacity
+                Capacity = c.Capacity,
+                UserIds = c.FitnessClassRegistrations.Select(r => r.MemberId).ToList()
             })
             .AsNoTracking()
             .ToListAsync();

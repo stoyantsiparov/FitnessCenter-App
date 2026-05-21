@@ -15,10 +15,16 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        // Count total members, classes, events, and spa procedures for dashboard display
+        var now = DateTime.Now;
+
         ViewBag.MembersCount = await _context.MembershipRegistrations.CountAsync();
-        ViewBag.ClassesCount = await _context.FitnessClasses.CountAsync();
-        ViewBag.EventsCount = await _context.FitnessEvents.CountAsync();
+
+        ViewBag.ClassesCount = await _context.FitnessClasses
+            .CountAsync(c => c.ScheduleDateTime.AddMinutes(c.Duration) >= now);
+
+        ViewBag.EventsCount = await _context.FitnessEvents
+            .CountAsync(e => e.EndDate >= now);
+
         ViewBag.SpaCount = await _context.SpaProcedures.CountAsync();
 
         return View();

@@ -28,6 +28,13 @@ public class FitnessClassController : BaseController
         return View(model);
     }
 
+    [AllowAnonymous]
+    public async Task<IActionResult> Archive()
+    {
+        var model = await _fitnessClassService.GetPastClassesAsync();
+        return View(model);
+    }
+
     public async Task<IActionResult> MyClasses()
     {
         var userId = GetUserId();

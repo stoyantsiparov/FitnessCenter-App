@@ -28,6 +28,13 @@ public class FitnessEventController : BaseController
         return View(model);
     }
 
+    [AllowAnonymous]
+    public async Task<IActionResult> Archive()
+    {
+        var model = await _fitnessEventService.GetPastFitnessEventsAsync();
+        return View(model);
+    }
+
     public async Task<IActionResult> MyFitnessEvents()
     {
         var userId = GetUserId();
