@@ -3,7 +3,7 @@
 	int currentYear = DateTime.UtcNow.Year;
 	string footerNote = (ReleaseYear == currentYear) ?
 		$"{ReleaseYear}" : $"{ReleaseYear} - {currentYear}";
-	
+
 	string projectName = "УНСС Фитнес Център";
 }
 <!DOCTYPE html>
@@ -105,13 +105,13 @@
 				<div class="col-md-4 text-center text-md-start mb-2 mb-md-0 d-flex align-items-center justify-content-center justify-content-md-start">
 					<span class="text-primary fw-bold me-3">Стоян Ципаров - 22180022</span>
 				</div>
-                
+
 				<div class="col-md-4 text-center mb-2 mb-md-0">
 					<span class="text-primary fw-bold me-2">&copy; @footerNote - @projectName</span>
 					<a href="https://github.com/stoyantsiparov" target="_blank" class="text-dark fs-5 mx-1" title="GitHub"><i class="bi bi-github"></i></a>
 					<a href="https://www.linkedin.com/in/stoyan-tsiparov-53286a1a5/" target="_blank" class="text-dark fs-5 mx-1" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
 				</div>
-                
+
 				<div class="col-md-4 text-center text-md-end">
 					<span class="text-primary fw-bold">v1.0.0</span>
 				</div>
@@ -122,8 +122,9 @@
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
-    
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script>
 		toastr.options = {
 		"closeButton": true,

@@ -39,10 +39,10 @@
                         <td class="fw-bold ps-3">@participant.Email</td>
                         <td class="text-center text-primary">@participant.AppointmentTime</td>
                         <td class="text-center">
-                            <form method="post" asp-action="RemoveParticipant" onsubmit="return confirm('Сигурни ли сте, че искате да отмените резервацията на този потребител?');">
+                            <form method="post" asp-action="RemoveParticipant" class="remove-form">
                                 <input type="hidden" name="procedureId" value="@Model.ProcedureId" />
                                 <input type="hidden" name="userId" value="@participant.UserId" />
-                                <button type="submit" class="btn btn-danger btn-sm">
+                                <button type="button" class="btn btn-danger btn-sm remove-btn">
                                     <i class="fas fa-user-times"></i> Отмени
                                 </button>
                             </form>
@@ -58,8 +58,11 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(document).ready(function () {
+        // DataTable initialization
         $('#participantsTable').DataTable({
         "paging": true,
         "ordering": true,
@@ -71,6 +74,25 @@
         "emptyTable": "Все още няма направени резервации.",
         "url": "//cdn.datatables.net/plug-ins/1.13.7/i18n/bg.json"
         }
+        });
+
+        // SweetAlert2 logic for remove confirmation
+        $('.remove-btn').on('click', function (e) {
+        var form = $(this).closest('form');
+        Swal.fire({
+        title: 'Сигурни ли сте?',
+        text: "Резервацията ще бъде отменена!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Да, отмени!',
+        cancelButtonText: 'Отказ'
+        }).then((result) => {
+        if (result.isConfirmed) {
+        form.submit();
+        }
+        });
         });
         });
     </script>

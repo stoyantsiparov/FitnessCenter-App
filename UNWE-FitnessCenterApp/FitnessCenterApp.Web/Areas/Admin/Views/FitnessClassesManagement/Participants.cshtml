@@ -37,10 +37,10 @@
                     <tr>
                         <td class="fw-bold ps-3">@participant.Email</td>
                         <td class="text-center">
-                            <form method="post" asp-action="RemoveParticipant" onsubmit="return confirm('Сигурни ли сте, че искате да премахнете този потребител от класа?');">
+                            <form method="post" asp-action="RemoveParticipant" class="remove-form">
                                 <input type="hidden" name="classId" value="@Model.ClassId" />
                                 <input type="hidden" name="userId" value="@participant.UserId" />
-                                <button type="submit" class="btn btn-danger btn-sm">
+                                <button type="button" class="btn btn-danger btn-sm remove-btn">
                                     <i class="fas fa-user-times"></i> Премахни
                                 </button>
                             </form>
@@ -56,19 +56,38 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
     <script>
         $(document).ready(function () {
+		// DataTable initialization
         $('#participantsTable').DataTable({
         "paging": true,
         "ordering": true,
         "info": true,
-        "columnDefs": [
-        { "orderable": false, "targets": -1 }
-        ],
+        "columnDefs": [{ "orderable": false, "targets": -1 }],
         "language": {
         "emptyTable": "Все още няма записани участници.",
         "url": "//cdn.datatables.net/plug-ins/1.13.7/i18n/bg.json"
         }
+        });
+
+		// SweetAlert2 logic for remove confirmation
+        $('.remove-btn').on('click', function (e) {
+        var form = $(this).closest('form');
+        Swal.fire({
+        title: 'Сигурни ли сте?',
+        text: "Потребителят ще бъде премахнат от класа!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Да, премахни го!',
+        cancelButtonText: 'Отказ'
+        }).then((result) => {
+        if (result.isConfirmed) {
+        form.submit();
+        }
+        });
         });
         });
     </script>
