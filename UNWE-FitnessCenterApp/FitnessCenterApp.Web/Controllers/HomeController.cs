@@ -1,15 +1,26 @@
+using FitnessCenterApp.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitnessCenterApp.Web.Controllers;
 
 public class HomeController : Controller
 {
-    public IActionResult Index()
+    private readonly ApplicationDbContext _context;
+
+    public HomeController(ApplicationDbContext context)
     {
-        ViewData["Title"] = "Achieve Your Fitness Goals";
-        ViewData["Message"] = "Join our fitness and wellness community today!";
-        ViewData["CTAButtonText"] = "Get Started";
-        ViewData["Description"] = "Explore our fitness classes and rejuvenating spa services. Whether you’re looking to get fit or relax, we’ve got you covered.";
+        _context = context;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        // Count total members, classes, events, and spa procedures for dashboard display
+        ViewBag.MembersCount = await _context.MembershipRegistrations.CountAsync();
+        ViewBag.ClassesCount = await _context.FitnessClasses.CountAsync();
+        ViewBag.EventsCount = await _context.FitnessEvents.CountAsync();
+        ViewBag.SpaCount = await _context.SpaProcedures.CountAsync();
+
         return View();
     }
 
