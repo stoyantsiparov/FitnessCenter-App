@@ -1,94 +1,111 @@
-﻿@model FitnessCenterApp.Web.ViewModels.SpaProcedure.PaginatedSpaProceduresViewModel
+﻿@using System.Security.Claims
+@model FitnessCenterApp.Web.ViewModels.SpaProcedure.PaginatedSpaProceduresViewModel
 
 @{
-	ViewData["Title"] = "Налични спа процедури";
+    ViewData["Title"] = "Налични спа процедури";
+    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
 <h2 class="text-center mt-4">@ViewData["Title"]</h2>
 <hr class="mb-4" />
 
 <form method="get" asp-controller="SpaProcedure" asp-action="Index" class="mb-5 bg-white p-4 rounded shadow-sm border">
-	<div class="row g-3">
-		<div class="col-md-6">
-			<input type="text" name="searchQuery" class="form-control" value="@Model.SearchQuery" placeholder="Търсене на процедури..." />
-		</div>
-		<div class="col-md-3">
-			<select name="sortOrder" class="form-select">
-				<option value="">Сортирай по...</option>
-				<option value="name_asc" selected="@(ViewData["CurrentSort"]?.ToString() == "name_asc")">Име (А-Я)</option>
-				<option value="name_desc" selected="@(ViewData["CurrentSort"]?.ToString() == "name_desc")">Име (Я-А)</option>
-			</select>
-		</div>
-		<div class="col-md-3 d-flex gap-2">
-			<button type="submit" class="btn btn-primary w-100">Търси</button>
-			<a asp-controller="SpaProcedure" asp-action="Index" class="btn btn-outline-secondary w-100">Изчисти</a>
-		</div>
-	</div>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <input type="text" name="searchQuery" class="form-control" value="@Model.SearchQuery" placeholder="Търсене на процедури..." />
+        </div>
+        <div class="col-md-3">
+            <select name="sortOrder" class="form-select">
+                <option value="">Сортирай по...</option>
+                <option value="name_asc" selected="@(ViewData["CurrentSort"]?.ToString() == "name_asc")">Име (А-Я)</option>
+                <option value="name_desc" selected="@(ViewData["CurrentSort"]?.ToString() == "name_desc")">Име (Я-А)</option>
+            </select>
+        </div>
+        <div class="col-md-3 d-flex gap-2">
+            <button type="submit" class="btn btn-primary w-100">Търси</button>
+            <a asp-controller="SpaProcedure" asp-action="Index" class="btn btn-outline-secondary w-100">Изчисти</a>
+        </div>
+    </div>
 </form>
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
-	@foreach (var procedure in Model.SpaProcedures)
-	{
-		<div class="col">
-			<div class="card h-100">
-				@if (!string.IsNullOrEmpty(procedure.ImageUrl))
-				{
-					<img class="card-img-top" src="@procedure.ImageUrl" alt="@procedure.Name" style="height: 200px; object-fit: cover;">
-				}
-				else
-				{
-					<img class="card-img-top" src="~/img/no-image-available-02.jpg" alt="Няма налична снимка" style="height: 200px; object-fit: cover;">
-				}
+    @foreach (var procedure in Model.SpaProcedures)
+    {
+        bool isRegistered = currentUserId != null && procedure.UserIds != null && procedure.UserIds.Contains(currentUserId);
 
-				<div class="card-body d-flex flex-column">
-					<h5 class="card-title text-center text-primary">@procedure.Name</h5>
-					<hr class="mt-2 mb-3" />
+        <div class="col">
+            <div class="card h-100 shadow-sm @(isRegistered ? "opacity-75" : "")" style="@(isRegistered ? "filter: grayscale(100%);" : "")">
+                @if (!string.IsNullOrEmpty(procedure.ImageUrl))
+                {
+                    <img class="card-img-top" src="@procedure.ImageUrl" alt="@procedure.Name" style="height: 200px; object-fit: cover;">
+                }
+                else
+                {
+                    <img class="card-img-top" src="~/img/no-image-available-02.jpg" alt="Няма налична снимка" style="height: 200px; object-fit: cover;">
+                }
 
-					<p class="card-text flex-grow-1 text-center">
-						@procedure.Description
-					</p>
+                <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title text-primary mb-0">@procedure.Name</h5>
+                        @if (isRegistered)
+                        {
+                            <span class="badge bg-secondary">ЗАПАЗЕНО</span>
+                        }
+                    </div>
+                    <hr class="mt-1 mb-3" />
 
-					<div class="alert bg-sidecar border text-center py-2 mb-3" style="font-size: 0.9rem;">
-						<strong><i class="bi bi-people"></i> Капацитет:</strong> @procedure.Capacity места
-					</div>
+                    <p class="card-text flex-grow-1 text-center">
+                        @procedure.Description
+                    </p>
 
-					<div class="mt-auto d-flex flex-column gap-2">
-						<a asp-controller="SpaProcedure" asp-action="Details" asp-route-id="@procedure.Id" class="btn btn-primary w-100">Резервирай</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	}
+                    <div class="alert bg-sidecar border text-center py-2 mb-3" style="font-size: 0.9rem;">
+                        <strong><i class="bi bi-people"></i> Капацитет:</strong> @procedure.Capacity места
+                    </div>
+
+                    <div class="mt-auto d-flex flex-column gap-2">
+                        @if (isRegistered)
+                        {
+                            <button class="btn btn-secondary w-100" disabled>Вече сте резервирали</button>
+                        }
+                        else
+                        {
+                            <a asp-controller="SpaProcedure" asp-action="Details" asp-route-id="@procedure.Id" class="btn btn-primary w-100">Резервирай</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 @if (Model.TotalPages > 1)
 {
-	<nav aria-label="Page navigation" class="mt-5">
-		<ul class="pagination justify-content-center">
-			@if (Model.HasPreviousPage)
-			{
-				<li class="page-item">
-					<a class="page-link" asp-action="Index" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-searchQuery="@Model.SearchQuery" asp-route-sortOrder="@ViewData["CurrentSort"]">Предишна</a>
-				</li>
-			}
+    <nav aria-label="Page navigation" class="mt-5">
+        <ul class="pagination justify-content-center">
+            @if (Model.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="Index" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-searchQuery="@Model.SearchQuery" asp-route-sortOrder="@ViewData["CurrentSort"]">Предишна</a>
+                </li>
+            }
 
-			@for (int i = 1; i <= Model.TotalPages; i++)
-			{
-				<li class="page-item @(i == Model.PageNumber ? "active" : "")">
-					<a class="page-link" asp-action="Index" asp-route-pageNumber="@i" asp-route-searchQuery="@Model.SearchQuery" asp-route-sortOrder="@ViewData["CurrentSort"]">@i</a>
-				</li>
-			}
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-pageNumber="@i" asp-route-searchQuery="@Model.SearchQuery" asp-route-sortOrder="@ViewData["CurrentSort"]">@i</a>
+                </li>
+            }
 
-			@if (Model.HasNextPage)
-			{
-				<li class="page-item">
-					<a class="page-link" asp-action="Index" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-searchQuery="@Model.SearchQuery" asp-route-sortOrder="@ViewData["CurrentSort"]">Следваща</a>
-				</li>
-			}
-		</ul>
-	</nav>
+            @if (Model.HasNextPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="Index" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-searchQuery="@Model.SearchQuery" asp-route-sortOrder="@ViewData["CurrentSort"]">Следваща</a>
+                </li>
+            }
+        </ul>
+    </nav>
 }
 
 @section Scripts {
-	<partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
 }

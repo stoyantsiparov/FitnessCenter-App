@@ -9,4 +9,5 @@ public class AllSpaProceduresViewModel
     public int Capacity { get; set; }
     public string? AppointmentDateTime { get; set; }
     public int ParticipantsCount { get; set; }
+    public IEnumerable<string> UserIds { get; set; } = new List<string>();
 }

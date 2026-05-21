@@ -10,4 +10,5 @@ public class AllFitnessEventsViewModel
     public string? ImageUrl { get; set; }
     public int Capacity { get; set; }
     public int ParticipantsCount { get; set; }
+    public IEnumerable<string> UserIds { get; set; } = new List<string>();
 }
