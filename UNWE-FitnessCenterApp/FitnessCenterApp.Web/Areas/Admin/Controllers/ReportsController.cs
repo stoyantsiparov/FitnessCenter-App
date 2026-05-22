@@ -23,9 +23,9 @@ public class ReportsController : Controller
     [HttpGet]
     public async Task<IActionResult> Index(DateTime? fromDate, DateTime? toDate)
     {
-        // Default to a 60-day window if no dates are provided
+        // Scale dates to a reasonable default range if not provided
         var start = fromDate ?? DateTime.Today.AddDays(-30);
-        var end = toDate ?? DateTime.Today.AddDays(30);
+        var end = toDate ?? DateTime.Today.AddMonths(6);
 
         ViewBag.FromDate = start.ToString("yyyy-MM-dd");
         ViewBag.ToDate = end.ToString("yyyy-MM-dd");
