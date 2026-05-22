@@ -36,25 +36,31 @@
     <div class="row g-4 mb-5">
         <div class="col-md-4">
             <div class="card shadow-sm border-0 h-100 rounded-3">
-                <div class="card-body">
-                    <h5 class="card-title text-center mb-3 fw-bold text-dark">Заетост Класове (%)</h5>
-                    <canvas id="classesChart"></canvas>
+                <div class="card-body d-flex flex-column align-items-center">
+                    <h5 class="card-title text-center mb-3 fw-bold text-dark w-100">Заетост Класове (%)</h5>
+                    <div style="position: relative; height: 300px; width: 100%; display: flex; justify-content: center;">
+                        <canvas id="classesChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card shadow-sm border-0 h-100 rounded-3">
-                <div class="card-body">
-                    <h5 class="card-title text-center mb-3 fw-bold text-dark">Заетост Събития (%)</h5>
-                    <canvas id="eventsChart"></canvas>
+                <div class="card-body d-flex flex-column align-items-center">
+                    <h5 class="card-title text-center mb-3 fw-bold text-dark w-100">Заетост Събития (%)</h5>
+                    <div style="position: relative; height: 300px; width: 100%; display: flex; justify-content: center;">
+                        <canvas id="eventsChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card shadow-sm border-0 h-100 rounded-3">
-                <div class="card-body">
-                    <h5 class="card-title text-center mb-3 fw-bold text-dark">Заетост СПА (%)</h5>
-                    <canvas id="spaChart"></canvas>
+                <div class="card-body d-flex flex-column align-items-center">
+                    <h5 class="card-title text-center mb-3 fw-bold text-dark w-100">Заетост СПА (%)</h5>
+                    <div style="position: relative; height: 300px; width: 100%; display: flex; justify-content: center;">
+                        <canvas id="spaChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -86,11 +92,7 @@
                         </tr>
                     </thead>
                     <tbody class="align-middle">
-                        @if (classesReport == null || !classesReport.Any())
-                        {
-                            <tr><td colspan="6" class="text-center text-muted py-4">Няма данни за периода.</td></tr>
-                        }
-                        else
+                        @if (classesReport != null)
                         {
                             foreach (var item in classesReport)
                             {
@@ -133,11 +135,7 @@
                         </tr>
                     </thead>
                     <tbody class="align-middle">
-                        @if (eventsReport == null || !eventsReport.Any())
-                        {
-                            <tr><td colspan="5" class="text-center text-muted py-4">Няма данни за периода.</td></tr>
-                        }
-                        else
+                        @if (eventsReport != null)
                         {
                             foreach (var item in eventsReport)
                             {
@@ -179,11 +177,7 @@
                         </tr>
                     </thead>
                     <tbody class="align-middle">
-                        @if (spaReport == null || !spaReport.Any())
-                        {
-                            <tr><td colspan="5" class="text-center text-muted py-4">Няма данни за периода.</td></tr>
-                        }
-                        else
+                        @if (spaReport != null)
                         {
                             foreach (var item in spaReport)
                             {
@@ -213,7 +207,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
 
-        // Initialize DataTables for all report tables
+		// Initialize DataTables with Bulgarian localization
         $(document).ready(function () {
         var dataTableOptions = {
         "paging": true,
@@ -229,7 +223,7 @@
         $('#spaTable').DataTable(dataTableOptions);
         });
 
-        // Chart data preparation
+		// Prepare chart data from ViewBag
         var chartData = {
         classes: { labels: @Html.Raw(Json.Serialize(ViewBag.ClassLabels)), data: @Html.Raw(Json.Serialize(ViewBag.ClassData)) },
         events: { labels: @Html.Raw(Json.Serialize(ViewBag.EventLabels)), data: @Html.Raw(Json.Serialize(ViewBag.EventData)) },
@@ -247,8 +241,10 @@
         'rgba(255, 99, 132, 0.7)',
         'rgba(46, 204, 113, 0.7)'
         ];
+
         var borderColors = bgColors.map(color => color.replace('0.7', '1'));
 
+		// Function to create a bar chart
         var createChart = (id, labels, data) => {
         new Chart(document.getElementById(id), {
         type: 'bar',
@@ -258,18 +254,48 @@
         data: data,
         backgroundColor: bgColors,
         borderColor: borderColors,
-        borderWidth: 1
+        borderWidth: 1,
+        maxBarThickness: 50
         }]
         },
         options: {
         responsive: true,
-        maintainAspectRatio: true,
-        scales: { y: { beginAtZero: true, max: 100, ticks: { callback: v => v + "%" } } },
-        plugins: { legend: { display: false } }
+        maintainAspectRatio: false,
+        scales: {
+        x: {
+        ticks: {
+		// Shorten long labels to prevent overflow, but show full label in tooltip
+        callback: function(value) {
+        let label = this.getLabelForValue(value);
+        if (label && label.length > 12) {
+        return label.substring(0, 12) + '...';
+        }
+        return label;
+        }
+        }
+        },
+        y: {
+        beginAtZero: true,
+        max: 100,
+        ticks: { callback: v => v + "%" }
+        }
+        },
+        plugins: {
+        legend: { display: false },
+        tooltip: {
+        callbacks: {
+		// Hover tooltip to show full label and value
+        title: function(tooltipItems) {
+        return tooltipItems[0].label;
+        }
+        }
+        }
+        }
         }
         });
         };
 
+		// Render all charts
         createChart('classesChart', chartData.classes.labels, chartData.classes.data);
         createChart('eventsChart', chartData.events.labels, chartData.events.data);
         createChart('spaChart', chartData.spa.labels, chartData.spa.data);
