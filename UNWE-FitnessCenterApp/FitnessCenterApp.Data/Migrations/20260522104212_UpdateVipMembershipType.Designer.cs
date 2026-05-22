@@ -4,6 +4,7 @@ using FitnessCenterApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessCenterApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260522104212_UpdateVipMembershipType")]
+    partial class UpdateVipMembershipType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,130 +93,130 @@ namespace FitnessCenterApp.Data.Migrations
                         {
                             Id = 1,
                             Capacity = 20,
-                            Description = "Спокойна и хармонична йога сесия, идеална за рестарт на деня и подобряване на фокуса. Водена лично от холивудската звезда.",
+                            Description = "Спокойна и хармонична йога сесия, идеална за рестарт на деня и подобряване на фокуса.",
                             Duration = 60,
                             ImageUrl = "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80",
-                            InstructorId = 10,
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8212),
+                            InstructorId = 1,
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8061),
                             Name = "Сутрешна Йога",
-                            Price = 25.00m,
+                            Price = 15.00m,
                             ScheduleDateTime = new DateTime(2026, 7, 15, 7, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
                             Capacity = 15,
-                            Description = "Интензивна интервална тренировка и спринтове, създадена да изгори максимален брой калории за кратко време.",
+                            Description = "Интензивна интервална тренировка, създадена да изгори максимален брой калории за кратко време.",
                             Duration = 45,
                             ImageUrl = "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80",
-                            InstructorId = 4,
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8222),
+                            InstructorId = 2,
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8072),
                             Name = "HIIT Предизвикателство",
-                            Price = 30.00m,
+                            Price = 20.00m,
                             ScheduleDateTime = new DateTime(2026, 7, 16, 18, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
                             Capacity = 25,
-                            Description = "Забавен и енергичен зумба клас, подходящ за всички нива. Танцувайте и отслабвайте в ритъма на 80-те!",
+                            Description = "Забавен и енергичен зумба клас, подходящ за всички нива. Танцувайте и отслабвайте!",
                             Duration = 60,
                             ImageUrl = "https://images.unsplash.com/photo-1522898467493-49726bf28798?auto=format&fit=crop&w=800&q=80",
-                            InstructorId = 9,
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8229),
+                            InstructorId = 3,
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8078),
                             Name = "Зумба Танци",
-                            Price = 20.00m,
+                            Price = 15.00m,
                             ScheduleDateTime = new DateTime(2026, 7, 17, 10, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 4,
                             Capacity = 15,
-                            Description = "Тренировка за заздравяване на коремните мускули, подобряване на стойката и екстремна гъвкавост.",
+                            Description = "Тренировка за заздравяване на коремните мускули, подобряване на стойката и гъвкавостта.",
                             Duration = 60,
                             ImageUrl = "https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=800&q=80",
-                            InstructorId = 6,
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8235),
-                            Name = "Пилатес",
-                            Price = 25.00m,
+                            InstructorId = 4,
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8084),
+                            Name = "Пилатес за Ядрото",
+                            Price = 18.00m,
                             ScheduleDateTime = new DateTime(2026, 7, 18, 8, 30, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 5,
                             Capacity = 10,
-                            Description = "Въвеждащ клас в силовите тренировки с акцент върху правилната техника за вдигане на тежести и безопасност.",
+                            Description = "Въвеждащ клас в силовите тренировки с акцент върху правилната техника и безопасност.",
                             Duration = 45,
                             ImageUrl = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80",
-                            InstructorId = 3,
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8241),
+                            InstructorId = 5,
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8089),
                             Name = "Основи на Силовите Тренировки",
-                            Price = 40.00m,
+                            Price = 25.00m,
                             ScheduleDateTime = new DateTime(2026, 7, 19, 17, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 6,
                             Capacity = 12,
-                            Description = "Научете основните техники на смесените бойни изкуства в сигурна и мотивираща среда с шампиона на UFC.",
+                            Description = "Научете основните техники на смесените бойни изкуства в сигурна и мотивираща среда.",
                             Duration = 60,
                             ImageUrl = "https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=800&q=80",
-                            InstructorId = 1,
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8246),
+                            InstructorId = 6,
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8095),
                             Name = "ММА Основи",
-                            Price = 50.00m,
+                            Price = 30.00m,
                             ScheduleDateTime = new DateTime(2026, 7, 20, 20, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 7,
                             Capacity = 15,
-                            Description = "Изключително тежка комплексна тренировка с тежести и кардио. Препоръчва се само за напреднали и психически подготвени!",
+                            Description = "Тежка комплексна тренировка с тежести, гимнастика и кардио. Само за напреднали!",
                             Duration = 60,
                             ImageUrl = "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=800&q=80",
                             InstructorId = 7,
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8252),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8100),
                             Name = "Кросфит за Напреднали",
-                            Price = 35.00m,
+                            Price = 25.00m,
                             ScheduleDateTime = new DateTime(2026, 7, 21, 18, 30, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 8,
                             Capacity = 12,
-                            Description = "Тренировка в олимпийския басейн, фокусирана върху изчистване на стила и увеличаване на скоростта във водата.",
+                            Description = "Освежаваща водна тренировка в басейна. Идеална за раздвижване без натоварване на ставите.",
                             Duration = 50,
-                            ImageUrl = "https://m5.netinfo.bg/media/images/30960/30960313/960-600-plovdivskoto-sportno-uchilishte.jpg",
-                            InstructorId = 2,
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8257),
-                            Name = "Спортно Плуване",
-                            Price = 45.00m,
+                            ImageUrl = "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+                            InstructorId = 8,
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8105),
+                            Name = "Аква Аеробика",
+                            Price = 20.00m,
                             ScheduleDateTime = new DateTime(2026, 7, 22, 9, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 9,
                             Capacity = 16,
-                            Description = "Клас, насочен към базови боксови комбинации, движение с крака и кардио издръжливост на ринга.",
+                            Description = "Клас, насочен към базови боксови комбинации, движение с крака и кардио издръжливост.",
                             Duration = 60,
                             ImageUrl = "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=800&q=80",
-                            InstructorId = 5,
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8262),
+                            InstructorId = 9,
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8113),
                             Name = "Бокс за Начинаещи",
-                            Price = 35.00m,
+                            Price = 25.00m,
                             ScheduleDateTime = new DateTime(2026, 7, 23, 19, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 10,
                             Capacity = 20,
-                            Description = "Интензивно колоездене на закрито с изключително високо темпо. Изгорете до 800 калории за една сесия!",
+                            Description = "Интензивно колоездене на закрито с мотивираща музика. Изгорете до 600 калории!",
                             Duration = 45,
-                            ImageUrl = "https://sofiamarathon.bg/wp-content/uploads/2026/01/wa-sof-mar_1025_0763-scaled.jpg",
-                            InstructorId = 8,
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8267),
-                            Name = "Маратон",
-                            Price = 25.00m,
+                            ImageUrl = "https://images.unsplash.com/photo-1534438097545-a2c22c57f2df?auto=format&fit=crop&w=800&q=80",
+                            InstructorId = 10,
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8119),
+                            Name = "Спининг Маратон",
+                            Price = 18.00m,
                             ScheduleDateTime = new DateTime(2026, 7, 24, 18, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -307,9 +310,9 @@ namespace FitnessCenterApp.Data.Migrations
                             Capacity = 500,
                             Description = "Присъединете се към вълнуващ 10 км маратон през централните улици на града.",
                             EndDate = new DateTime(2026, 8, 12, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://novinar.bg/wp-content/uploads/2026/04/maraton1.webp",
+                            ImageUrl = "https://images.unsplash.com/photo-1530143311094-34d807799e8f?auto=format&fit=crop&w=800&q=80",
                             Location = "Площад Център",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8464),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8330),
                             StartDate = new DateTime(2026, 8, 12, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Пролетен Градски Маратон"
                         },
@@ -321,7 +324,7 @@ namespace FitnessCenterApp.Data.Migrations
                             EndDate = new DateTime(2026, 8, 20, 15, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=800&q=80",
                             Location = "Хижа Алеко",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8472),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8338),
                             StartDate = new DateTime(2026, 8, 20, 6, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Планински Поход Витоша"
                         },
@@ -331,9 +334,9 @@ namespace FitnessCenterApp.Data.Migrations
                             Capacity = 100,
                             Description = "Живописна разходка около езерото. Перфектна възможност за лека кардио активност на чист въздух.",
                             EndDate = new DateTime(2026, 10, 8, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://static.dir.bg/uploads/images/2024/10/25/2817113/1366x768.jpg?_=1729836290",
-                            Location = "Геопарк 'Искър-Панега'",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8511),
+                            ImageUrl = "https://images.unsplash.com/photo-1506535995048-63737b794f83?auto=format&fit=crop&w=800&q=80",
+                            Location = "Панчарево",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8348),
                             StartDate = new DateTime(2026, 10, 8, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Есенна Разходка край Езерото"
                         },
@@ -343,9 +346,9 @@ namespace FitnessCenterApp.Data.Migrations
                             Capacity = 200,
                             Description = "Празнично 5 км бягане през снежния парк, средствата от което отиват за благотворителност.",
                             EndDate = new DateTime(2026, 12, 15, 11, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://360mag.bg/wp-content/uploads/2023/01/Winter_running_myhealth-org.webp",
-                            Location = "Витоша",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8518),
+                            ImageUrl = "https://images.unsplash.com/photo-1512361436605-a484fc5e943c?auto=format&fit=crop&w=800&q=80",
+                            Location = "Южен Парк",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8356),
                             StartDate = new DateTime(2026, 12, 15, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Зимно Благотворително Бягане"
                         },
@@ -357,7 +360,7 @@ namespace FitnessCenterApp.Data.Migrations
                             EndDate = new DateTime(2026, 7, 25, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
                             Location = "Слънчев Бряг",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8525),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8363),
                             StartDate = new DateTime(2026, 7, 25, 7, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Лятна Йога на Плажа"
                         },
@@ -368,8 +371,8 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "Основи на водолазното гмуркане. Научете се да дишате под вода с професионални инструктори.",
                             EndDate = new DateTime(2026, 9, 5, 16, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
-                            Location = "Черно море",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8531),
+                            Location = "Спортен Басейн",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8370),
                             StartDate = new DateTime(2026, 9, 5, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Курс по Гмуркане"
                         },
@@ -381,7 +384,7 @@ namespace FitnessCenterApp.Data.Migrations
                             EndDate = new DateTime(2026, 10, 20, 14, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80",
                             Location = "Главна Фитнес Зала",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8537),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8377),
                             StartDate = new DateTime(2026, 10, 20, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Турнир по Вдигане на Тежести"
                         },
@@ -393,7 +396,7 @@ namespace FitnessCenterApp.Data.Migrations
                             EndDate = new DateTime(2026, 9, 13, 18, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=800&q=80",
                             Location = "Еко Комплекс 'Балкан'",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8543),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8383),
                             StartDate = new DateTime(2026, 9, 12, 8, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Уикенд Йога Ретрийт"
                         },
@@ -405,7 +408,7 @@ namespace FitnessCenterApp.Data.Migrations
                             EndDate = new DateTime(2026, 8, 5, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=80",
                             Location = "Борисова Градина",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8549),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8390),
                             StartDate = new DateTime(2026, 8, 5, 8, 30, 0, 0, DateTimeKind.Unspecified),
                             Title = "Фитнес Буткемп на Открито"
                         },
@@ -417,7 +420,7 @@ namespace FitnessCenterApp.Data.Migrations
                             EndDate = new DateTime(2026, 11, 10, 20, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=800&q=80",
                             Location = "Конферентна Зала",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8554),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8397),
                             StartDate = new DateTime(2026, 11, 10, 18, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Мастърклас по Здравословно Хранене"
                         });
@@ -503,102 +506,102 @@ namespace FitnessCenterApp.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Bio = "Ирландски професионален ММА боец и бивш двоен шампион на UFC. Тренировките с Конър ще ви научат на безкомпромисна дисциплина, експлозивна сила и елитни бойни техники.",
-                            FirstName = "Конър",
-                            ImageUrl = "https://dsport.bg/media/234/gettyimages-1399254105~2.l.webp",
-                            LastName = "Макгрегър",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8593),
-                            Specialization = "ММА"
+                            Bio = "Натали е сертифициран йога инструктор с над 10 години опит. Тя е посветена на това да помага на хората да постигнат хармония между тяло и дух.",
+                            FirstName = "Натали",
+                            ImageUrl = "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80",
+                            LastName = "Асатрян",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8437),
+                            Specialization = "Йога"
                         },
                         new
                         {
                             Id = 2,
-                            Bio = "Най-успешният олимпиец на всички времена с 28 медала. В неговите класове ще изградите техника, бързина и издръжливост във водата, напълно достойни за шампиони.",
-                            FirstName = "Майкъл",
-                            ImageUrl = "https://lira.bg/wp-content/uploads/2016/08/michaelphelps.jpg",
-                            LastName = "Фелпс",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8595),
-                            Specialization = "Спортно плуване"
+                            Bio = "Уорън е фитнес треньор, специализиран във високоинтензивни интервални тренировки (HIIT). Обича да мотивира клиентите си да надскачат собствените си граници.",
+                            FirstName = "Уорън",
+                            ImageUrl = "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=800&q=80",
+                            LastName = "Скот",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8439),
+                            Specialization = "HIIT"
                         },
                         new
                         {
                             Id = 3,
-                            Bio = "Живата легенда в бодибилдинга и 7-кратен Мистър Олимпия. Арнолд ще ви покаже как да изградите перфектната физика с правилна техника и \"желязна\" воля.",
-                            FirstName = "Арнолд",
-                            ImageUrl = "https://www.flashnews.bg/wp-content/uploads/2018/07/DIY-frame-Arnold-Schwarzenegger-Terminator-Great-Muscle-Poster-Bodybuilding-Gym-Decor.jpg_640x640.jpg",
-                            LastName = "Шварценегер",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8597),
-                            Specialization = "Силови тренировки"
+                            Bio = "Емили е инструктор по Зумба с богат опит в танците. Тя създава забавна и енергична атмосфера, в която тренировката се усеща като парти.",
+                            FirstName = "Емили",
+                            ImageUrl = "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80",
+                            LastName = "Джонсън",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8441),
+                            Specialization = "Зумба"
                         },
                         new
                         {
                             Id = 4,
-                            Bio = "Най-бързият човек на планетата. Неговите високоинтензивни тренировки и спринтове ще ви помогнат да развиете експлозивна скорост и ненадминато кардио.",
-                            FirstName = "Юсейн",
-                            ImageUrl = "https://bntnews.bg/f/news/b/1279/77b161de7a82fb079a287346551c5c74.jpg",
-                            LastName = "Болт",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8599),
-                            Specialization = "HIIT / Спринт"
+                            Bio = "Оливия е сертифициран Пилатес инструктор. Нейната страст е да помага на хората да подобрят стойката си, гъвкавостта и силата на ядрото.",
+                            FirstName = "Оливия",
+                            ImageUrl = "https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=800&q=80",
+                            LastName = "Уилямс",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8443),
+                            Specialization = "Пилатес"
                         },
                         new
                         {
                             Id = 5,
-                            Bio = "\"Железният\" Майк е един от най-великите боксьори в тежка категория за всички времена. Тренировките с него изискват пълно раздаване, 100% фокус и сурова сила.",
-                            FirstName = "Майк",
-                            ImageUrl = "https://s0.rbk.ru/v6_top_pics/media/img/9/24/347098230779249.jpeg",
-                            LastName = "Тайсън",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8600),
-                            Specialization = "Бокс"
+                            Bio = "Улф е треньор по силови тренировки и вдигане на тежести. Специализира в изграждането на мускулна маса и правилна техника на изпълнение.",
+                            FirstName = "Улф",
+                            ImageUrl = "https://images.unsplash.com/photo-1567598508481-65985588e295?auto=format&fit=crop&w=800&q=80",
+                            LastName = "Джеймисън",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8445),
+                            Specialization = "Силови тренировки"
                         },
                         new
                         {
                             Id = 6,
-                            Bio = "Майстор на бойните изкуства и кино звезда, световноизвестен със своята невероятна гъвкавост. Ще ви помогне да изградите силно ядро, перфектен баланс и контрол над тялото.",
-                            FirstName = "Жан-Клод",
-                            ImageUrl = "https://www.menslife.com/upload/iblock/51b/orig.jpg",
-                            LastName = "Ван Дам",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8602),
-                            Specialization = "Гъвкавост / Пилатес"
+                            Bio = "Конър е професионален ММА боец и мотиватор. В неговите класове ще научите основите на бойните изкуства и ще изградите желязна дисциплина.",
+                            FirstName = "Конър",
+                            ImageUrl = "https://images.unsplash.com/photo-1509967419530-da38b4704bc6?auto=format&fit=crop&w=800&q=80",
+                            LastName = "Макгрегър",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8446),
+                            Specialization = "ММА"
                         },
                         new
                         {
                             Id = 7,
-                            Bio = "Бивш \"Тюлен\" (Navy SEAL) и ултрамаратонец. Гогинс няма да ви позволи да се откажете. Готови ли сте да надскочите границите на човешките си възможности?",
-                            FirstName = "Дейвид",
-                            ImageUrl = "https://knigomania.bg/media/attributesplash/david-goggins-portait.jpg",
-                            LastName = "Гогинс",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8603),
-                            Specialization = "Кросфит / Издръжливост"
+                            Bio = "Митко е бивш състезател по Кросфит. Тренировките му са интензивни, комплексни и гарантират бързи резултати за издръжливост и сила.",
+                            FirstName = "Димитър",
+                            ImageUrl = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80",
+                            LastName = "Петров",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8448),
+                            Specialization = "Кросфит"
                         },
                         new
                         {
                             Id = 8,
-                            Bio = "Световноизвестен колоездач, който отлично знае какво означава да въртиш педалите до край. Подгответе се за най-тежките и мотивиращи спининг маратони в живота си.",
-                            FirstName = "Ланс",
-                            ImageUrl = "https://radiofresh.bg/uploads/images/51085959.jpg",
-                            LastName = "Армстронг",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8605),
-                            Specialization = "Спининг / Колоездене"
+                            Bio = "Мария е инструктор по водна аеробика. Нейните тренировки са щадящи за ставите, но изключително ефективни за изгаряне на калории.",
+                            FirstName = "Мария",
+                            ImageUrl = "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=800&q=80",
+                            LastName = "Иванова",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8450),
+                            Specialization = "Аква Аеробика"
                         },
                         new
                         {
                             Id = 9,
-                            Bio = "Иконата на фитнес революцията. Нейната заразителна енергия и чувство за ритъм ще превърнат всяка кардио и зумба тренировка в истинско забавление.",
-                            FirstName = "Джейн",
-                            ImageUrl = "https://trud.bg/storage/media/2021-02/1111396/32fonda_2266406737285834814_original.jpg",
-                            LastName = "Фонда",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8606),
-                            Specialization = "Зумба / Аеробика"
+                            Bio = "Георги е треньор по бокс с дългогодишен опит. Подходящ както за начинаещи, така и за напреднали, желаещи да подобрят техниката си.",
+                            FirstName = "Георги",
+                            ImageUrl = "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80",
+                            LastName = "Георгиев",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8451),
+                            Specialization = "Бокс"
                         },
                         new
                         {
                             Id = 10,
-                            Bio = "Освен холивудска звезда, тя е отдаден практик на йога от десетилетия. Нейните сесии ще ви донесат нужното спокойствие, гъвкавост и дълбок вътрешен мир.",
-                            FirstName = "Дженифър",
-                            ImageUrl = "https://eva.bg/media/cache/article_photo_above_text/media/ZVEZDI/Novini/hijklmno/J-Aniston/2023/jen5cecac1f3.jpg",
-                            LastName = "Анистън",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8608),
-                            Specialization = "Йога"
+                            Bio = "Елена води едни от най-енергичните спининг класове в центъра. Музиката ѝ е мотивираща, а натоварването - гарантирано.",
+                            FirstName = "Елена",
+                            ImageUrl = "https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=800&q=80",
+                            LastName = "Стоянова",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8453),
+                            Specialization = "Спининг"
                         });
                 });
 
@@ -722,7 +725,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "Стандартен месечен абонамент. Включва неограничен достъп до фитнес залата и всички групови класове. Този план не включва право на записване за СПА процедури.",
                             Duration = 30,
                             ImageUrl = "/img/membership/Basic.png",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8642),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8488),
                             Name = "Основен план",
                             Price = 59.99m
                         },
@@ -733,7 +736,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "Двумесечен абонамент за активни трениращи. Включва пълен достъп до фитнес залата, всички класове и право на 1 резервация за СПА процедура на седмица.",
                             Duration = 60,
                             ImageUrl = "/img/membership/Elite.png",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8645),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8490),
                             Name = "Елитен план",
                             Price = 99.99m
                         },
@@ -744,7 +747,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "Шестмесечен абонамент с висока добавена стойност. Гарантира достъп до всички съоръжения и ви дава право на до 5 резервации за СПА процедури на седмица.",
                             Duration = 180,
                             ImageUrl = "/img/membership/Premium.png",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8647),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8492),
                             Name = "Премиум план",
                             Price = 299.99m
                         },
@@ -755,7 +758,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "Ексклузивен годишен абонамент за най-отдадените. Включва пълен достъп до фитнес залата, всички класове и най-високия възможен седмичен лимит за резервация на СПА процедури.",
                             Duration = 365,
                             ImageUrl = "/img/membership/Vip.png",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8648),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8494),
                             Name = "ВИП план",
                             Price = 499.99m
                         },
@@ -766,7 +769,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "Специално предложение за студенти на УНСС. Осигурява пълен достъп до фитнес залата и всички тренировъчни класове. Планът не включва право на резервации за СПА процедури.",
                             Duration = 30,
                             ImageUrl = "/img/membership/UNWE.png",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8650),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8496),
                             Name = "Студентски план",
                             Price = 39.99m
                         },
@@ -777,7 +780,7 @@ namespace FitnessCenterApp.Data.Migrations
                             Description = "Месечен абонамент с достъп до фитнес залата всеки ден, валиден за посещения в часовия интервал от 08:00 до 16:00 ч. Планът не включва право на резервации за СПА процедури.",
                             Duration = 30,
                             ImageUrl = "/img/membership/Daytime.png",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8652),
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8498),
                             Name = "Дневен план",
                             Price = 45.99m
                         });
@@ -842,8 +845,8 @@ namespace FitnessCenterApp.Data.Migrations
                             Capacity = 5,
                             Description = "Успокояващ масаж с бавни и плавни движения за облекчаване на напрежението и стреса.",
                             Duration = 60,
-                            ImageUrl = "https://osoba.bg/sites/default/files/2023-01/relax-masaj2.png",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8685),
+                            ImageUrl = "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8582),
                             Name = "Релаксиращ Масаж",
                             Price = 50.00m
                         },
@@ -853,8 +856,8 @@ namespace FitnessCenterApp.Data.Migrations
                             Capacity = 2,
                             Description = "Подмладяваща процедура за лице, която подхранва, хидратира и освежава кожата.",
                             Duration = 45,
-                            ImageUrl = "https://www.puls.bg/cache/5/f/4/e/f/5f4ef5eae5984d5b0f78d3292fffd48a68d17d73.jpeg",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8687),
+                            ImageUrl = "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=800&q=80",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8584),
                             Name = "Терапия за Лице",
                             Price = 45.00m
                         },
@@ -864,8 +867,8 @@ namespace FitnessCenterApp.Data.Migrations
                             Capacity = 3,
                             Description = "Сесия с етерични масла, която стимулира сетивата и насърчава пълното отпускане.",
                             Duration = 30,
-                            ImageUrl = "https://www.estespa.bg/wp-content/uploads/2017/08/%D0%BC%D0%B0%D1%81%D0%B0%D0%B6-%D0%B0%D1%80%D0%BE%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B0%D0%BF%D0%B8%D1%8F.jpg",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8689),
+                            ImageUrl = "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=800&q=80",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8586),
                             Name = "Ароматерапия",
                             Price = 35.00m
                         },
@@ -875,8 +878,8 @@ namespace FitnessCenterApp.Data.Migrations
                             Capacity = 3,
                             Description = "Терапевтичен масаж, използващ гладки, нагряти камъни за дълбоко отпускане на мускулите.",
                             Duration = 75,
-                            ImageUrl = "https://www.estespa.bg/wp-content/uploads/2020/01/600-2-1200x600.jpg",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8691),
+                            ImageUrl = "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=800&q=80",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8588),
                             Name = "Масаж с Горещи Камъни",
                             Price = 75.00m
                         },
@@ -886,8 +889,8 @@ namespace FitnessCenterApp.Data.Migrations
                             Capacity = 4,
                             Description = "Масаж, насочен към по-дълбоките слоеве на мускулната тъкан за освобождаване на хронично напрежение.",
                             Duration = 60,
-                            ImageUrl = "https://studio24.bg/gallery/picture/1/1126/tehnika-pri-dalbokotakanen-masazh-1738515226.jpg",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8693),
+                            ImageUrl = "https://images.unsplash.com/photo-1519824145371-29681b328e11?auto=format&fit=crop&w=800&q=80",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8590),
                             Name = "Дълбокотъканен Масаж",
                             Price = 65.00m
                         },
@@ -897,8 +900,8 @@ namespace FitnessCenterApp.Data.Migrations
                             Capacity = 2,
                             Description = "Детоксикираща процедура за тяло с богати на хранителни вещества водорасли за стягане на кожата.",
                             Duration = 90,
-                            ImageUrl = "https://www.thefountainspa.com/wp-content/uploads/2025/01/seaweed-wrap-460x320-1.webp",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8694),
+                            ImageUrl = "https://images.unsplash.com/photo-1544161514-93c68383a542?auto=format&fit=crop&w=800&q=80",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8592),
                             Name = "Обвиване с Водорасли",
                             Price = 85.00m
                         },
@@ -908,8 +911,8 @@ namespace FitnessCenterApp.Data.Migrations
                             Capacity = 6,
                             Description = "Дълбоко проникваща топлина, която подпомага детоксикацията, отслабването и релаксацията.",
                             Duration = 45,
-                            ImageUrl = "https://honuhousehawaii.com/wp-content/uploads/2024/11/Infrared-sauna-.png",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8696),
+                            ImageUrl = "https://images.unsplash.com/photo-1583416750470-965b2707b355?auto=format&fit=crop&w=800&q=80",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8594),
                             Name = "Инфрачервена Сауна",
                             Price = 25.00m
                         },
@@ -919,8 +922,8 @@ namespace FitnessCenterApp.Data.Migrations
                             Capacity = 8,
                             Description = "Пречистваща парна баня, обогатена с лечебни билки за отваряне на порите и дихателните пътища.",
                             Duration = 30,
-                            ImageUrl = "https://ruskovets.com/wp-content/uploads/2025/06/parna-banq-polzi-1.jpg",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8698),
+                            ImageUrl = "https://images.unsplash.com/photo-1552693673-1bf958298935?auto=format&fit=crop&w=800&q=80",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8596),
                             Name = "Парна Баня с Билкови Екстракти",
                             Price = 20.00m
                         },
@@ -930,8 +933,8 @@ namespace FitnessCenterApp.Data.Migrations
                             Capacity = 1,
                             Description = "Студова терапия, изключително ефективна за бързо възстановяване на мускулите след тежка тренировка.",
                             Duration = 15,
-                            ImageUrl = "https://img1.wsimg.com/isteam/ip/267c7f02-971c-448a-ace3-5d2ce5803d75/%D0%9A%D1%80%D0%B8%D0%BE%D1%82%D0%B5%D1%80%D0%B0%D0%BF%D0%B8%D1%8F.jpg",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8700),
+                            ImageUrl = "https://images.unsplash.com/photo-1583416750470-965b2707b355?auto=format&fit=crop&w=800&q=80",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8598),
                             Name = "Криотерапия за Възстановяване",
                             Price = 40.00m
                         },
@@ -941,8 +944,8 @@ namespace FitnessCenterApp.Data.Migrations
                             Capacity = 2,
                             Description = "Специализиран енергичен масаж, който използва бамбукови пръчки за дълбок дренаж на тъканите.",
                             Duration = 60,
-                            ImageUrl = "https://funstarter.bg/uploads/2024/11/detail-hands-massaging-human-calf-muscle_155003-5895.webp",
-                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 15, 23, 27, 89, DateTimeKind.Utc).AddTicks(8701),
+                            ImageUrl = "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=800&q=80",
+                            ModifiedOn_22180022 = new DateTime(2026, 5, 22, 10, 42, 12, 55, DateTimeKind.Utc).AddTicks(8599),
                             Name = "Спортен Масаж с Бамбукови Пръчки",
                             Price = 60.00m
                         });
