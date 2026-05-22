@@ -10,25 +10,29 @@
 
 	<div class="card shadow border-0 overflow-hidden mx-auto" style="max-width: 1000px;">
 		<div class="row g-0">
-			<div class="col-md-6">
+			<div class="col-md-6 position-relative" style="min-height: 500px;">
 				@if (!string.IsNullOrEmpty(Model.ImageUrl))
 				{
-					<img src="@Model.ImageUrl" alt="@Model.FirstName" class="img-fluid h-100 w-100" style="object-fit: cover; min-height: 450px;" />
+					<img src="@Model.ImageUrl" alt="@Model.FirstName" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover;" />
 				}
 				else
 				{
-					<img src="~/img/no-image-available-02.jpg" alt="No image" class="img-fluid h-100 w-100" style="object-fit: cover; min-height: 450px;" />
+					<img src="~/img/no-image-available-02.jpg" alt="No image" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover;" />
 				}
 			</div>
+
 			<div class="col-md-6 p-4 d-flex flex-column">
 				<h3 class="card-title text-primary fw-bold mb-2">@Model.FirstName @Model.LastName</h3>
-				<h5 class="text-muted mb-4"><i class="bi bi-star-fill text-warning me-2"></i>@Model.Specialization</h5>
                 
-				<div class="alert bg-sidecar border-0 flex-grow-1 p-4 mb-4">
-					<h6 class="text-dark fw-bold mb-2"><i class="bi bi-person-lines-fill me-2"></i>Биография:</h6>
-					<p class="mb-0 text-dark" style="line-height: 1.6; text-align: justify;">
-						@Model.Bio
-					</p>
+				<div class="flex-grow-1">
+					<h5 class="text-muted mb-4"><i class="bi bi-star-fill text-warning me-2"></i>@Model.Specialization</h5>
+                    
+					<div class="alert bg-sidecar border-0 p-4 mb-4">
+						<h6 class="text-dark fw-bold mb-2"><i class="bi bi-person-lines-fill me-2"></i>Биография:</h6>
+						<p class="mb-0 text-dark" style="line-height: 1.6; text-align: justify;">
+							@Model.Bio
+						</p>
+					</div>
 				</div>
 
 				<div class="mt-auto">

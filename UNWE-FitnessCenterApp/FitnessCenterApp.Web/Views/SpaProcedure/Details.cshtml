@@ -10,27 +10,30 @@
 
     <div class="card shadow border-0 overflow-hidden mx-auto" style="max-width: 1000px;">
         <div class="row g-0">
-            <div class="col-md-6">
+            <div class="col-md-6 position-relative" style="min-height: 500px;">
                 @if (!string.IsNullOrEmpty(Model.ImageUrl))
                 {
-                    <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid h-100 w-100" style="object-fit: cover; min-height: 550px;" />
+                    <img src="@Model.ImageUrl" alt="@Model.Name" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover;" />
                 }
                 else
                 {
-                    <img src="~/img/no-image-available-02.jpg" alt="No image" class="img-fluid h-100 w-100" style="object-fit: cover; min-height: 550px;" />
+                    <img src="~/img/no-image-available-02.jpg" alt="No image" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover;" />
                 }
             </div>
+
             <div class="col-md-6 p-4 d-flex flex-column">
                 <h4 class="card-title text-primary mb-3">Информация за процедурата</h4>
 
-                <p class="card-text flex-grow-1 text-muted" style="text-align: justify;">
-                    <strong>Описание:</strong><br /> @Model.Description
-                </p>
+                <div class="flex-grow-1">
+                    <p class="card-text text-muted" style="text-align: justify;">
+                        <strong>Описание:</strong><br /> @Model.Description
+                    </p>
 
-                <div class="alert bg-sidecar border-0 py-3 mb-4">
-                    <p class="mb-2"><strong><i class="bi bi-tag"></i> Цена:</strong> @Model.Price.ToString("C")</p>
-                    <p class="mb-2"><strong><i class="bi bi-clock"></i> Продължителност:</strong> @Model.Duration минути</p>
-                    <p class="mb-0"><strong><i class="bi bi-people"></i> Капацитет:</strong> @Model.Capacity места</p>
+                    <div class="alert bg-sidecar border-0 py-3 mb-4">
+                        <p class="mb-2"><strong><i class="bi bi-tag"></i> Цена:</strong> @Model.Price.ToString("C")</p>
+                        <p class="mb-2"><strong><i class="bi bi-clock"></i> Продължителност:</strong> @Model.Duration минути</p>
+                        <p class="mb-0"><strong><i class="bi bi-people"></i> Капацитет:</strong> @Model.Capacity места</p>
+                    </div>
                 </div>
 
                 <div class="mt-auto">
@@ -40,7 +43,7 @@
                             <input type="datetime-local" name="appointmentDateTime" id="appointmentDateTime" class="form-control border-0" required />
                             <span class="text-danger" id="timeErrorSpan"></span>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100 fw-bold">Резервирай</button>
+                        <button type="submit" class="btn btn-primary w-100 fw-bold mb-2">Резервирай</button>
                     </form>
                     <a asp-controller="SpaProcedure" asp-action="Index" class="btn btn-outline-secondary w-100">Назад към списъка</a>
                 </div>
