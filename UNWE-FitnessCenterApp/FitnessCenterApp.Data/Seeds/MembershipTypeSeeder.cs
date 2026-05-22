@@ -11,45 +11,67 @@ public static class MembershipTypeSeeder
             new MembershipType
             {
                 Id = 1,
-                Name = "Basic",
+                Name = "Основен план",
                 Price = 59.99m,
                 Duration = 30,
-                ImageUrl = "https://i0.wp.com/poolstats.co/wp-content/uploads/2019/01/Basic-Membership.png?fit=400%2C327&ssl=1",
-                Description = "A basic membership that grants access to all regular classes and gym facilities.",
+                ImageUrl = "/img/membership/Basic.png",
+                Description = "Стандартен месечен абонамент. Включва неограничен достъп до фитнес залата и всички групови класове. Този план не включва право на записване за СПА процедури.",
                 AllowedSpaProceduresPerWeek = 0,
                 ModifiedOn_22180022 = DateTime.UtcNow
             },
             new MembershipType
             {
                 Id = 2,
-                Name = "Elite",
+                Name = "Елитен план",
                 Price = 99.99m,
                 Duration = 60,
-                ImageUrl = "https://cdn.vectorstock.com/i/500p/49/16/elite-gold-label-vector-2944916.jpg",
-                Description = "An elite membership offering access to all classes, gym facilities, and spa treatments.",
+                ImageUrl = "/img/membership/Elite.png",
+                Description = "Двумесечен абонамент за активни трениращи. Включва пълен достъп до фитнес залата, всички класове и право на 1 резервация за СПА процедура на седмица.",
                 AllowedSpaProceduresPerWeek = 1,
                 ModifiedOn_22180022 = DateTime.UtcNow
             },
             new MembershipType
             {
                 Id = 3,
-                Name = "Premium",
+                Name = "Премиум план",
                 Price = 299.99m,
                 Duration = 180,
-                ImageUrl = "https://thumbs.dreamstime.com/b/premium-membership-badge-stamp-golden-red-ribbon-text-30827692.jpg",
-                Description = "A premium membership offering access to all classes, gym facilities, and spa treatments.",
+                ImageUrl = "/img/membership/Premium.png",
+                Description = "Шестмесечен абонамент с висока добавена стойност. Гарантира достъп до всички съоръжения и ви дава право на до 5 резервации за СПА процедури на седмица.",
                 AllowedSpaProceduresPerWeek = 5,
                 ModifiedOn_22180022 = DateTime.UtcNow
             },
             new MembershipType
             {
                 Id = 4,
-                Name = "VIP",
+                Name = "ВИП план",
                 Price = 499.99m,
                 Duration = 365,
-                ImageUrl = "https://cdn11.bigcommerce.com/s-2ooutu2zpl/images/stencil/original/products/35315/51564/VIP_Badge_2__62906.1641934958.png?c=2",
-                Description = "An exclusive membership with additional perks including priority booking for events and personal training.",
+                ImageUrl = "/img/membership/Vip.png",
+                Description = "Ексклузивен годишен абонамент за най-отдадените. Включва пълен достъп до фитнес залата, всички класове и най-високия възможен седмичен лимит за резервация на СПА процедури.",
                 AllowedSpaProceduresPerWeek = 99,
+                ModifiedOn_22180022 = DateTime.UtcNow
+            },
+            new MembershipType
+            {
+                Id = 5,
+                Name = "Студентски план",
+                Price = 39.99m,
+                Duration = 30,
+                ImageUrl = "/img/membership/UNWE.png",
+                Description = "Специално предложение за студенти на УНСС. Осигурява пълен достъп до фитнес залата и всички тренировъчни класове. Планът не включва право на резервации за СПА процедури.",
+                AllowedSpaProceduresPerWeek = 0,
+                ModifiedOn_22180022 = DateTime.UtcNow
+            },
+            new MembershipType
+            {
+                Id = 6,
+                Name = "Дневен план",
+                Price = 45.99m,
+                Duration = 30,
+                ImageUrl = "/img/membership/Daytime.png",
+                Description = "Месечен абонамент с достъп до фитнес залата всеки ден, валиден за посещения в часовия интервал от 08:00 до 16:00 ч. Планът не включва право на резервации за СПА процедури.",
+                AllowedSpaProceduresPerWeek = 0,
                 ModifiedOn_22180022 = DateTime.UtcNow
             }
         );
