@@ -57,7 +57,7 @@
         <div class="col-md-4">
             <div class="card shadow-sm border-0 h-100 rounded-3">
                 <div class="card-body d-flex flex-column align-items-center">
-                    <h5 class="card-title text-center mb-3 fw-bold text-dark w-100">Заетост СПА (%)</h5>
+                    <h5 class="card-title text-center mb-3 fw-bold text-dark w-100">Популярност СПА (%)</h5>
                     <div style="position: relative; height: 300px; width: 100%; display: flex; justify-content: center;">
                         <canvas id="spaChart"></canvas>
                     </div>
@@ -172,21 +172,26 @@
                             <th>Процедура</th>
                             <th>Капацитет (сесия)</th>
                             <th>Резервации (за периода)</th>
-                            <th>Заетост</th>
+                            <th>Дял от всички (%)</th>
                             <th>Оборот (за периода)</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle">
+                        @{
+                            int totalSpaBookingsAll = spaReport != null ? Enumerable.Sum(spaReport, (Func<dynamic, int>)(x => (int)x.TotalBookings)) : 0;
+                        }
                         @if (spaReport != null)
                         {
                             foreach (var item in spaReport)
                             {
-                                double occupancy = item.Capacity > 0 ? Math.Round(((double)item.TotalBookings / item.Capacity) * 100) : 0;
+                                double popularity = totalSpaBookingsAll > 0 ? Math.Round(((double)item.TotalBookings / totalSpaBookingsAll) * 100) : 0;
                                 <tr>
                                     <td class="fw-bold ps-3">@item.Name</td>
                                     <td class="text-center">@item.Capacity места</td>
                                     <td class="text-center">@item.TotalBookings</td>
-                                    <td class="text-center"><span class="badge @(occupancy >= 70 ? "bg-success" : occupancy >= 40 ? "bg-warning text-dark" : "bg-danger")">@occupancy%</span></td>
+                                    <td class="text-center">
+                                        <span class="badge @(popularity >= 50 ? "bg-success" : popularity >= 20 ? "bg-warning text-dark" : "bg-primary")">@popularity%</span>
+                                    </td>
                                     <td class="text-center fw-bold text-success">@item.Revenue.ToString("C")</td>
                                 </tr>
                             }
@@ -207,7 +212,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
 
-		// Initialize DataTables with Bulgarian localization
+        // Initialize DataTables with Bulgarian localization
         $(document).ready(function () {
         var dataTableOptions = {
         "paging": true,
@@ -223,7 +228,7 @@
         $('#spaTable').DataTable(dataTableOptions);
         });
 
-		// Prepare chart data from ViewBag
+        // Prepare chart data from ViewBag
         var chartData = {
         classes: { labels: @Html.Raw(Json.Serialize(ViewBag.ClassLabels)), data: @Html.Raw(Json.Serialize(ViewBag.ClassData)) },
         events: { labels: @Html.Raw(Json.Serialize(ViewBag.EventLabels)), data: @Html.Raw(Json.Serialize(ViewBag.EventData)) },
@@ -244,7 +249,7 @@
 
         var borderColors = bgColors.map(color => color.replace('0.7', '1'));
 
-		// Function to create a bar chart
+        // Function to create a bar chart
         var createChart = (id, labels, data) => {
         new Chart(document.getElementById(id), {
         type: 'bar',
@@ -264,7 +269,7 @@
         scales: {
         x: {
         ticks: {
-		// Shorten long labels to prevent overflow, but show full label in tooltip
+        // Shorten long labels to prevent overflow, but show full label in tooltip
         callback: function(value) {
         let label = this.getLabelForValue(value);
         if (label && label.length > 12) {
@@ -284,7 +289,7 @@
         legend: { display: false },
         tooltip: {
         callbacks: {
-		// Hover tooltip to show full label and value
+        // Hover tooltip to show full label and value
         title: function(tooltipItems) {
         return tooltipItems[0].label;
         }
@@ -295,7 +300,7 @@
         });
         };
 
-		// Render all charts
+        // Render all charts
         createChart('classesChart', chartData.classes.labels, chartData.classes.data);
         createChart('eventsChart', chartData.events.labels, chartData.events.data);
         createChart('spaChart', chartData.spa.labels, chartData.spa.data);

@@ -72,9 +72,14 @@ public class ReportsController : Controller
                 Revenue = sp.Price * sp.SpaRegistrations.Count(r => r.AppointmentDateTime >= start && r.AppointmentDateTime <= end)
             }).ToListAsync();
 
+        // Find total bookings across all procedures to calculate popularity percentages
+        var totalSpaBookings = spaReport.Sum(s => s.TotalBookings);
+
         ViewBag.SpaReport = spaReport;
         ViewBag.SpaLabels = spaReport.Select(s => s.Name).ToArray();
-        ViewBag.SpaData = spaReport.Select(s => s.Capacity > 0 ? Math.Round(((double)s.TotalBookings / s.Capacity) * 100) : 0).ToArray();
+
+        // Calculate percentage of total bookings for each procedure, handling division by zero
+        ViewBag.SpaData = spaReport.Select(s => totalSpaBookings > 0 ? Math.Round(((double)s.TotalBookings / totalSpaBookings) * 100) : 0).ToArray();
 
         return View();
     }

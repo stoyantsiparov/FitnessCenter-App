@@ -13,9 +13,9 @@
             </div>
             <div class="text-end">
                 <h5 class="mb-1">
-                    Заети места:
-                    <span class="@(Model.CurrentParticipantsCount >= Model.Capacity ? "text-danger" : "text-success") fw-bold">
-                        @Model.CurrentParticipantsCount / @Model.Capacity
+                    Общо резервации:
+                    <span class="text-primary fw-bold">
+                        @Model.CurrentParticipantsCount
                     </span>
                 </h5>
                 <a asp-action="Index" class="btn btn-outline-secondary btn-sm mt-2">Обратно към процедурите</a>
