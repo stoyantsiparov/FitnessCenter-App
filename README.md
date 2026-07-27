@@ -1,6 +1,6 @@
-# FitnessCenter-App - Web-Based System for Fitness Center Management
+# FitnessCenter-BachelorProject - Web-Based System for Fitness Center Management
 
-Bachelors-FitnessCenter-App is a web-based business application designed for the comprehensive management of operational activities in a modern fitness and wellness center. The platform serves users, active members, and administrators to seamlessly manage memberships, classes, events, and spa procedures through a 24/7 self-service portal.
+FitnessCenter-BachelorProject is a web-based business application designed for the comprehensive management of operational activities in a modern fitness and wellness center. The platform serves users, active members, and administrators to seamlessly manage memberships, classes, events, and spa procedures through a 24/7 self-service portal.
 
 ## Features
 
@@ -53,4 +53,4 @@ Bachelors-FitnessCenter-App is a web-based business application designed for the
 ## Installation
 * Clone the repository:
 ```bash
-git clone [https://github.com/stoyantsiparov/Bachelors-FitnessCenter-App.git](https://github.com/stoyantsiparov/Bachelors-FitnessCenter-App.git)
+git clone [https://github.com/stoyantsiparov/FitnessCenter-BachelorProject.git](https://github.com/stoyantsiparov/FitnessCenter-BachelorProject.git)
