@@ -1,4 +1,4 @@
-# Bachelors-FitnessCenter-App - Web-Based System for Fitness Center Management
+# FitnessCenter-App - Web-Based System for Fitness Center Management
 
 Bachelors-FitnessCenter-App is a web-based business application designed for the comprehensive management of operational activities in a modern fitness and wellness center. The platform serves users, active members, and administrators to seamlessly manage memberships, classes, events, and spa procedures through a 24/7 self-service portal.
 
